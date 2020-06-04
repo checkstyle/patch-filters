@@ -19,7 +19,14 @@
 
 package com.github.checkstyle.patchfilter;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import com.github.checkstyle.AbstractModuleTestSupport;
+import com.puppycrawl.tools.checkstyle.api.AuditEvent;
+import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
+import com.puppycrawl.tools.checkstyle.api.SeverityLevel;
 
 public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
 
@@ -28,4 +35,23 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         return "com/github/checkstyle/patchfilter";
     }
 
+    @Test
+    public void testAccept() throws Exception {
+        final String fileName = getPath("MethodCountPatch.txt");
+        final SuppressionPatchFilter filter = createSuppressionPatchFilter(fileName);
+        final LocalizedMessage message = new LocalizedMessage(7, 1, null, "msg", null,
+                SeverityLevel.ERROR, null, getClass(), null);
+        final AuditEvent ev = new AuditEvent(this, "MethodCountUpdate.java", message);
+
+        assertTrue(filter.accept(ev),
+                "Audit event should be rejected when there are no matching patch filters");
+    }
+
+    private static SuppressionPatchFilter
+        createSuppressionPatchFilter(String fileName) throws Exception {
+        final SuppressionPatchFilter suppressionPatchFilter = new SuppressionPatchFilter();
+        suppressionPatchFilter.setFile(fileName);
+        suppressionPatchFilter.finishLocalSetup();
+        return suppressionPatchFilter;
+    }
 }
