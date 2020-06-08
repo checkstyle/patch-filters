@@ -5,4 +5,9 @@
     "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
+    <suppress checks="ClassDataAbstractionCoupling"
+              files="(CheckerTest|AbstractModuleTestSupport|AbstractItModuleTestSupport|
+                     |CheckstyleAntTaskTest|
+                     |TranslationCheckTest|LocalizedMessageTest|AbstractFileSetCheckTest|
+                     |AbstractCheckTest|AutomaticBeanTest)\.java"/>
 </suppressions>
