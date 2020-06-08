@@ -1,0 +1,19 @@
+--- InputCaseThreeOrigin.java	2020-06-08 20:48:17.000000000 +0800
++++ InputCaseThreeUpdate.java	2020-06-08 20:48:45.000000000 +0800
+@@ -1,12 +1,14 @@
+ package com.github.checkstyle.patchfilter;
+ 
+-public class InputCaseThreeOrigin {
++public class InputCaseThreeUpdate {
+     public void fun(boolean valid) {
++        check(valid);
++    }
++    private void check(boolean valid) {
+         if (valid) {
+             {
+                 System.out.println("ok");
+             }
+         }
+     }
+-
+ }

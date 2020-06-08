@@ -1,0 +1,14 @@
+--- MethodLineOrigin.java	2020-06-08 18:10:20.000000000 +0800
++++ MethodLineUpdate.java	2020-06-08 18:10:20.000000000 +0800
+@@ -1,8 +1,9 @@
+ package com.github.checkstyle.patchfilter;
+ 
+-public class MethodLineOrigin {
++public class MethodLineUpdate {
+     public void test1() {
+         System.out.println();
++        System.out.println();
++        System.out.println();
+     }
+-
+ }
