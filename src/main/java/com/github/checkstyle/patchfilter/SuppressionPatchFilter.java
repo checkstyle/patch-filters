@@ -22,6 +22,7 @@ package com.github.checkstyle.patchfilter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.github.difflib.UnifiedDiffUtils;
@@ -40,7 +41,9 @@ import com.puppycrawl.tools.checkstyle.api.Filter;
  */
 public class SuppressionPatchFilter implements Filter {
 
-    /** Specify the location of the patch file. */
+    /**
+     * Specify the location of the patch file.
+     */
     private String file;
 
     /**
@@ -51,7 +54,9 @@ public class SuppressionPatchFilter implements Filter {
      */
     private boolean optional;
 
-    /** Set of individual suppresses. */
+    /**
+     * Set of individual suppresses.
+     */
     private PatchFilterSet filters = new PatchFilterSet();
 
     /**
@@ -92,25 +97,69 @@ public class SuppressionPatchFilter implements Filter {
     }
 
     private PatchFilterSet loadPatchFile(String patchFileName) throws IOException {
-        final List<String> patched = Files.readAllLines(new File(patchFileName).toPath());
-        final String fileName = getFileName(patched);
-        final Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patched);
-        final Chunk chunk = patch.getDeltas().get(0).getTarget();
-        final Integer startLine = chunk.getPosition();
-        final Integer endLine = chunk.getPosition() + chunk.getLines().size();
-        final SuppressionPatchFilterElement element =
-                new SuppressionPatchFilterElement(fileName, startLine, endLine);
-        filters.addFilter(element);
+        final List<String> originPatch = Files.readAllLines(new File(patchFileName).toPath());
+        final List<List<String>> patchList = getPatchList(originPatch);
+        for (List<String> singlePatch : patchList) {
+            final String fileName = getFileName(singlePatch);
+            final Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(singlePatch);
+            final List<List<Integer>> lineRangeList = getLineRange(patch);
+            final SuppressionPatchFilterElement element =
+                    new SuppressionPatchFilterElement(fileName, lineRangeList);
+            filters.addFilter(element);
+        }
         return filters;
     }
 
     /**
-     * To get file name that is changed.
-     * @param patched patch file's List of string
-     * @return String
+     * To seperate different files's diff contents when there are multiple files in patch file.
+     * @param originPatch List of String
+     * @return patchedList List of List of String
      */
-    private String getFileName(List<String> patched) {
-        return patched.get(1).split("\\s")[1];
+    private List<List<String>> getPatchList(List<String> originPatch) {
+        final List<List<String>> patchedList = new ArrayList<>();
+        boolean flag = true;
+        List<String> singlePatched = new ArrayList<>();
+        for (String str : originPatch) {
+            if (str.startsWith("diff ")) {
+                if (flag) {
+                    flag = false;
+                }
+                else {
+                    patchedList.add(singlePatched);
+                    singlePatched = new ArrayList<>();
+                }
+            }
+            singlePatched.add(str);
+        }
+        patchedList.add(singlePatched);
+        return patchedList;
     }
 
+    private String getFileName(List<String> singlePatch) {
+        String fileName = null;
+        for (String str : singlePatch) {
+            if (str.startsWith("+++ ")) {
+                fileName = str.split("\\s")[1];
+                final String fileSplit = "/";
+                if (fileName.contains(fileSplit)) {
+                    final String[] fileNameArray = fileName.split(fileSplit);
+                    fileName = fileNameArray[fileNameArray.length - 1];
+                }
+                break;
+            }
+        }
+        return fileName;
+    }
+
+    private List<List<Integer>> getLineRange(Patch<String> patch) {
+        final List<List<Integer>> lineRangeList = new ArrayList<>();
+        for (int i = 0; i < patch.getDeltas().size(); i++) {
+            final Chunk targetChunk = patch.getDeltas().get(i).getTarget();
+            final List<Integer> lineRange = new ArrayList<>();
+            lineRange.add(targetChunk.getPosition());
+            lineRange.add(targetChunk.getPosition() + targetChunk.getLines().size());
+            lineRangeList.add(lineRange);
+        }
+        return lineRangeList;
+    }
 }

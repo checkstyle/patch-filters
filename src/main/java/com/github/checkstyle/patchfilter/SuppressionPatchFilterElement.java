@@ -19,6 +19,8 @@
 
 package com.github.checkstyle.patchfilter;
 
+import java.util.List;
+
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.Filter;
 
@@ -31,24 +33,19 @@ public class SuppressionPatchFilterElement implements Filter {
     /** The String of file names. */
     private final String fileName;
 
-    /** The num of start line. */
-    private final Integer startLine;
-
-    /** The num of end line. */
-    private final Integer endLine;
+    /** The list of line range. */
+    private final List<List<Integer>> lineRangeList;
 
     /**
      * Constructs a {@code SuppressPatchFilterElement} for a
      * file name pattern.
      *
      * @param fileName names of filtered files.
-     * @param startLine   start lines values for line number filtering.
-     * @param endLine end lines values  for line number filtering.
+     * @param lineRangeList   list of line range for line number filtering.
      */
-    public SuppressionPatchFilterElement(String fileName, int startLine, int endLine) {
+    public SuppressionPatchFilterElement(String fileName, List<List<Integer>> lineRangeList) {
         this.fileName = fileName;
-        this.startLine = startLine;
-        this.endLine = endLine;
+        this.lineRangeList = lineRangeList;
     }
 
     @Override
@@ -74,9 +71,15 @@ public class SuppressionPatchFilterElement implements Filter {
      * @return true if line and column are matching or not set.
      */
     private boolean isLineMatching(AuditEvent event) {
-        Boolean result = false;
+        boolean result = false;
         if (event.getLocalizedMessage() != null) {
-            result = startLine <= event.getLine() && event.getLine() <= endLine;
+            for (List<Integer> aLineRangeList : lineRangeList) {
+                result = aLineRangeList.get(0) < event.getLine()
+                        && event.getLine() < aLineRangeList.get(1);
+                if (result) {
+                    break;
+                }
+            }
         }
         return result;
     }
