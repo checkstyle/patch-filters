@@ -19,6 +19,7 @@
 
 package com.github.checkstyle.patchfilter;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -32,18 +33,50 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
 
     @Override
     protected String getPackageLocation() {
-        return "com/github/checkstyle/patchfilter";
+        return "com/github/checkstyle/patchfilter/";
     }
 
     @Test
     public void testAccept() throws Exception {
-        final String fileName = getPath("MethodCountPatch.txt");
+        final String fileName = getPath("MethodCount/MethodCountPatch.txt");
         final SuppressionPatchFilter filter = createSuppressionPatchFilter(fileName);
         final LocalizedMessage message = new LocalizedMessage(7, 1, null, "msg", null,
                 SeverityLevel.ERROR, null, getClass(), null);
         final AuditEvent ev = new AuditEvent(this, "MethodCountUpdate.java", message);
 
         assertTrue(filter.accept(ev),
+                "Audit event should be rejected when there are no matching patch filters");
+    }
+
+    @Test
+    public void testMultiChangesOnOneFileOne() throws Exception {
+        final String fileName = getPath("MultiChangesOnOneFilePatch.txt");
+        final SuppressionPatchFilter filter = createSuppressionPatchFilter(fileName);
+        final LocalizedMessage message = new LocalizedMessage(4, 1, null, "msg", null,
+                SeverityLevel.ERROR, null, getClass(), null);
+        final AuditEvent ev = new AuditEvent(this, "Update.java", message);
+        assertTrue(filter.accept(ev),
+                "Audit event should be rejected when there are no matching patch filters");
+    }
+
+    @Test
+    public void testMultiChangedFilesOnOnePatch() throws Exception {
+        final String fileName = getPath("MultiChangedFilesOnOnePatch.txt");
+        final SuppressionPatchFilter filter = createSuppressionPatchFilter(fileName);
+        final LocalizedMessage message1 = new LocalizedMessage(7, 1, null, "msg", null,
+                SeverityLevel.ERROR, null, getClass(), null);
+        final AuditEvent ev1 = new AuditEvent(this, "Test2.java", message1);
+        assertTrue(filter.accept(ev1),
+                "Audit event should be rejected when there are no matching patch filters");
+        final LocalizedMessage message2 = new LocalizedMessage(77, 1, null, "msg", null,
+                SeverityLevel.ERROR, null, getClass(), null);
+        final AuditEvent ev2 = new AuditEvent(this, "Test1.java", message2);
+        assertFalse(filter.accept(ev2),
+                "Audit event should be rejected when there are no matching patch filters");
+        final LocalizedMessage message3 = new LocalizedMessage(7, 1, null, "msg", null,
+                SeverityLevel.ERROR, null, getClass(), null);
+        final AuditEvent ev3 = new AuditEvent(this, "Test1.java", message1);
+        assertTrue(filter.accept(ev1),
                 "Audit event should be rejected when there are no matching patch filters");
     }
 
