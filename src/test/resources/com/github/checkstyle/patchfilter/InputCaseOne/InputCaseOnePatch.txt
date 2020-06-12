@@ -1,0 +1,14 @@
+--- InputCaseOneOrigin.java	2020-06-08 20:20:02.000000000 +0800
++++ InputCaseOneUpdate.java	2020-06-08 20:20:02.000000000 +0800
+@@ -1,8 +1,10 @@
+ package com.github.checkstyle.patchfilter;
+ 
+-public class InputCaseOneOrigin {
++public class InputCaseOneUpdate {
+     private int i;
+     void foo() {
+         i++;
++
++
+     }
+ }

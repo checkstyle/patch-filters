@@ -1,0 +1,12 @@
+--- MagicNumberOrigin.java	2020-06-08 20:54:55.000000000 +0800
++++ MagicNumberUpdate.java	2020-06-08 20:55:23.000000000 +0800
+@@ -1,7 +1,7 @@
+ package com.github.checkstyle.patchfilter;
+ 
+-public class MagicNumberOrigin {
++public class MagicNumberUpdate {
+     public void fun() {
+-        int a = 123;
++        int a =    256;
+     }
+ }
