@@ -1,0 +1,25 @@
+From 7c32611c211917da7723512fb05e9a7d84982322 Mon Sep 17 00:00:00 2001
+From: Baratali Izmailov <barataliba@gmail.com>
+Date: Sun, 14 Jun 2020 13:50:54 +0100
+Subject: [PATCH] TestCommit
+
+---
+ src/main/java/com/puppycrawl/tools/checkstyle/Checker.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/Checker.java b/src/main/java/com/puppycrawl/tools/checkstyle/Checker.java
+index ac872448b..d487d2ffb 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/Checker.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/Checker.java
+@@ -134,7 +134,7 @@ public class Checker extends AutomaticBean implements MessageDispatcher, RootMod
+      * Creates a new {@code Checker} instance.
+      * The instance needs to be contextualized and configured.
+      */
+-    public Checker() {
++    public Checker throws RuntimeException () {
+         addListener(counter);
+         log = LogFactory.getLog(Checker.class);
+     }
+--
+2.25.1.windows.1
+

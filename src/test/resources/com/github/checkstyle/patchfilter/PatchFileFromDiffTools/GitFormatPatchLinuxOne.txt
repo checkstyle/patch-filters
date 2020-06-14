@@ -1,0 +1,31 @@
+From f07bcc7fbfa8fc6c4cd8885d2f4f13226425acfa Mon Sep 17 00:00:00 2001
+From: "dependabot-preview[bot]"
+ <27856297+dependabot-preview[bot]@users.noreply.github.com>
+Date: Wed, 3 Jun 2020 13:56:22 +0000
+Subject: [PATCH] dependency: bump archunit-junit5 from 0.13.1 to 0.14.1
+
+Bumps [archunit-junit5](https://github.com/TNG/ArchUnit) from 0.13.1 to 0.14.1.
+- [Release notes](https://github.com/TNG/ArchUnit/releases)
+- [Commits](https://github.com/TNG/ArchUnit/compare/v0.13.1...v0.14.1)
+
+Signed-off-by: dependabot-preview[bot] <support@dependabot.com>
+---
+ pom.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pom.xml b/pom.xml
+index 221c50e..7feed9f 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -226,7 +226,7 @@
+     <dependency>
+       <groupId>com.tngtech.archunit</groupId>
+       <artifactId>archunit-junit5</artifactId>
+-      <version>0.13.1</version>
++      <version>0.14.1</version>
+       <scope>test</scope>
+     </dependency>
+     <dependency>
+--
+2.7.4
+

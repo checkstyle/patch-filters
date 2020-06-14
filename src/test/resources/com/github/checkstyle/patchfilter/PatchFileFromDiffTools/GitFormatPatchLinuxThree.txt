@@ -1,0 +1,26 @@
+From 901e713030f194cce682dc98b2ae0d3447af9c97 Mon Sep 17 00:00:00 2001
+From: wltan <53135010+wltan@users.noreply.github.com>
+Date: Sun, 29 Mar 2020 13:39:32 +0800
+Subject: [PATCH] spelling: Fix typo in JavadocMethodCheck
+
+---
+ .../tools/checkstyle/checks/javadoc/JavadocMethodCheck.java | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java
+index 6faf17d256..e194c6b944 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java
+@@ -717,9 +717,9 @@ private static int calculateTagColumn(Matcher javadocTagMatcher,
+     private static List<ExceptionInfo> combineExceptionInfo(List<ExceptionInfo> list1,
+                                                      List<ExceptionInfo> list2) {
+         final List<ExceptionInfo> result = new ArrayList<>(list1);
+-        for (ExceptionInfo expectionInfo : list2) {
+-            if (result.stream().noneMatch(item -> isExceptionInfoSame(item, expectionInfo))) {
+-                result.add(expectionInfo);
++        for (ExceptionInfo exceptionInfo : list2) {
++            if (result.stream().noneMatch(item -> isExceptionInfoSame(item, exceptionInfo))) {
++                result.add(exceptionInfo);
+             }
+         }
+         return result;
