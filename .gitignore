@@ -33,3 +33,6 @@ replay_pid*
 
 # Apple MacOS hidden file
 .DS_Store
+
+# DiffReport
+DiffReport/
