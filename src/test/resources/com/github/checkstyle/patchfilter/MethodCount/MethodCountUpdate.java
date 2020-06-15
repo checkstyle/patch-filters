@@ -1,4 +1,4 @@
-package com.github.checkstyle.patchfilter;
+package com.github.checkstyle.MethodCount;
 
 public class MethodCountUpdate {
     public void test1() {

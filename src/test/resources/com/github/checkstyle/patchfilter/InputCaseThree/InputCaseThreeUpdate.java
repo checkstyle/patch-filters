@@ -1,4 +1,4 @@
-package com.github.checkstyle.patchfilter;
+package com.github.checkstyle.InputCaseThree;
 
 public class InputCaseThreeUpdate {
     public void fun(boolean valid) {

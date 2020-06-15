@@ -3,7 +3,7 @@
     "-//Puppy Crawl//DTD Import Control 1.2//EN"
     "http://checkstyle.sourceforge.net/dtds/import_control_1_2.dtd">
 
-<import-control pkg="com.github.checkstyle.patchfilter">
+<import-control pkg="com.github.checkstyle">
     <allow pkg="com.puppycrawl.tools.checkstyle.api"/>
     <allow pkg="com.puppycrawl.tools.checkstyle.checks"/>
     <allow pkg="java.io"/>
@@ -15,4 +15,9 @@
     <allow pkg="org.apache.commons.logging"/>
     <allow pkg="org.xml.sax"/>
     <allow pkg="com.github.difflib"/>
+
+    <subpackage name="generatepatchfile">
+        <allow pkg="org.eclipse.jgit"/>
+        <allow pkg="java.text"/>
+    </subpackage>
 </import-control>
