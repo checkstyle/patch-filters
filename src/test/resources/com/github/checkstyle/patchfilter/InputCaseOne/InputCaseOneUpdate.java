@@ -1,4 +1,4 @@
-package com.github.checkstyle.patchfilter;
+package com.github.checkstyle.InputCaseOne;
 
 public class InputCaseOneUpdate {
     private int i;

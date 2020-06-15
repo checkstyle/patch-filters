@@ -1,4 +1,4 @@
-package com.github.checkstyle.patchfilter;
+package com.github.checkstyle.ReturnCount;
 
 public class ReturnCountOrigin {
     public void fun(int error) {

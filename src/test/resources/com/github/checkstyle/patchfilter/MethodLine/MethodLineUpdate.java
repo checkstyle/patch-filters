@@ -1,4 +1,4 @@
-package com.github.checkstyle.patchfilter;
+package com.github.checkstyle.MethodLine;
 
 public class MethodLineUpdate {
     public void test1() {

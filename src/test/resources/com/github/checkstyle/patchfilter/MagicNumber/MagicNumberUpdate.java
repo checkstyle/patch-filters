@@ -1,4 +1,4 @@
-package com.github.checkstyle.patchfilter;
+package com.github.checkstyle.MagicNumber;
 
 public class MagicNumberUpdate {
     public void fun() {
