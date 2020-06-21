@@ -9,5 +9,5 @@
               files="(CheckerTest|AbstractModuleTestSupport|AbstractItModuleTestSupport|
                      |CheckstyleAntTaskTest|
                      |TranslationCheckTest|LocalizedMessageTest|AbstractFileSetCheckTest|
-                     |AbstractCheckTest|AutomaticBeanTest)\.java"/>
+                     |AbstractCheckTest|AutomaticBeanTest|GeneratePatchFile)\.java"/>
 </suppressions>
