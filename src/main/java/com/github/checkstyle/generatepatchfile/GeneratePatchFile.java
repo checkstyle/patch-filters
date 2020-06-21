@@ -138,7 +138,7 @@ public class GeneratePatchFile {
         if (destDirFile.exists()) {
             throw new IOException("commit dir exists, please delete");
         }
-        final boolean succ = new File(destDirName).mkdir();
+        final boolean succ = new File(destDirName).mkdirs();
         if (succ) {
             final File patchFile = new File(diffReportDirName, "patch.txt");
             final PrintStream ps = new PrintStream(new FileOutputStream(patchFile));
