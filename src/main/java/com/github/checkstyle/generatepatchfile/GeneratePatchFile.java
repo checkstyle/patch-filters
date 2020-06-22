@@ -24,8 +24,12 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.diff.DiffEntry;
@@ -40,6 +44,36 @@ import org.eclipse.jgit.treewalk.CanonicalTreeParser;
  * To generate patch file through jgit.
  */
 public class GeneratePatchFile {
+    /**
+     * HEAD.
+     */
+    private static final String HEAD = "-HEAD~";
+
+    /**
+     * PATCH_FILE_FORMAT.
+     */
+    private static final String PATCH_FILE_FORMAT = "%s-patch-%s-%s.txt";
+
+    /**
+     * GIT.
+     */
+    private static final String GIT = "git";
+
+    /**
+     * DEST_DIR_NAME_FORMAT.
+     */
+    private static final String DEST_DIR_NAME_FORMAT = "%s/%s";
+
+    /**
+     * MOVE_PATCH_FILE_ERROR_MESSAGE.
+     */
+    private static final String MOVE_PATCH_FILE_ERROR_MESSAGE = "Moving Patch File failed!";
+
+    /**
+     * PATCH_TXT.
+     */
+    private static final String PATCH_TXT = "patch.txt";
+
     /**
      * Git instance.
      */
@@ -87,12 +121,13 @@ public class GeneratePatchFile {
 
     /**
      * Init GeneratePatchFile.
-     * @param repoPath RepoPath of repository that will be checked by checkstyle.
-     * @param testerPath Path of checkstyle-tester.
+     *
+     * @param repoPath           RepoPath of repository that will be checked by checkstyle.
+     * @param testerPath         Path of checkstyle-tester.
      * @param checkstyleRepoPath Path of checkstyle.
-     * @param checkstyleBranch Patch-branch of checkstyle.
-     * @param baseConfigFile BaseConfigFile.
-     * @param patchConfigFile PatchConfigFile.
+     * @param checkstyleBranch   Patch-branch of checkstyle.
+     * @param baseConfigFile     BaseConfigFile.
+     * @param patchConfigFile    PatchConfigFile.
      */
     public GeneratePatchFile(String repoPath, String testerPath,
                              String checkstyleRepoPath, String checkstyleBranch,
@@ -115,6 +150,34 @@ public class GeneratePatchFile {
         diffReportDirName = new File(".").getAbsoluteFile().getParent() + "/DiffReport";
     }
 
+    /**
+     * To generate patch file through jgit.
+     *
+     * @param runPatchNum num of patch file between two commits
+     * @throws Exception exception
+     */
+    public void generatePatch(int runPatchNum) throws Exception {
+        final List<RevCommit> commitList = getAllCommits();
+        for (int i = 0; i < runPatchNum - 1; i++) {
+            generateTwoCommitDiffPatch(commitList.get(i + 1), commitList.get(i));
+        }
+        generateSummaryIndexHtml();
+    }
+
+    /**
+     * To generate patch file through git command.
+     *
+     * @param runPatchNum num of patch file between two commits
+     * @throws Exception exception
+     */
+    public void generatePatchWithGitCommand(int runPatchNum) throws Exception {
+        for (int i = 1; i < runPatchNum; i++) {
+            generateDiffPatchWithGitCommand(i);
+            checkoutWithGitCommand();
+        }
+        generateSummaryIndexHtml();
+    }
+
     private List<RevCommit> getAllCommits() throws Exception {
         final Iterable<RevCommit> commits = git.log().add(repository.resolve("HEAD")).call();
         int count = 0;
@@ -127,20 +190,15 @@ public class GeneratePatchFile {
         return commitList;
     }
 
-    private void
-        generateTwoCommitDiffPatch(RevCommit commitOld, RevCommit commitNew)
+    private void generateTwoCommitDiffPatch(RevCommit commitOld, RevCommit commitNew)
             throws Exception {
         final int commitNameLength = 7;
         final String subDirName = getSimpleRepoName() + "-"
                 + commitNew.getName().substring(0, commitNameLength);
-        final String destDirName = String.format("%s/%s", diffReportDirName, subDirName);
-        final File destDirFile = new File(destDirName);
-        if (destDirFile.exists()) {
-            throw new IOException("commit dir exists, please delete");
-        }
-        final boolean succ = new File(destDirName).mkdirs();
+        final File destDirFile = createDestDirName(subDirName);
+        final boolean succ = destDirFile.mkdirs();
         if (succ) {
-            final File patchFile = new File(diffReportDirName, "patch.txt");
+            final File patchFile = new File(diffReportDirName, PATCH_TXT);
             final PrintStream ps = new PrintStream(new FileOutputStream(patchFile));
             final DiffFormatter diffFormatter = new DiffFormatter(ps);
             diffFormatter.setRepository(git.getRepository());
@@ -155,14 +213,68 @@ public class GeneratePatchFile {
 
             checkout(commitNew.getName());
             final File reportDir = generate();
-            Utils.copyDir(reportDir, new File(destDirName));
+            Utils.copyDir(reportDir, destDirFile);
 
-            final String patchFileName = String.format("%s-patch-%s-%s.txt", getSimpleRepoName(),
+            final String patchFileName = String.format(PATCH_FILE_FORMAT, getSimpleRepoName(),
                     commitOld.getName().substring(0, commitNameLength),
                     commitNew.getName().substring(0, commitNameLength));
-            if (patchFile.renameTo(new File(destDirName, patchFileName))) {
-                System.out.println("File is moved successful!");
+            if (!(patchFile.renameTo(new File(destDirFile.getAbsolutePath(), patchFileName)))) {
+                throw new IOException(MOVE_PATCH_FILE_ERROR_MESSAGE);
             }
+        }
+    }
+
+    private void generateDiffPatchWithGitCommand(int headNum) throws Exception {
+        final Process process = new ProcessBuilder()
+                .directory(new File(repoPath))
+                .command(GIT, "format-patch", "-1")
+                .inheritIO()
+                .start();
+        final int code = process.waitFor();
+        if (code != 0) {
+            throw new IllegalStateException("an error occurred when running git format-patch -1");
+        }
+        final File repoDir = new File(repoPath);
+        final File[] fileList = repoDir.listFiles((dir, name) -> name.endsWith(".patch"));
+        final String subDirName = getSimpleRepoName() + HEAD + headNum;
+        final File destDirFile = createDestDirName(subDirName);
+        final boolean succ = destDirFile.mkdirs();
+        if (succ) {
+            final File patchFile = new File(diffReportDirName, PATCH_TXT);
+            if (fileList != null && fileList[0] != null) {
+                if (!(fileList[0].renameTo(patchFile))) {
+                    throw new IOException(MOVE_PATCH_FILE_ERROR_MESSAGE);
+                }
+            }
+            final File reportDir = generate();
+            Utils.copyDir(reportDir, destDirFile);
+            final DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
+            final String patchFileName = String.format(PATCH_FILE_FORMAT, getSimpleRepoName(),
+                    HEAD + headNum, format.format(new Date()));
+            System.out.println(destDirFile.getAbsolutePath());
+            if (!(patchFile.renameTo(new File(destDirFile.getAbsolutePath(), patchFileName)))) {
+                throw new IOException(MOVE_PATCH_FILE_ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private File createDestDirName(String subDirName) throws Exception {
+        final File destDirFile = new File(diffReportDirName, subDirName);
+        if (destDirFile.exists()) {
+            throw new IOException("commit dir exists, please delete");
+        }
+        return destDirFile;
+    }
+
+    private void checkoutWithGitCommand() throws Exception {
+        final Process process = new ProcessBuilder()
+                .directory(new File(repoPath))
+                .command(GIT, "checkout", "HEAD~1")
+                .inheritIO()
+                .start();
+        final int code = process.waitFor();
+        if (code != 0) {
+            throw new IllegalStateException("an error occurred when running git checkout HEAD~1");
         }
     }
 
@@ -245,18 +357,5 @@ public class GeneratePatchFile {
         catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-
-    /**
-     * To generate patch file through jgit.
-     * @param runPatchNum num of patch file between two commits
-     * @throws Exception exception
-     */
-    public void generatePatch(int runPatchNum) throws Exception {
-        final List<RevCommit> commitList = getAllCommits();
-        for (int i = 0; i < runPatchNum - 1; i++) {
-            generateTwoCommitDiffPatch(commitList.get(i + 1), commitList.get(i));
-        }
-        generateSummaryIndexHtml();
     }
 }
