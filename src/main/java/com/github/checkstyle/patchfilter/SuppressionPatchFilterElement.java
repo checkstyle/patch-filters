@@ -74,8 +74,15 @@ public class SuppressionPatchFilterElement implements Filter {
         boolean result = false;
         if (event.getLocalizedMessage() != null) {
             for (List<Integer> aLineRangeList : lineRangeList) {
-                result = aLineRangeList.get(0) < event.getLine()
-                        && event.getLine() < aLineRangeList.get(1);
+                final int startLine = aLineRangeList.get(0);
+                final int endLine = aLineRangeList.get(1);
+                if (startLine == endLine) {
+                    result = startLine == event.getLine();
+                }
+                else {
+                    final int currentLine = event.getLine();
+                    result = currentLine > startLine && currentLine <= endLine;
+                }
                 if (result) {
                     break;
                 }
