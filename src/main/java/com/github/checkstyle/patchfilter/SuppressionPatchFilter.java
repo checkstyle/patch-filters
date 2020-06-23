@@ -140,11 +140,7 @@ public class SuppressionPatchFilter implements Filter {
         for (String str : singlePatch) {
             if (str.startsWith("+++ ")) {
                 fileName = str.split("\\s")[1];
-                final String fileSplit = "/";
-                if (fileName.contains(fileSplit)) {
-                    final String[] fileNameArray = fileName.split(fileSplit);
-                    fileName = fileNameArray[fileNameArray.length - 1];
-                }
+                fileName = fileName.replaceAll("^b/", "");
                 break;
             }
         }
