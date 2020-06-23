@@ -80,8 +80,19 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
                 "Audit event should be rejected when there are no matching patch filters");
     }
 
+    @Test
+    public void testBoundaryOne() throws Exception {
+        final String fileName = getPath("BoundaryTestPatchOne.txt");
+        final SuppressionPatchFilter filter = createSuppressionPatchFilter(fileName);
+        final LocalizedMessage message = new LocalizedMessage(3, 1, null, "msg", null,
+                SeverityLevel.ERROR, null, getClass(), null);
+        final AuditEvent ev = new AuditEvent(this, "Update1.java", message);
+        assertTrue(filter.accept(ev),
+                "Audit event should be rejected when there are no matching patch filters");
+    }
+
     private static SuppressionPatchFilter
-        createSuppressionPatchFilter(String fileName) throws Exception {
+    createSuppressionPatchFilter(String fileName) throws Exception {
         final SuppressionPatchFilter suppressionPatchFilter = new SuppressionPatchFilter();
         suppressionPatchFilter.setFile(fileName);
         suppressionPatchFilter.finishLocalSetup();
