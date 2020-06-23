@@ -61,7 +61,8 @@ public class SuppressionPatchFilterElement implements Filter {
      */
     private boolean isFileNameMatching(AuditEvent event) {
         return event.getFileName() != null
-                && (event.getFileName()).equals(fileName);
+                && ((event.getFileName()).equals(fileName)
+                || event.getFileName().contains(fileName));
     }
 
     /**

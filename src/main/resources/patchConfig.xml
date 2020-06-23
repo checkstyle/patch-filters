@@ -105,9 +105,7 @@
         <property name="fileExtensions" value="java"/>
     </module>
     <module name="LineLength">
-        <property name="fileExtensions" value="java"/>
-        <property name="max" value="100"/>
-        <property name="ignorePattern" value="^ *\* *([^ ]+|\{@code .*|&lt;a href=&quot;[^&quot;]+&quot;&gt;)$"/>
+        <property name="max" value="80"/>
     </module>
 
     <!-- Whitespace -->
