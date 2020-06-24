@@ -325,12 +325,11 @@ public class GeneratePatchFile {
             out.write("<strong>WARNING: Excludes are ignored by diff.groovy.</strong>\n");
             out.write("</span></h3>\n");
 
-            out.write("<h4>\n");
+            out.write("<h2>\n");
             out.write("Base branch: master");
             out.write(brLine);
             out.write("Patch branch: " + checkstyleBranch);
-            out.write(brLine);
-            out.write("</h4>\n");
+            out.write(brLine + brLine);
             final File diffReportDir = new File(diffReportDirName);
             final String[] commitDirNameList =
                     diffReportDir.list((dir, name) -> !name.endsWith(".html"));
@@ -351,7 +350,7 @@ public class GeneratePatchFile {
                     out.write(brLine);
                 }
             }
-            out.write("\n</body></html>");
+            out.write("</h2>\n</body></html>");
 
         }
         catch (IOException ex) {
