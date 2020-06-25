@@ -45,6 +45,6 @@ public final class GeneratePatchFileWithGitCommandLauncher {
         final GeneratePatchFile generatePatchFile =
                 new GeneratePatchFile(repoPath, testerPath, checkstyleRepoPath,
                         checkstyleBranch, baseConfigFile, patchConfigFile);
-        generatePatchFile.generatePatchWithGitCommand(Integer.parseInt(args[6]));
+        generatePatchFile.generatePatchWithGitCommand(Integer.parseInt(args[6]), args[7]);
     }
 }
