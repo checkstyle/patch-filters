@@ -78,7 +78,7 @@ public class SuppressionPatchFilterElement implements Filter {
                 final int startLine = aLineRangeList.get(0);
                 final int endLine = aLineRangeList.get(1);
                 final int currentLine = event.getLine();
-                result = currentLine > startLine && currentLine <= endLine;
+                result = currentLine >= startLine && currentLine <= endLine;
                 if (result) {
                     break;
                 }
