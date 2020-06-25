@@ -168,11 +168,12 @@ public class GeneratePatchFile {
      * To generate patch file through git command.
      *
      * @param runPatchNum num of patch file between two commits
+     * @param patchFormat choose git command to create patch format
      * @throws Exception exception
      */
-    public void generatePatchWithGitCommand(int runPatchNum) throws Exception {
+    public void generatePatchWithGitCommand(int runPatchNum, String patchFormat) throws Exception {
         for (int i = 1; i < runPatchNum; i++) {
-            generateDiffPatchWithGitCommand(i);
+            generateDiffPatchWithGitCommand(i, patchFormat);
             checkoutWithGitCommand();
         }
         generateSummaryIndexHtml();
@@ -224,15 +225,33 @@ public class GeneratePatchFile {
         }
     }
 
-    private void generateDiffPatchWithGitCommand(int headNum) throws Exception {
-        final Process process = new ProcessBuilder()
-                .directory(new File(repoPath))
-                .command(GIT, "format-patch", "-1")
-                .inheritIO()
-                .start();
-        final int code = process.waitFor();
-        if (code != 0) {
-            throw new IllegalStateException("an error occurred when running git format-patch -1");
+    private void generateDiffPatchWithGitCommand(int headNum, String patchFormat) throws Exception {
+        if ("show".equals(patchFormat)) {
+            final List<String> showCmds = new ArrayList<>();
+            showCmds.add("sh");
+            showCmds.add("-c");
+            showCmds.add("git show > show.patch");
+            final Process process = new ProcessBuilder()
+                    .directory(new File(repoPath))
+                    .command(showCmds)
+                    .start();
+            final int code = process.waitFor();
+            if (code != 0) {
+                throw new IllegalStateException(
+                        "an error occurred when running git show > show.patch");
+            }
+        }
+        else {
+            final Process process = new ProcessBuilder()
+                    .directory(new File(repoPath))
+                    .command(GIT, "format-patch", "-1")
+                    .inheritIO()
+                    .start();
+            final int code = process.waitFor();
+            if (code != 0) {
+                throw new IllegalStateException(
+                        "an error occurred when running git format-patch -1");
+            }
         }
         final File repoDir = new File(repoPath);
         final File[] fileList = repoDir.listFiles((dir, name) -> name.endsWith(".patch"));
