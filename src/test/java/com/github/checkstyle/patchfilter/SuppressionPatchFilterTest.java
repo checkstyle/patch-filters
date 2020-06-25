@@ -65,17 +65,17 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         final SuppressionPatchFilter filter = createSuppressionPatchFilter(fileName);
         final LocalizedMessage message1 = new LocalizedMessage(7, 1, null, "msg", null,
                 SeverityLevel.ERROR, null, getClass(), null);
-        final AuditEvent ev1 = new AuditEvent(this, "Test2.java", message1);
+        final AuditEvent ev1 = new AuditEvent(this, "Update/Test2.java", message1);
         assertTrue(filter.accept(ev1),
                 "Audit event should be rejected when there are no matching patch filters");
         final LocalizedMessage message2 = new LocalizedMessage(77, 1, null, "msg", null,
                 SeverityLevel.ERROR, null, getClass(), null);
-        final AuditEvent ev2 = new AuditEvent(this, "Test1.java", message2);
+        final AuditEvent ev2 = new AuditEvent(this, "Update/Test1.java", message2);
         assertFalse(filter.accept(ev2),
                 "Audit event should be rejected when there are no matching patch filters");
         final LocalizedMessage message3 = new LocalizedMessage(7, 1, null, "msg", null,
                 SeverityLevel.ERROR, null, getClass(), null);
-        final AuditEvent ev3 = new AuditEvent(this, "Test1.java", message1);
+        final AuditEvent ev3 = new AuditEvent(this, "Update/Test1.java", message1);
         assertTrue(filter.accept(ev1),
                 "Audit event should be rejected when there are no matching patch filters");
     }
@@ -92,7 +92,7 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
     }
 
     private static SuppressionPatchFilter
-    createSuppressionPatchFilter(String fileName) throws Exception {
+        createSuppressionPatchFilter(String fileName) throws Exception {
         final SuppressionPatchFilter suppressionPatchFilter = new SuppressionPatchFilter();
         suppressionPatchFilter.setFile(fileName);
         suppressionPatchFilter.finishLocalSetup();
