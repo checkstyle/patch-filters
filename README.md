@@ -1,5 +1,5 @@
 # patch-filters
-special project to host GSOC project Patch Suppressions 
+Special project to host GSOC project Patch Suppressions 
 
 ## PatchFilter Report Setup
 
