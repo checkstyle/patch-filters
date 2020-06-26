@@ -1,0 +1,43 @@
+language: java
+sudo: false
+
+cache:
+  apt: true
+  directories:
+    - ~/.m2
+
+branches:
+  only:
+    - master
+
+addons:
+  apt:
+    packages:
+      - xmlstarlet
+
+install:
+  - ""
+
+matrix:
+  fast_finish: true
+  include:
+    # JDK 8
+    - jdk: openjdk8
+      env:
+        - DESC="install (openjdk8)"
+        - CMD="mvn install "
+
+script:
+  - |
+    MVN_SETTINGS=${TRAVIS_HOME}/.m2/settings.xml
+    if [[ -f ${MVN_SETTINGS} ]]; then
+      if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
+        sed -i'' -e "/<mirrors>/,/<\/mirrors>/ d" $MVN_SETTINGS
+      else
+        xmlstarlet ed --inplace -d "//mirrors" $MVN_SETTINGS
+      fi
+    fi
+    echo "eval of CMD is starting";
+    echo "CMD=$CMD";
+    eval $CMD;
+    echo "eval of CMD is completed";
