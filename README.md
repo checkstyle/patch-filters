@@ -73,10 +73,17 @@ patch-filter
 path/to/baseConfig.xml
 # path to the patch checkstyle config file. It will be applied to patch-filter branch
 path/to/patchConfig.xml
-# num of commits will be used to create patch-filter report
-# example is 4, then 3 reports will be created.
+# commit parameter will be used to create patch-filter report
+# if commit parameter is number then the Generator will work in sequence mode,
+# for example if commit parameter is 4, then 3 reports that represent 
+# the first three commits in HEAD branch will be created.
+4 # sequence mode
 # Attention: num should be greater than 1, because if num is 1, no report will be created.
-4
+
+# if commit parameter is a comma separated list of commit hashes then the Generator will work in set mode,
+# for example if commit parameter is 86bf3a482c68a3a466b278ae4c7bba4bd7be1d9c,aafac1c6d794750aeba9213e9b15a0b8f0e54f81
+# then 2 report that represent the two commit will be created if they belong to the HEAD branch.
+86bf3a482c68a3a466b278ae4c7bba4bd7be1d9c,aafac1c6d794750aeba9213e9b15a0b8f0e54f81 # set mode
 ```
 after above, if everything is ok, reports will be created in `/path/to/patch-filters/DiffReport/`.
 for example, when `repopath` is guava and `runPatchNum` is 4, then result will look like:
