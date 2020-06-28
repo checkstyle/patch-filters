@@ -73,8 +73,9 @@ patch-filter
 path/to/baseConfig.xml
 # path to the patch checkstyle config file. It will be applied to patch-filter branch
 path/to/patchConfig.xml
-# num of patch-filter report between two commits will be created
-# example is 4, then three reports will be created.
+# num of commits will be used to create patch-filter report
+# example is 4, then 3 reports will be created.
+# Attention: num should be greater than 1, because if num is 1, no report will be created.
 4
 ```
 after above, if everything is ok, reports will be created in `/path/to/patch-filters/DiffReport/`.
