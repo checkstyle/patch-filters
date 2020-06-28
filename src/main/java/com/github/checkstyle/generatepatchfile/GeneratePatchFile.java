@@ -155,8 +155,12 @@ public class GeneratePatchFile {
      *
      * @param runPatchNum num of patch file between two commits
      * @throws Exception exception
+     * @throws IllegalArgumentException runPatchNum should be greater than 1.
      */
     public void generatePatch(int runPatchNum) throws Exception {
+        if (runPatchNum <= 1) {
+            throw new IllegalArgumentException("runPatchNum should be greater than 1");
+        }
         final List<RevCommit> commitList = getAllCommits();
         for (int i = 0; i < runPatchNum - 1; i++) {
             generateTwoCommitDiffPatch(commitList.get(i + 1), commitList.get(i));
