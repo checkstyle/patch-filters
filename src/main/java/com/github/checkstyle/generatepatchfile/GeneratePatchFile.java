@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.diff.DiffEntry;
@@ -159,6 +160,25 @@ public class GeneratePatchFile {
         final List<RevCommit> commitList = getAllCommits();
         for (int i = 0; i < runPatchNum - 1; i++) {
             generateTwoCommitDiffPatch(commitList.get(i + 1), commitList.get(i));
+        }
+        generateSummaryIndexHtml();
+    }
+
+    /**
+     * To generate patch file through jgit.
+     *
+     * @param commits a set of commitIDs
+     * @throws Exception exception
+     */
+    public void generatePatch(Set<String> commits) throws Exception {
+        final List<RevCommit> revisions = getAllCommits();
+        for (int i = 0; i < revisions.size() - 1; ++i) {
+            final RevCommit rev = revisions.get(i);
+            final String name = rev.getId().getName();
+            if (commits.contains(name)) {
+                final RevCommit prevRev = revisions.get(i + 1);
+                generateTwoCommitDiffPatch(prevRev, rev);
+            }
         }
         generateSummaryIndexHtml();
     }

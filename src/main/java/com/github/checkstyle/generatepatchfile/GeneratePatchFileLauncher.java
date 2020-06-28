@@ -20,6 +20,9 @@
 package com.github.checkstyle.generatepatchfile;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * GeneratePatchFileWithGitCommandLauncher.
@@ -45,6 +48,14 @@ public final class GeneratePatchFileLauncher {
         final GeneratePatchFile generatePatchFile =
                 new GeneratePatchFile(repoPath, testerPath, checkstyleRepoPath,
                         checkstyleBranch, baseConfigFile, patchConfigFile);
-        generatePatchFile.generatePatch(Integer.parseInt(args[6]));
+        final String commitParam = args[6];
+        if (commitParam.matches("(0|[1-9]\\d*)")) {
+            generatePatchFile.generatePatch(Integer.parseInt(args[6]));
+        }
+        else {
+            final String[] commitIds = commitParam.split(",");
+            final Set<String> commitSet = new HashSet<>(Arrays.asList(commitIds));
+            generatePatchFile.generatePatch(commitSet);
+        }
     }
 }
