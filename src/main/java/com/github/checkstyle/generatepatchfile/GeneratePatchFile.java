@@ -60,11 +60,6 @@ public class GeneratePatchFile {
     private static final String GIT = "git";
 
     /**
-     * DEST_DIR_NAME_FORMAT.
-     */
-    private static final String DEST_DIR_NAME_FORMAT = "%s/%s";
-
-    /**
      * MOVE_PATCH_FILE_ERROR_MESSAGE.
      */
     private static final String MOVE_PATCH_FILE_ERROR_MESSAGE = "Moving Patch File failed!";
@@ -231,31 +226,16 @@ public class GeneratePatchFile {
 
     private void generateDiffPatchWithGitCommand(int headNum, String patchFormat) throws Exception {
         if ("show".equals(patchFormat)) {
-            final List<String> showCmds = new ArrayList<>();
-            showCmds.add("sh");
-            showCmds.add("-c");
-            showCmds.add("git show > show.patch");
-            final Process process = new ProcessBuilder()
-                    .directory(new File(repoPath))
-                    .command(showCmds)
-                    .start();
-            final int code = process.waitFor();
-            if (code != 0) {
-                throw new IllegalStateException(
-                        "an error occurred when running git show > show.patch");
-            }
+            runShellCommand("git show > show.patch");
+        }
+        else if ("diff".equals(patchFormat)) {
+            runShellCommand("git diff HEAD~1 HEAD > show.patch");
+        }
+        else if ("format".equals(patchFormat)) {
+            runShellCommand("git format-patch -1");
         }
         else {
-            final Process process = new ProcessBuilder()
-                    .directory(new File(repoPath))
-                    .command(GIT, "format-patch", "-1")
-                    .inheritIO()
-                    .start();
-            final int code = process.waitFor();
-            if (code != 0) {
-                throw new IllegalStateException(
-                        "an error occurred when running git format-patch -1");
-            }
+            throw new IllegalArgumentException("patchFormat should be 'show', 'diff' or 'format'");
         }
         final File repoDir = new File(repoPath);
         final File[] fileList = repoDir.listFiles((dir, name) -> name.endsWith(".patch"));
@@ -278,6 +258,22 @@ public class GeneratePatchFile {
             if (!(patchFile.renameTo(new File(destDirFile.getAbsolutePath(), patchFileName)))) {
                 throw new IOException(MOVE_PATCH_FILE_ERROR_MESSAGE);
             }
+        }
+    }
+
+    private void runShellCommand(String command) throws Exception {
+        final List<String> cmds = new ArrayList<>();
+        cmds.add("sh");
+        cmds.add("-c");
+        cmds.add(command);
+        final Process process = new ProcessBuilder()
+                .directory(new File(repoPath))
+                .command(cmds)
+                .inheritIO()
+                .start();
+        final int code = process.waitFor();
+        if (code != 0) {
+            throw new IllegalStateException("an error occurred when running " + command);
         }
     }
 
