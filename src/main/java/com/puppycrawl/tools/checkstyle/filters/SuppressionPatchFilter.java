@@ -23,12 +23,17 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import com.github.difflib.UnifiedDiffUtils;
 import com.github.difflib.patch.Chunk;
 import com.github.difflib.patch.Patch;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
+import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+import com.puppycrawl.tools.checkstyle.api.ExternalResourceHolder;
 import com.puppycrawl.tools.checkstyle.api.Filter;
 
 /**
@@ -39,7 +44,8 @@ import com.puppycrawl.tools.checkstyle.api.Filter;
  *
  * @since 8.34
  */
-public class SuppressionPatchFilter implements Filter {
+public class SuppressionPatchFilter extends AutomaticBean
+        implements Filter, ExternalResourceHolder {
 
     /**
      * Specify the location of the patch file.
@@ -88,30 +94,34 @@ public class SuppressionPatchFilter implements Filter {
     /**
      * To finish the part of this component's setup.
      *
-     * @throws Exception if there is a configuration error.
+     * @throws CheckstyleException if there is a configuration error.
      */
-    protected void finishLocalSetup() throws Exception {
+    protected void finishLocalSetup() throws CheckstyleException {
         if (file != null) {
             loadPatchFile(file);
         }
     }
 
-    private PatchFilterSet loadPatchFile(String patchFileName) throws IOException {
-        final List<String> originPatch = Files.readAllLines(new File(patchFileName).toPath());
-        final List<List<String>> patchList = getPatchList(originPatch);
-        for (List<String> singlePatch : patchList) {
-            final String fileName = getFileName(singlePatch);
-            final Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(singlePatch);
-            final List<List<Integer>> lineRangeList = getLineRange(patch);
-            final SuppressionPatchFilterElement element =
-                    new SuppressionPatchFilterElement(fileName, lineRangeList);
-            filters.addFilter(element);
+    private void loadPatchFile(String patchFileName) throws CheckstyleException {
+        try {
+            final List<String> originPatch = Files.readAllLines(new File(patchFileName).toPath());
+            final List<List<String>> patchList = getPatchList(originPatch);
+            for (List<String> singlePatch : patchList) {
+                final String fileName = getFileName(singlePatch);
+                final Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(singlePatch);
+                final List<List<Integer>> lineRangeList = getLineRange(patch);
+                final SuppressionPatchFilterElement element =
+                        new SuppressionPatchFilterElement(fileName, lineRangeList);
+                filters.addFilter(element);
+            }
         }
-        return filters;
+        catch (IOException ex) {
+            throw new CheckstyleException("an error occurred when load patch file", ex);
+        }
     }
 
     /**
-     * To seperate different files's diff contents when there are multiple files in patch file.
+     * To separate different files's diff contents when there are multiple files in patch file.
      * @param originPatch List of String
      * @return patchedList List of List of String
      */
@@ -158,4 +168,10 @@ public class SuppressionPatchFilter implements Filter {
         }
         return lineRangeList;
     }
+
+    @Override
+    public Set<String> getExternalResourceLocations() {
+        return Collections.singleton(file);
+    }
+
 }
