@@ -17,7 +17,7 @@
         <property name="fileNamePattern" value="module\-info\.java$" />
     </module>
 
-    <module name="com.github.checkstyle.patchfilter.SuppressionPatchFilter">
+    <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
         <property name="file" value="/Users/hgh/Documents/GitHub/patch-filters/DiffReport/patch.txt"/>
     </module>
 
