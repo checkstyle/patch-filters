@@ -18,7 +18,7 @@
     </module>
 
     <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
-        <property name="file" value="/Users/hgh/Documents/GitHub/patch-filters/DiffReport/patch.txt"/>
+        <property name="file" value="${checkstyle.patchfilter.patch}"/>
     </module>
 
     <!--<module name="Header">-->
