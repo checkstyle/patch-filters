@@ -121,7 +121,7 @@ public class UnifiedDiffReaderTest extends AbstractModuleTestSupport {
         assertEquals("pom.xml", file1.getToFile());
         assertEquals(1, file1.getPatch().getDeltas().size());
 
-        assertEquals("2.7.4\n\n", diff.getTail());
+        assertEquals("2.7.4\n", diff.getTail());
     }
 
     @Test
@@ -190,17 +190,13 @@ public class UnifiedDiffReaderTest extends AbstractModuleTestSupport {
                 file1.getToFile());
         assertEquals(1, file1.getPatch().getDeltas().size());
 
-        assertEquals("2.25.1.windows.1\n\n", diff.getTail());
+        assertEquals("2.25.1.windows.1\n", diff.getTail());
     }
 
     @Test
-    @Ignore("filename parsed error, Expected :<tests/test-check-pyflakes.t>, "
-            + "Actual :<tests/test-check-pyflakes.t\tTue Jun 09 17:13:26 2020 -0400>\n"
-            + "until https://github.com/java-diff-utils/java-diff-utils/issues/85")
     public void testHgDiffPatch() throws Exception {
         final UnifiedDiff diff = getUnifiedDiff("PatchFileFromDiffTools/HGDiffPatch.txt");
         assertEquals(1, diff.getFiles().size());
-
         final UnifiedDiffFile file1 = diff.getFiles().get(0);
         assertEquals("diff -r 83e41b73d115 -r a4438263b228 tests/test-check-pyflakes.t",
                 file1.getDiffCommand());

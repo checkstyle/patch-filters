@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -61,6 +62,11 @@ public class SuppressionPatchFilter extends AutomaticBean
     private boolean optional;
 
     /**
+     * Control if only consider added lines in file.
+     */
+    private String strategy = "all";
+
+    /**
      * Set of individual suppresses.
      */
     private PatchFilterSet filters = new PatchFilterSet();
@@ -84,6 +90,15 @@ public class SuppressionPatchFilter extends AutomaticBean
      */
     public void setOptional(boolean optional) {
         this.optional = optional;
+    }
+
+    /**
+     * Setter to control if only consider added lines in file.
+     *
+     * @param strategy tells if only consider added lines is add, should be added or changed.
+     */
+    public void setStrategy(String strategy) {
+        this.strategy = strategy;
     }
 
     @Override
@@ -159,14 +174,190 @@ public class SuppressionPatchFilter extends AutomaticBean
 
     private List<List<Integer>> getLineRange(Patch<String> patch) {
         final List<List<Integer>> lineRangeList = new ArrayList<>();
+        int totalAddNum = 0;
+        int totalRemoveNum = 0;
         for (int i = 0; i < patch.getDeltas().size(); i++) {
-            final Chunk targetChunk = patch.getDeltas().get(i).getTarget();
-            final List<Integer> lineRange = new ArrayList<>();
-            lineRange.add(targetChunk.getPosition());
-            lineRange.add(targetChunk.getPosition() + targetChunk.getLines().size());
-            lineRangeList.add(lineRange);
+            final List<Integer> removePositionList = getRemovePositionList(patch, i);
+            final List<Integer> addPositionList = getAddPositionList(patch, i);
+            final int removePositionListSize = removePositionList.size();
+            final int addPositionListSize = addPositionList.size();
+            if ("added".equals(strategy) && addPositionListSize != 0) {
+                final List<Integer> newPositionList = new ArrayList<>();
+                int addIndex = 0;
+                int removeIndex = 0;
+                // changeFlag decides which position list to process
+                // true is addPositionList
+                // false is removePositionList
+                boolean changeFlag;
+                if (removePositionListSize == 0) {
+                    changeFlag = true;
+                }
+                else {
+                    changeFlag =
+                            addPositionList.get(addIndex) < removePositionList.get(removeIndex);
+                }
+                while (addIndex < addPositionListSize) {
+                    if (changeFlag || removeIndex >= removePositionListSize) {
+                        // change flag to process remove position list
+                        changeFlag = !changeFlag;
+                        final int position = addPositionList.get(addIndex);
+                        final int matchingRemovePositon = position - totalAddNum + totalRemoveNum;
+                        // Judge if there are matching line in the remove position list
+                        // if not, then it is added line
+                        if (!removePositionList.contains(matchingRemovePositon)) {
+                            newPositionList.add(position);
+                            totalAddNum++;
+                            final List<Integer> increaseAddList =
+                                    dealContinuousPosition(addIndex, addPositionList,
+                                            true, newPositionList);
+                            totalAddNum += increaseAddList.get(0);
+                            addIndex += increaseAddList.get(1);
+                        }
+                        else {
+                            final int matchingRemovePositionIndex =
+                                    removePositionList.indexOf(matchingRemovePositon);
+                            final boolean flag =
+                                    matchingRemovePositionIndex
+                                            >= removeIndex;
+                            if (flag) {
+                                removeIndex++;
+                            }
+                            final List<Integer> increaseRemoveList =
+                                    dealContinuousPosition(matchingRemovePositionIndex,
+                                            removePositionList, flag);
+                            totalRemoveNum += increaseRemoveList.get(0);
+                            removeIndex += increaseRemoveList.get(1);
+                            final List<Integer> increaseAddList =
+                                    dealContinuousPosition(addIndex, addPositionList, true);
+                            totalAddNum += increaseAddList.get(0);
+                            addIndex += increaseAddList.get(1);
+                        }
+                        addIndex++;
+                    }
+                    else {
+                        final int position = removePositionList.get(removeIndex);
+                        final int matchingAddPositon = position + totalAddNum - totalRemoveNum;
+                        // Judge if there are matching line in the add position list
+                        // if not, then it is just removed line
+                        if (!addPositionList.contains(matchingAddPositon)) {
+                            totalRemoveNum++;
+                            final int increaseRemoveNum = dealContinuousPosition(addIndex,
+                                    removePositionList).get(0);
+                            totalRemoveNum += increaseRemoveNum;
+                        }
+                        else {
+                            final int increaseRemoveIndex = dealContinuousPosition(removeIndex,
+                                    removePositionList).get(0);
+                            removeIndex += increaseRemoveIndex;
+                        }
+                        removeIndex++;
+                        // Judge if change flag to deal with add position list
+                        // this judgment is for a certain situation that two or more
+                        // removed fragment are continuous, this situation can be found
+                        // in testAddOptionThree
+                        if (removeIndex >= removePositionListSize) {
+                            changeFlag = !changeFlag;
+                        }
+                        else if (removePositionList.get(removeIndex)
+                                >= addPositionList.get(addIndex)) {
+                            changeFlag = !changeFlag;
+                        }
+                        else if (removePositionList.get(removeIndex)
+                                < addPositionList.get(addIndex)) {
+                            // test if previous removeIndex is a removed fragment
+                            final int testposition = removePositionList.get(removeIndex);
+                            final int testmatchingAddPositon = testposition
+                                    + totalAddNum - totalRemoveNum
+                                    + dealAddPosition(addPositionList, removePositionList,
+                                    addIndex, removeIndex, totalAddNum, totalRemoveNum);
+                            if (addPositionList.contains(testmatchingAddPositon)) {
+                                changeFlag = !changeFlag;
+                            }
+                        }
+                    }
+                }
+                lineRangeList.add(newPositionList);
+            }
+            else {
+                lineRangeList.add(addPositionList);
+            }
         }
         return lineRangeList;
+    }
+
+    private List<Integer> getRemovePositionList(Patch<String> patch, int index) {
+        final Chunk originChunk = patch.getDeltas().get(index).getSource();
+        return originChunk.getChangePosition();
+    }
+
+    private List<Integer> getAddPositionList(Patch<String> patch, int index) {
+        final Chunk targetChunk = patch.getDeltas().get(index).getTarget();
+        return targetChunk.getChangePosition();
+    }
+
+    private List<Integer> dealContinuousPosition(int startIndex,
+                                                 List<Integer> positionList) {
+        return dealContinuousPosition(startIndex, positionList, false);
+    }
+
+    private List<Integer> dealContinuousPosition(int startIndex,
+                                                 List<Integer> positionList,
+                                                 boolean updateIndex) {
+        return dealContinuousPosition(startIndex, positionList, updateIndex, null);
+    }
+
+    private List<Integer> dealContinuousPosition(int startIndex,
+                                                 List<Integer> positionList,
+                                                 boolean updateIndex,
+                                                 List<Integer> newPositionList) {
+        int tempNum = 0;
+        int tempIndex = 0;
+        for (int k = startIndex + 1; k < positionList.size(); k++) {
+            final int tempPosition = positionList.get(k - 1);
+            final int nextAddPosition = positionList.get(k);
+            if (nextAddPosition - tempPosition == 1) {
+                tempNum++;
+                if (updateIndex) {
+                    tempIndex++;
+                }
+                if (newPositionList != null) {
+                    newPositionList.add(nextAddPosition);
+                }
+            }
+            else {
+                break;
+            }
+        }
+        return Arrays.asList(tempNum, tempIndex);
+    }
+
+    private int dealAddPosition(List<Integer> addPositionList, List<Integer> removePositionList,
+                                int addIndex, int removeIndex,
+                                int totalAddNum, int totalRemoveNum) {
+        final int position = addPositionList.get(addIndex);
+        int tempAddNum = 0;
+        int tempRemoveNum = 0;
+        final int matchingRemovePositon = position - totalAddNum + totalRemoveNum;
+        if (!removePositionList.contains(matchingRemovePositon)) {
+            tempAddNum++;
+            final int increaseAddNum = dealContinuousPosition(addIndex, addPositionList).get(0);
+            tempAddNum += increaseAddNum;
+        }
+        else {
+            final int increaseRemoveNum = dealContinuousPosition(
+                    removePositionList.indexOf(matchingRemovePositon),
+                    removePositionList).get(0);
+            tempRemoveNum += increaseRemoveNum;
+        }
+        final int increaseAddNum = dealContinuousPosition(addIndex, addPositionList).get(0);
+        tempAddNum += increaseAddNum;
+
+        int diffNum = tempAddNum - tempRemoveNum;
+
+        if (matchingRemovePositon >= removePositionList.get(removeIndex)) {
+            diffNum = 0;
+        }
+        return diffNum;
     }
 
     @Override

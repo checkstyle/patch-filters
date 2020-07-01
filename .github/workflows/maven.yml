@@ -13,5 +13,10 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Install java-diff-utils 4.8-SNAPSHOT
+      run: |
+        git clone https://github.com/java-diff-utils/java-diff-utils.git
+        cd java-diff-utils/
+        mvn clean install
     - name: Build with Maven
-      run: mvn install
+      run: mvn clean install

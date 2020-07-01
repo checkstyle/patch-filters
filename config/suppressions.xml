@@ -14,4 +14,7 @@
             files="GeneratePatchFileLauncher|GeneratePatchFileWithGitCommandLauncher\.java"/>
     <suppress checks="UncommentedMain"
             files="GeneratePatchFileLauncher|GeneratePatchFileWithGitCommandLauncher\.java"/>
+    <suppress checks="CyclomaticComplexity" files="SuppressionPatchFilter\.java"/>
+    <suppress checks="ExecutableStatementCount" files="SuppressionPatchFilter\.java"/>
+    <suppress checks="JavaNCSS" files="SuppressionPatchFilter\.java"/>
 </suppressions>
