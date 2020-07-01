@@ -161,10 +161,7 @@ public class SuppressionPatchFilter extends AutomaticBean
         final List<List<Integer>> lineRangeList = new ArrayList<>();
         for (int i = 0; i < patch.getDeltas().size(); i++) {
             final Chunk targetChunk = patch.getDeltas().get(i).getTarget();
-            final List<Integer> lineRange = new ArrayList<>();
-            lineRange.add(targetChunk.getPosition());
-            lineRange.add(targetChunk.getPosition() + targetChunk.getLines().size());
-            lineRangeList.add(lineRange);
+            lineRangeList.add(targetChunk.getChangePosition());
         }
         return lineRangeList;
     }

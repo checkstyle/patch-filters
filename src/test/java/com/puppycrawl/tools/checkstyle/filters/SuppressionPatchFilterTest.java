@@ -22,6 +22,9 @@ package com.puppycrawl.tools.checkstyle.filters;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Test;
 
 import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
@@ -44,7 +47,7 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
                 SeverityLevel.ERROR, null, getClass(), null);
         final AuditEvent ev = new AuditEvent(this, "MethodCountUpdate.java", message);
 
-        assertTrue(filter.accept(ev),
+        assertFalse(filter.accept(ev),
                 "Audit event should be rejected when there are no matching patch filters");
     }
 
@@ -52,7 +55,7 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
     public void testMultiChangesOnOneFileOne() throws Exception {
         final String fileName = getPath("MultiChangesOnOneFilePatch.txt");
         final SuppressionPatchFilter filter = createSuppressionPatchFilter(fileName);
-        final LocalizedMessage message = new LocalizedMessage(4, 1, null, "msg", null,
+        final LocalizedMessage message = new LocalizedMessage(3, 1, null, "msg", null,
                 SeverityLevel.ERROR, null, getClass(), null);
         final AuditEvent ev = new AuditEvent(this, "Update.java", message);
         assertTrue(filter.accept(ev),
@@ -84,10 +87,63 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
     public void testBoundaryOne() throws Exception {
         final String fileName = getPath("BoundaryTestPatchOne.txt");
         final SuppressionPatchFilter filter = createSuppressionPatchFilter(fileName);
-        final LocalizedMessage message = new LocalizedMessage(3, 1, null, "msg", null,
+        final LocalizedMessage message = new LocalizedMessage(5, 1, null, "msg", null,
                 SeverityLevel.ERROR, null, getClass(), null);
         final AuditEvent ev = new AuditEvent(this, "Update1.java", message);
+        assertFalse(filter.accept(ev),
+                "Audit event should be rejected when there are no matching patch filters");
+    }
+
+    @Test
+    public void testExactLineOne() throws Exception {
+        final String patchFileName = getPath("eclipse-cs-patch-1c057d1-9d473b4.txt");
+        final SuppressionPatchFilter filter =
+                createSuppressionPatchFilter(patchFileName);
+        final List<Integer> acceptLineList = Arrays.asList(3, 4, 9, 10, 11, 12, 14, 15, 16,
+                17, 19, 20, 21, 22, 24, 25, 26, 27, 29, 30, 31, 32, 34, 35, 36, 37, 39,
+                40, 41, 42, 44, 45, 46, 47, 49, 50, 51, 52);
+        final List<Integer> noiseLineList = Arrays.asList(1, 2, 5, 6, 7, 8, 13, 18, 23,
+                28, 33, 38, 43, 48, 53, 54, 55);
+        final String fileName = "net.sf.eclipsecs.ui/test/net/sf"
+                + "/eclipsecs/ui/quickfixes/coding/RequireThisTest.java";
+        testExactLine(filter, fileName, acceptLineList, noiseLineList);
+    }
+
+    @Test
+    public void testExactLineTwo() throws Exception {
+        final String patchFileName = getPath("eclipse-cs-patch-1c057d1-9d473b4.txt");
+        final SuppressionPatchFilter filter =
+                createSuppressionPatchFilter(patchFileName);
+        final List<Integer> acceptLineList = Arrays.asList(5, 6, 7, 29, 34, 35, 77);
+        final List<Integer> noiseLineList = Arrays.asList(4, 8, 19, 20, 21, 22, 26, 27, 28);
+        final String fileName = "net.sf.eclipsecs.ui/test/net/sf"
+                + "/eclipsecs/ui/quickfixes/AbstractQuickfixTestCase.java";
+        testExactLine(filter, fileName, acceptLineList, noiseLineList);
+    }
+
+    private void testExactLine(SuppressionPatchFilter filter, String fileName,
+                               List<Integer> acceptLineList, List<Integer> noiseLineList) {
+        for (int lineNo : acceptLineList) {
+            shouldAcceptLine(filter, lineNo, fileName);
+        }
+        for (int lineNo : noiseLineList) {
+            shouldRejectLine(filter, lineNo, fileName);
+        }
+    }
+
+    private void shouldAcceptLine(SuppressionPatchFilter filter, int lineNo, String fileName) {
+        final LocalizedMessage message = new LocalizedMessage(lineNo, 1, null, "msg", null,
+                SeverityLevel.ERROR, null, getClass(), null);
+        final AuditEvent ev = new AuditEvent(this, fileName, message);
         assertTrue(filter.accept(ev),
+                "Audit event should be rejected when there are no matching patch filters");
+    }
+
+    private void shouldRejectLine(SuppressionPatchFilter filter, int lineNo, String fileName) {
+        final LocalizedMessage message = new LocalizedMessage(lineNo, 1, null, "msg", null,
+                SeverityLevel.ERROR, null, getClass(), null);
+        final AuditEvent ev = new AuditEvent(this, fileName, message);
+        assertFalse(filter.accept(ev),
                 "Audit event should be rejected when there are no matching patch filters");
     }
 
