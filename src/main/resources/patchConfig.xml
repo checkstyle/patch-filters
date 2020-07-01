@@ -19,6 +19,7 @@
 
     <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
         <property name="file" value="${checkstyle.patchfilter.patch}"/>
+        <property name="strategy" value="added"/>
     </module>
 
     <!--<module name="Header">-->
@@ -109,6 +110,7 @@
     <module name="FileTabCharacter">
         <property name="eachLine" value="false"/>
     </module>
+
     <!-- Example of filter -->
     <!--
     <module name="SeverityMatchFilter">
