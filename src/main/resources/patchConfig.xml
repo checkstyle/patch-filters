@@ -18,7 +18,8 @@
     </module>
 
     <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
-        <property name="file" value="${checkstyle.patchfilter.patch}"/>
+        <property name="file" value="/Users/hgh/Documents/GitHub/patch-filters/DiffReport/patch.txt"/>
+        <property name="add" value="true"/>
     </module>
 
     <!--<module name="Header">-->
@@ -109,6 +110,11 @@
     <module name="FileTabCharacter">
         <property name="eachLine" value="false"/>
     </module>
+
+    <module name="RegexpSingleline">
+        <property name="format" value="jupiter"/>
+    </module>
+
     <!-- Example of filter -->
     <!--
     <module name="SeverityMatchFilter">
