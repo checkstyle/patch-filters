@@ -47,11 +47,10 @@ patchConfig need Checks and patch-filter, added checks can
 refer to [here](https://github.com/checkstyle/checkstyle/blob/ec4d06712ab203d31d73c5c6d5c46067f3a6d5b3/config/checkstyle_checks.xml#L60-L190), 
 you can skip Translation Check and checks that reuqires extra config file (Header and RegExpHeader), patchfilter setting is like:
 ```xml
-<module name="com.github.checkstyle.patchfilter.SuppressionPatchFilter">
-    <property name="file" value="path/to/patch-filters/DiffReport/patch.txt"/>
+<module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
+        <property name="file" value="${checkstyle.patchfilter.patch}"/>
 </module>
 ```
-value should be absolute path
 
 ### Open this repo in IDEA or other IDE
 
@@ -78,8 +77,12 @@ path/to/patchConfig.xml
 # Attention: num should be greater than 1, because if num is 1, no report will be created.
 4
 ```
+then, add Environment variables:
+```bash
+checkstyle.patchfilter.patch=/path/to/patch-filters/DiffReport/patch.txt
+```
 after above, if everything is ok, reports will be created in `/path/to/patch-filters/DiffReport/`.
-for example, when `repopath` is guava and `runPatchNum` is 4, then result will look like:
+for example, when `repoPath` is guava and `runPatchNum` is 4, then result will look like:
 
 - DiffReport
   - guava-a1b3c06
