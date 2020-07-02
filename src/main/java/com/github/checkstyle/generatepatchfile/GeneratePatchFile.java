@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,8 +32,6 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -219,17 +216,15 @@ public class GeneratePatchFile {
         final boolean succ = destDirFile.mkdirs();
         if (succ) {
             final File patchFile = new File(diffReportDirName, PATCH_TXT);
-            final PrintStream ps = new PrintStream(new FileOutputStream(patchFile));
-            final DiffFormatter diffFormatter = new DiffFormatter(ps);
-            diffFormatter.setRepository(git.getRepository());
             final ObjectReader reader = git.getRepository().newObjectReader();
             final CanonicalTreeParser oldTreeIter = new CanonicalTreeParser();
             oldTreeIter.reset(reader, commitOld.getTree());
             final CanonicalTreeParser newTreeIter = new CanonicalTreeParser();
             newTreeIter.reset(reader, commitNew.getTree());
-            final List<DiffEntry> entries = diffFormatter.scan(oldTreeIter, newTreeIter);
-            diffFormatter.format(entries);
-            diffFormatter.close();
+            final int contextLineNum = 0;
+            git.diff().setContextLines(contextLineNum)
+                    .setOutputStream(new FileOutputStream(patchFile))
+                    .setOldTree(oldTreeIter).setNewTree(newTreeIter).call();
 
             checkout(commitNew.getName());
             final File reportDir = generate();
@@ -246,13 +241,13 @@ public class GeneratePatchFile {
 
     private void generateDiffPatchWithGitCommand(int headNum, String patchFormat) throws Exception {
         if ("show".equals(patchFormat)) {
-            runShellCommand("git show > show.patch");
+            runShellCommand("git show -U0> show.patch");
         }
         else if ("diff".equals(patchFormat)) {
-            runShellCommand("git diff HEAD~1 HEAD > show.patch");
+            runShellCommand("git diff -U0 HEAD~1 HEAD > show.patch");
         }
         else if ("format".equals(patchFormat)) {
-            runShellCommand("git format-patch -1");
+            runShellCommand("git format-patch -1 -U0");
         }
         else {
             throw new IllegalArgumentException("patchFormat should be 'show', 'diff' or 'format'");
@@ -269,8 +264,10 @@ public class GeneratePatchFile {
                     throw new IOException(MOVE_PATCH_FILE_ERROR_MESSAGE);
                 }
             }
+
             final File reportDir = generate();
             Utils.copyDir(reportDir, destDirFile);
+
             final DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
             final String patchFileName = String.format(PATCH_FILE_FORMAT, getSimpleRepoName(),
                     HEAD + headNum, format.format(new Date()));
