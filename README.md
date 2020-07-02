@@ -35,7 +35,9 @@ $ git checkout patch-filter-jar
 
 Firstly, you need to do is to modify projects-to-test-on.properties and test project that you want.
 For example, if I want to test `guava`, then I will only remove # before `guava` (anything that starts with # 
-is considered a comment and is ignored.)
+is considered a comment and is ignored.) and remove the specific version to change  
+`guava|git|https://github.com/google/guava|v28.2||` to `guava|git|https://github.com/google/guava||`
+, which aims to avoid auto checkout to the specific version in `diff.groovy`.
 
 Secondly, you need to set baseConfig.xml and patchConfig.xml by yourself, 
 **Attention:**
