@@ -23,6 +23,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -159,6 +161,7 @@ public class GeneratePatchFile {
             generateTwoCommitDiffPatch(commitList.get(i + 1), commitList.get(i));
         }
         generateSummaryIndexHtml();
+        checkout(commitList.get(0).getId().getName());
     }
 
     /**
@@ -178,6 +181,7 @@ public class GeneratePatchFile {
             }
         }
         generateSummaryIndexHtml();
+        checkout(revisions.get(0).getId().getName());
     }
 
     /**
@@ -188,11 +192,21 @@ public class GeneratePatchFile {
      * @throws Exception exception
      */
     public void generatePatchWithGitCommand(int runPatchNum, String patchFormat) throws Exception {
+        final String headSha = getHeadSha();
         for (int i = 1; i < runPatchNum; i++) {
             generateDiffPatchWithGitCommand(i, patchFormat);
             checkoutWithGitCommand();
         }
         generateSummaryIndexHtml();
+        checkout(headSha);
+    }
+
+    private String getHeadSha() throws Exception {
+        runShellCommand("git rev-parse HEAD > HEAD_SHA");
+        final Path path = new File(repoPath, "HEAD_SHA").toPath();
+        final String headSha = Files.readAllLines(path).get(0);
+        Files.delete(path);
+        return headSha;
     }
 
     private List<RevCommit> getAllCommits() throws Exception {
