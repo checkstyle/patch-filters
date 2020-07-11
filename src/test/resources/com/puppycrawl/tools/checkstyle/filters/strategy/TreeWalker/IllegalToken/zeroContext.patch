@@ -1,0 +1,15 @@
+diff --git a/Test.java b/Test.java
+index 762aa6a..ff7ee3e 100644
+--- a/Test.java
++++ b/Test.java
+@@ -11,0 +12,10 @@ public class Test {
++
++
++    public void Test() {
++        outer: // violation
++        for (int i = 0; i < 5; i++) {
++            if (i == 1) {
++                break outer;
++            }
++        }
++    }

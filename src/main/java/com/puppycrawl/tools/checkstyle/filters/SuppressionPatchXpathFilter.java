@@ -23,28 +23,29 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jgit.patch.FileHeader;
 import org.eclipse.jgit.patch.Patch;
 
-import com.puppycrawl.tools.checkstyle.api.AuditEvent;
+import com.puppycrawl.tools.checkstyle.TreeWalkerAuditEvent;
+import com.puppycrawl.tools.checkstyle.TreeWalkerFilter;
 import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.ExternalResourceHolder;
-import com.puppycrawl.tools.checkstyle.api.Filter;
 
 /**
  * <p>
- * Filter {@code SuppressionFilter} rejects audit events for Check violations according to a
- * patch file.
+ * Filter {@code SuppressionPatchXpathFilter} rejects audit events for Check violations
+ * according to a patch file.
  * </p>
  *
  * @since 8.34
  */
-public class SuppressionPatchFilter extends AutomaticBean
-        implements Filter, ExternalResourceHolder {
+public class SuppressionPatchXpathFilter extends AutomaticBean implements
+        TreeWalkerFilter, ExternalResourceHolder {
 
     /**
      * Specify the location of the patch file.
@@ -67,7 +68,7 @@ public class SuppressionPatchFilter extends AutomaticBean
     /**
      * Set of individual suppresses.
      */
-    private PatchFilterSet filters = new PatchFilterSet();
+    private Set<TreeWalkerFilter> filters = new HashSet<>();
 
     /**
      * Setter to specify the location of the patch file.
@@ -100,15 +101,18 @@ public class SuppressionPatchFilter extends AutomaticBean
     }
 
     @Override
-    public boolean accept(AuditEvent event) {
-        return filters.accept(event);
+    public boolean accept(TreeWalkerAuditEvent treeWalkerAuditEvent) {
+        boolean result = false;
+        for (TreeWalkerFilter filter : filters) {
+            if (filter.accept(treeWalkerAuditEvent)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
-    /**
-     * To finish the part of this component's setup.
-     *
-     * @throws CheckstyleException if there is a configuration error.
-     */
+    @Override
     protected void finishLocalSetup() throws CheckstyleException {
         if (file != null) {
             loadPatchFile();
@@ -125,9 +129,9 @@ public class SuppressionPatchFilter extends AutomaticBean
                         new LoadPatchFileUtils(fileHeader, strategy);
                 final String fileName = loadPatchFileUtils.getFileName();
                 final List<List<Integer>> lineRangeList = loadPatchFileUtils.getLineRange();
-                final SuppressionPatchFilterElement element =
-                        new SuppressionPatchFilterElement(fileName, lineRangeList);
-                filters.addFilter(element);
+                final PatchXpathFilterElement element =
+                        new PatchXpathFilterElement(fileName, lineRangeList);
+                filters.add(element);
             }
         }
         catch (IOException ex) {
@@ -139,5 +143,4 @@ public class SuppressionPatchFilter extends AutomaticBean
     public Set<String> getExternalResourceLocations() {
         return Collections.singleton(file);
     }
-
 }
