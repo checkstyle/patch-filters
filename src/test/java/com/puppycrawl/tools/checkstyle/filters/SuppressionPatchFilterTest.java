@@ -153,6 +153,19 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         testAddedLine(addedfilter, changedfilter, fileName, addedLineList, changedLineList);
     }
 
+    @Test
+    public void testAddOptionFive() throws Exception {
+        final String patchFileName = getPath("added-line-test-patch.txt");
+        final SuppressionPatchFilter addedfilter =
+                createSuppressionPatchFilter(patchFileName, "added");
+        final SuppressionPatchFilter changedfilter =
+                createSuppressionPatchFilter(patchFileName, "changed");
+        final List<Integer> addedLineList = Arrays.asList(6, 11);
+        final List<Integer> changedLineList = Arrays.asList(1, 3);
+        final String fileName = "Update/Update2.java";
+        testAddedLine(addedfilter, changedfilter, fileName, addedLineList, changedLineList);
+    }
+
     private void testAddedLine(SuppressionPatchFilter addedfilter,
                                SuppressionPatchFilter changedfilter, String fileName,
                                List<Integer> addedLineList, List<Integer> changedLineList) {

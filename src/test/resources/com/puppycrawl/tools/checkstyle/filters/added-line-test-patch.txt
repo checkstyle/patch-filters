@@ -1,0 +1,22 @@
+--- Origin/Origin2.java	2020-07-11 12:22:33.000000000 +0800
++++ Update/Update2.java	2020-07-11 12:22:33.000000000 +0800
+@@ -1,15 +1,15 @@
+-package checkstyle_demo.PatchSuppression.MethodCount.Origin;
++package checkstyle_demo.PatchSuppression.MethodCount.Update;
+ 
+-public class Origin2 {
++public class Update2 {
+     public void test1() {
+ 
++        int a = 0;
+     }
+ 
+     public void test2() {
+ 
++        int a = 0;
+     }
+ 
+-    public void test3() {
+ 
+-    }
+ }

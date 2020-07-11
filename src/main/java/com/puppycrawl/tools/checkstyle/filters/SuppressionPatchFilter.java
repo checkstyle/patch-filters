@@ -303,8 +303,6 @@ public class SuppressionPatchFilter extends AutomaticBean
         private List<Integer> processAddPositionList(int totalAddNum, int totalRemoveNum) {
             int tempTotalAddNum = totalAddNum;
             int tempTotalRemoveNum = totalRemoveNum;
-            // change flag to process remove position list
-            changeFlag = !changeFlag;
             final int position = addPositionList.get(addIndex);
             final int matchingRemovePositon = position - tempTotalAddNum
                     + tempTotalRemoveNum;
@@ -339,6 +337,21 @@ public class SuppressionPatchFilter extends AutomaticBean
                 addIndex += increaseAddList.get(1);
             }
             addIndex++;
+            if (addIndex < addPositionListSize
+                    && removeIndex < removePositionListSize
+                    && addPositionList.get(addIndex)
+                    < removePositionList.get(removeIndex)) {
+                // test if current addIndex is a real added fragment
+                final int testposition = addPositionList.get(addIndex);
+                final int testmatchingRemovePositon = testposition
+                        - tempTotalAddNum + tempTotalRemoveNum;
+                if (removePositionList.contains(testmatchingRemovePositon)) {
+                    changeFlag = !changeFlag;
+                }
+            }
+            else {
+                changeFlag = !changeFlag;
+            }
             return Arrays.asList(tempTotalAddNum, tempTotalRemoveNum);
         }
 
@@ -350,37 +363,38 @@ public class SuppressionPatchFilter extends AutomaticBean
             // if not, then it is just removed line
             if (!addPositionList.contains(matchingAddPositon)) {
                 tempTotalRemoveNum++;
-                final int increaseRemoveNum = dealContinuousPosition(addIndex,
+                final int increaseRemoveNum = dealContinuousPosition(removeIndex,
                         removePositionList).get(0);
                 tempTotalRemoveNum += increaseRemoveNum;
+                removeIndex++;
+                // Judge if change flag to deal with add position list
+                // this judgment is for a certain situation that two or more
+                // removed fragment are continuous, this situation can be found
+                // in testAddOptionThree
+                if (removeIndex >= removePositionListSize) {
+                    changeFlag = !changeFlag;
+                }
+                else if (removePositionList.get(removeIndex)
+                        >= addPositionList.get(addIndex)) {
+                    changeFlag = !changeFlag;
+                }
+                else if (removePositionList.get(removeIndex)
+                        < addPositionList.get(addIndex)) {
+                    // test if current removeIndex is a removed fragment
+                    final int testposition = removePositionList.get(removeIndex);
+                    final int testmatchingAddPositon = testposition
+                            + totalAddNum - tempTotalRemoveNum;
+                    if (addPositionList.contains(testmatchingAddPositon)) {
+                        changeFlag = !changeFlag;
+                    }
+                }
             }
             else {
                 final int increaseRemoveIndex = dealContinuousPosition(removeIndex,
                         removePositionList).get(0);
                 removeIndex += increaseRemoveIndex;
-            }
-            removeIndex++;
-            // Judge if change flag to deal with add position list
-            // this judgment is for a certain situation that two or more
-            // removed fragment are continuous, this situation can be found
-            // in testAddOptionThree
-            if (removeIndex >= removePositionListSize) {
+                removeIndex++;
                 changeFlag = !changeFlag;
-            }
-            else if (removePositionList.get(removeIndex)
-                    >= addPositionList.get(addIndex)) {
-                changeFlag = !changeFlag;
-            }
-            else if (removePositionList.get(removeIndex)
-                    < addPositionList.get(addIndex)) {
-                // test if previous removeIndex is a removed fragment
-                final int testposition = removePositionList.get(removeIndex);
-                final int testmatchingAddPositon = testposition
-                        + totalAddNum - tempTotalRemoveNum
-                        + dealAddPosition(totalAddNum, tempTotalRemoveNum);
-                if (addPositionList.contains(testmatchingAddPositon)) {
-                    changeFlag = !changeFlag;
-                }
             }
             return Arrays.asList(totalAddNum, tempTotalRemoveNum);
         }
@@ -419,33 +433,6 @@ public class SuppressionPatchFilter extends AutomaticBean
                 }
             }
             return Arrays.asList(tempNum, tempIndex);
-        }
-
-        private int dealAddPosition(int totalAddNum, int totalRemoveNum) {
-            final int position = addPositionList.get(addIndex);
-            int tempAddNum = 0;
-            int tempRemoveNum = 0;
-            final int matchingRemovePositon = position - totalAddNum + totalRemoveNum;
-            if (!removePositionList.contains(matchingRemovePositon)) {
-                tempAddNum++;
-                final int increaseAddNum = dealContinuousPosition(addIndex, addPositionList).get(0);
-                tempAddNum += increaseAddNum;
-            }
-            else {
-                final int increaseRemoveNum = dealContinuousPosition(
-                        removePositionList.indexOf(matchingRemovePositon),
-                        removePositionList).get(0);
-                tempRemoveNum += increaseRemoveNum;
-            }
-            final int increaseAddNum = dealContinuousPosition(addIndex, addPositionList).get(0);
-            tempAddNum += increaseAddNum;
-
-            int diffNum = tempAddNum - tempRemoveNum;
-
-            if (matchingRemovePositon >= removePositionList.get(removeIndex)) {
-                diffNum = 0;
-            }
-            return diffNum;
         }
     }
 
