@@ -478,7 +478,7 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
                 new PropertiesExpander(System.getProperties()));
         final ClassLoader moduleClassLoader = SuppressionPatchFilter.class.getClassLoader();
         final ModuleFactory factory = new PackageObjectFactory(
-            SuppressionPatchFilter.class.getPackage().getName(), moduleClassLoader);
+                SuppressionPatchFilter.class.getPackage().getName(), moduleClassLoader);
 
         final RootModule rootModule = (RootModule) factory.createModule(config.getName());
         rootModule.setModuleClassLoader(moduleClassLoader);
@@ -494,9 +494,9 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
 
         // process each of the lines
         try (ByteArrayInputStream inputStream =
-                new ByteArrayInputStream(stream.toByteArray());
+                     new ByteArrayInputStream(stream.toByteArray());
              LineNumberReader lnr = new LineNumberReader(
-                new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+                     new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             final List<String> actuals = lnr.lines().limit(expected.length)
                     .sorted().collect(Collectors.toList());
             Arrays.sort(expected);
