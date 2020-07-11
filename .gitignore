@@ -1,3 +1,9 @@
+# IDEA project files
+patch-filter.iml
+patch-filter.ipr
+patch-filter.iws
+.idea
+
 # Eclipse project files
 .settings
 .externalToolBuilders
