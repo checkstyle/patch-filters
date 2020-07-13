@@ -37,8 +37,8 @@ public class GitDiffWithContextSizeZeroTest extends AbstractJgitPatchParserEvalu
         "src/test/resources/com/puppycrawl/tools/checkstyle/jgit/gitdiff/context-size-0/";
 
     @Test
-    public void testInsertDeleteReplaceEditTypesWithinHunk() throws IOException {
-        final String patchName = "InsertDeleteReplaceEditTypes.patch";
+    public void testMultiHunksOnSingleFile() throws Exception {
+        final String patchName = "MultiHunksOnOneFile.patch";
         final Patch patch = loadPatch(getPatchPath(patchName));
         assertNotNull(patch);
 
@@ -47,20 +47,18 @@ public class GitDiffWithContextSizeZeroTest extends AbstractJgitPatchParserEvalu
 
         // file header 0
         assertEquals(FileHeader.PatchType.UNIFIED, fileHeaders.get(0).getPatchType());
-        assertEquals(3, fileHeaders.get(0).getHunks().size());
+        assertEquals(2, fileHeaders.get(0).getHunks().size());
 
         final EditList edits = fileHeaders.get(0).toEditList();
-        assertEquals(3, edits.size());
-        assertEquals(new Edit(16, 16, 17, 18), edits.get(0));
+        assertEquals(2, edits.size());
+        assertEquals(new Edit(3, 3, 4, 12), edits.get(0));
         assertEquals(Edit.Type.INSERT, edits.get(0).getType());
-        assertEquals(new Edit(20, 21, 21, 22), edits.get(1));
-        assertEquals(Edit.Type.REPLACE, edits.get(1).getType());
-        assertEquals(new Edit(23, 24, 23, 23), edits.get(2));
-        assertEquals(Edit.Type.DELETE, edits.get(2).getType());
+        assertEquals(new Edit(16, 16, 25, 27), edits.get(1));
+        assertEquals(Edit.Type.INSERT, edits.get(1).getType());
     }
 
     @Test
-    public void testMultopleFilesWithMultipleHunks() throws IOException {
+    public void testMultipleFilesWithMultipleHunks() throws IOException {
         final String patchName = "MultipleFilesWithMultipleHunks.patch";
         final Patch patch = loadPatch(getPatchPath(patchName));
         assertNotNull(patch);
@@ -89,6 +87,142 @@ public class GitDiffWithContextSizeZeroTest extends AbstractJgitPatchParserEvalu
         assertEquals(Edit.Type.INSERT, edits1.get(0).getType());
         assertEquals(new Edit(16, 16, 25, 27), edits1.get(1));
         assertEquals(Edit.Type.INSERT, edits1.get(1).getType());
+    }
+
+    @Test
+    public void testHaveRenamedWithNoChangedFile() throws Exception {
+        final String patchName = "HaveRenamedWithNoChangedFile.patch";
+        final Patch patch = loadPatch(getPatchPath(patchName));
+        assertNotNull(patch);
+
+        final List<? extends FileHeader> fileHeaders = patch.getFiles();
+        assertEquals(1, fileHeaders.size());
+
+        // file header 0
+        assertEquals(FileHeader.PatchType.UNIFIED, fileHeaders.get(0).getPatchType());
+        assertEquals(0, fileHeaders.get(0).getHunks().size());
+        assertEquals("RENAME", fileHeaders.get(0).getChangeType().name());
+
+    }
+
+    @Test
+    public void testHaveRemovedFile() throws Exception {
+        final String patchName = "HaveRemovedFilePatch.patch";
+        final Patch patch = loadPatch(getPatchPath(patchName));
+        assertNotNull(patch);
+
+        final List<? extends FileHeader> fileHeaders = patch.getFiles();
+        assertEquals(1, fileHeaders.size());
+
+        // file header 0
+        assertEquals(FileHeader.PatchType.UNIFIED, fileHeaders.get(0).getPatchType());
+        assertEquals(1, fileHeaders.get(0).getHunks().size());
+
+        final EditList edits0 = fileHeaders.get(0).toEditList();
+        assertEquals(1, edits0.size());
+        assertEquals(new Edit(0, 23, -1, -1), edits0.get(0));
+        assertEquals(Edit.Type.DELETE, edits0.get(0).getType());
+    }
+
+    @Test
+    public void testMovedCodeInOneFileZeroSize() throws Exception {
+        final String patchName = "MovedCodeInOneFile.patch";
+        final Patch patch = loadPatch(getPatchPath(patchName));
+        assertNotNull(patch);
+
+        final List<? extends FileHeader> fileHeaders = patch.getFiles();
+        assertEquals(1, fileHeaders.size());
+
+        // file header 0
+        assertEquals(FileHeader.PatchType.UNIFIED, fileHeaders.get(0).getPatchType());
+        assertEquals(2, fileHeaders.get(0).getHunks().size());
+
+        final EditList edits0 = fileHeaders.get(0).toEditList();
+        assertEquals(2, edits0.size());
+        assertEquals(new Edit(5, 12, 4, 4), edits0.get(0));
+        assertEquals(Edit.Type.DELETE, edits0.get(0).getType());
+        assertEquals(new Edit(27, 27, 21, 29), edits0.get(1));
+        assertEquals(Edit.Type.INSERT, edits0.get(1).getType());
+    }
+
+    @Test
+    public void testOnlyDeletionInOneFile() throws Exception {
+        final String patchName = "OnlyDeletionInOneFile.patch";
+        final Patch patch = loadPatch(getPatchPath(patchName));
+        assertNotNull(patch);
+
+        final List<? extends FileHeader> fileHeaders = patch.getFiles();
+        assertEquals(1, fileHeaders.size());
+
+        // file header 0
+        assertEquals(FileHeader.PatchType.UNIFIED, fileHeaders.get(0).getPatchType());
+        assertEquals(1, fileHeaders.get(0).getHunks().size());
+
+        final EditList edits0 = fileHeaders.get(0).toEditList();
+        assertEquals(1, edits0.size());
+        assertEquals(new Edit(21, 29, 20, 20), edits0.get(0));
+        assertEquals(Edit.Type.DELETE, edits0.get(0).getType());
+    }
+
+    @Test
+    public void testOnlyAdditionInOneFile() throws Exception {
+        final String patchName = "OnlyAdditionInOneFile.patch";
+        final Patch patch = loadPatch(getPatchPath(patchName));
+        assertNotNull(patch);
+
+        final List<? extends FileHeader> fileHeaders = patch.getFiles();
+        assertEquals(1, fileHeaders.size());
+
+        // file header 0
+        assertEquals(FileHeader.PatchType.UNIFIED, fileHeaders.get(0).getPatchType());
+        assertEquals(1, fileHeaders.get(0).getHunks().size());
+
+        final EditList edits0 = fileHeaders.get(0).toEditList();
+        assertEquals(1, edits0.size());
+        assertEquals(new Edit(19, 19, 20, 24), edits0.get(0));
+        assertEquals(Edit.Type.INSERT, edits0.get(0).getType());
+    }
+
+    @Test
+    public void testOnlyReplacementInOneFile() throws Exception {
+        final String patchName = "OnlyReplaceMentInOneFile.patch";
+        final Patch patch = loadPatch(getPatchPath(patchName));
+        assertNotNull(patch);
+
+        final List<? extends FileHeader> fileHeaders = patch.getFiles();
+        assertEquals(1, fileHeaders.size());
+
+        // file header 0
+        assertEquals(FileHeader.PatchType.UNIFIED, fileHeaders.get(0).getPatchType());
+        assertEquals(1, fileHeaders.get(0).getHunks().size());
+
+        final EditList edits0 = fileHeaders.get(0).toEditList();
+        assertEquals(1, edits0.size());
+        assertEquals(new Edit(20, 22, 20, 22), edits0.get(0));
+        assertEquals(Edit.Type.REPLACE, edits0.get(0).getType());
+    }
+
+    @Test
+    public void testInsertDeleteReplaceEditTypesWithinHunk() throws IOException {
+        final String patchName = "InsertDeleteReplaceEditTypes.patch";
+        final Patch patch = loadPatch(getPatchPath(patchName));
+        assertNotNull(patch);
+
+        final List<? extends FileHeader> fileHeaders = patch.getFiles();
+        assertEquals(1, fileHeaders.size());
+
+        // file header 0
+        assertEquals(FileHeader.PatchType.UNIFIED, fileHeaders.get(0).getPatchType());
+        assertEquals(3, fileHeaders.get(0).getHunks().size());
+
+        final EditList edits = fileHeaders.get(0).toEditList();
+        assertEquals(3, edits.size());
+        assertEquals(new Edit(16, 16, 17, 18), edits.get(0));
+        assertEquals(Edit.Type.INSERT, edits.get(0).getType());
+        assertEquals(new Edit(20, 21, 21, 22), edits.get(1));
+        assertEquals(Edit.Type.REPLACE, edits.get(1).getType());
+        assertEquals(new Edit(23, 24, 23, 23), edits.get(2));
+        assertEquals(Edit.Type.DELETE, edits.get(2).getType());
     }
 
     @Override
