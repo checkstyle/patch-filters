@@ -1,0 +1,19 @@
+diff --git a/src/main/java/Test1.java b/src/main/java/Test1.java
+index 5b222c5..d730cb2 100644
+--- a/src/main/java/Test1.java
++++ b/src/main/java/Test1.java
+@@ -15,12 +15,12 @@ public class Test1 {
+
+ class Test {
+     public void test1() {
++        System.out.println("test");
+         System.out.println();
+         System.out.println();
+         System.out.println();
+-        System.out.println("test1");
++        System.out.println("test");
+         System.out.println("test2");
+         System.out.println();
+-        System.out.println();
+     }
+ }

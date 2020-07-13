@@ -1,0 +1,32 @@
+diff --git a/src/main/java/Test2.java b/src/main/java/Test2.java
+index 91aef3b..aba6949 100644
+--- a/src/main/java/Test2.java
++++ b/src/main/java/Test2.java
+@@ -4,0 +5,8 @@ public class Test2 {
++
++    public void test2() {
++
++    }
++
++    public void test3() {
++
++    }
+@@ -11,0 +20,2 @@ class Test22 {
++        System.out.println();
++        System.out.println();
+diff --git a/src/main/java/Test3.java b/src/main/java/Test3.java
+index 65cab73..4df8f12 100644
+--- a/src/main/java/Test3.java
++++ b/src/main/java/Test3.java
+@@ -4,0 +5,8 @@ public class Test3 {
++
++    public void test2() {
++
++    }
++
++    public void test3() {
++
++    }
+@@ -17,0 +26,2 @@ class Test33 {
++        System.out.println();
++        System.out.println();
