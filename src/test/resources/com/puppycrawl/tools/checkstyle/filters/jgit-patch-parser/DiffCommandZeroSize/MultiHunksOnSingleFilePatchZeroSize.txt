@@ -1,0 +1,18 @@
+diff -Nar -U 0 a/Test1.java b/Test1.java
+--- a/Test1.java	2020-07-13 13:28:41.000000000 +0800
++++ b/Test1.java	2020-07-13 13:28:41.000000000 +0800
+@@ -1 +1 @@
+-package checkstyle_demo.PatchSuppression.MultiChangeInOneFile.a;
++package checkstyle_demo.PatchSuppression.MultiChangeInOneFile.b;
+@@ -6,0 +7,8 @@
++
++    public void test2() {
++
++    }
++
++    public void test3() {
++
++    }
+@@ -19,0 +28,2 @@
++        System.out.println();
++        System.out.println();
