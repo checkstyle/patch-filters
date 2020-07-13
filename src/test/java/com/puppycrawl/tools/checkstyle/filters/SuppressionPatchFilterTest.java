@@ -19,15 +19,35 @@
 
 package com.puppycrawl.tools.checkstyle.filters;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
+import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
+import com.puppycrawl.tools.checkstyle.ModuleFactory;
+import com.puppycrawl.tools.checkstyle.PackageObjectFactory;
+import com.puppycrawl.tools.checkstyle.PropertiesExpander;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
+import com.puppycrawl.tools.checkstyle.api.Configuration;
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
+import com.puppycrawl.tools.checkstyle.api.RootModule;
 import com.puppycrawl.tools.checkstyle.api.SeverityLevel;
+import com.puppycrawl.tools.checkstyle.internal.utils.BriefUtLogger;
 
 public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
 
@@ -97,5 +117,53 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         suppressionPatchFilter.setFile(fileName);
         suppressionPatchFilter.finishLocalSetup();
         return suppressionPatchFilter;
+    }
+
+    @Ignore
+    @Test
+    public void testByConfig() throws Exception {
+        // we can add here any variable to provide path to patch name by PropertiesExpander
+        final Configuration config = ConfigurationLoader.loadConfiguration(
+                getPath("strategy/patchedline/InputRegexpSingleline/config.xml"),
+                new PropertiesExpander(System.getProperties()));
+        final ClassLoader moduleClassLoader = SuppressionPatchFilter.class.getClassLoader();
+        final ModuleFactory factory = new PackageObjectFactory(
+            SuppressionPatchFilter.class.getPackage().getName(), moduleClassLoader);
+
+        final RootModule rootModule = (RootModule) factory.createModule(config.getName());
+        rootModule.setModuleClassLoader(moduleClassLoader);
+        rootModule.configure(config);
+        final ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        rootModule.addListener(new BriefUtLogger(stream));
+
+        // run RootModule
+        final String path = getPath("strategy/patchedline/InputRegexpSingleline/Input.java");
+        final List<File> files = Collections.singletonList(
+                new File(path));
+        final int errorCounter = rootModule.process(files);
+
+        final String[] expected = {
+            "3: Line matches the illegal pattern 'System.out.print'.",
+            "7: Line matches the illegal pattern 'System.out.print'.",
+            "12: Line matches the illegal pattern 'System.out.print'.",
+        };
+
+        // process each of the lines
+        try (ByteArrayInputStream inputStream =
+                new ByteArrayInputStream(stream.toByteArray());
+             LineNumberReader lnr = new LineNumberReader(
+                new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            final List<String> actuals = lnr.lines().limit(expected.length)
+                    .sorted().collect(Collectors.toList());
+            Arrays.sort(expected);
+
+            for (int i = 0; i < expected.length; i++) {
+                final String expectedResult = path + ":" + expected[i];
+                assertEquals("error message " + i, expectedResult, actuals.get(i));
+            }
+
+            assertEquals("unexpected output: " + lnr.readLine(),
+                    expected.length, errorCounter);
+        }
     }
 }

@@ -9,7 +9,8 @@
               files="(CheckerTest|AbstractModuleTestSupport|AbstractItModuleTestSupport|
                      |CheckstyleAntTaskTest|
                      |TranslationCheckTest|LocalizedMessageTest|AbstractFileSetCheckTest|
-                     |AbstractCheckTest|AutomaticBeanTest|GeneratePatchFile)\.java"/>
+                     |AbstractCheckTest|AutomaticBeanTest|GeneratePatchFile|
+                     |SuppressionPatchFilterTest)\.java"/>
     <suppress checks="MagicNumber"
             files="GeneratePatchFileLauncher|GeneratePatchFileWithGitCommandLauncher\.java"/>
     <suppress checks="UncommentedMain"

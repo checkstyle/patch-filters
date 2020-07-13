@@ -103,6 +103,7 @@ public class SuppressionPatchFilter extends AutomaticBean
     }
 
     private void loadPatchFile(String patchFileName) throws CheckstyleException {
+        System.out.print(new File(".").getAbsolutePath());
         try {
             final List<String> originPatch = Files.readAllLines(new File(patchFileName).toPath());
             final List<List<String>> patchList = getPatchList(originPatch);
