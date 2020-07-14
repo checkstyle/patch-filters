@@ -1,0 +1,4 @@
+Starting audit...
+[ERROR] /Users/hgh/Downloads/my_file/IDEA_workspace/patchfiltergeneratepatch/src/main/java/Checker/UniqueProperties/test.properties:4: Duplicated property 'key.sub' (2 occurrence(s)). [UniqueProperties]
+[ERROR] /Users/hgh/Downloads/my_file/IDEA_workspace/patchfiltergeneratepatch/src/main/java/Checker/UniqueProperties/test.properties:6: Duplicated property 'key.png' (2 occurrence(s)). [UniqueProperties]
+Audit done.

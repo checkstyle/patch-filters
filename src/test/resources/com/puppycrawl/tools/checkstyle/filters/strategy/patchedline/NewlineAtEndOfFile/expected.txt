@@ -1,0 +1,4 @@
+Starting audit...
+[ERROR] /Users/hgh/Downloads/my_file/IDEA_workspace/patchfiltergeneratepatch/src/main/java/Checker/RegexpOnFilename/Test3.java:1: File match folder pattern '' and file pattern '\.java$'. [RegexpOnFilename]
+[ERROR] /Users/hgh/Downloads/my_file/IDEA_workspace/patchfiltergeneratepatch/src/main/java/Checker/RegexpOnFilename/Test.java:1: File match folder pattern '' and file pattern '\.java$'. [RegexpOnFilename]
+Audit done.
