@@ -1,0 +1,11 @@
+diff --git a/src/main/java/Checker/UniqueProperties/test.properties b/src/main/java/Checker/UniqueProperties/test.properties
+index d00aad3..d50f684 100644
+--- a/src/main/java/Checker/UniqueProperties/test.properties
++++ b/src/main/java/Checker/UniqueProperties/test.properties
+@@ -2,5 +2,6 @@ A =65
+ a =97
+ key =107 than nothing
+ key.sub =k is 107 and dot is 46
++key.sub =k is 107 and dot is 46
+ key.png =value - violation
+ key.png =value - violation

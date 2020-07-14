@@ -1,0 +1,3 @@
+Starting audit...
+[ERROR] /Users/hgh/Downloads/my_file/IDEA_workspace/patchfiltergeneratepatch/src/main/java/Checker/FileLength/Test2.java:1: File length is 14 lines (max allowed is 5). [FileLength]
+Audit done.
