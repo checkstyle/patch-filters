@@ -6,4 +6,8 @@
   <module name="RegexpSingleline">
     <property name="format" value="System.out.print"/>
   </module>
+  <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
+    <property name="file" value="src/test/resources/com/puppycrawl/tools/checkstyle/filters/strategy/RegexpSingleline/patch.diff" />
+    <property name="strategy" value="newline" />
+  </module>
 </module>

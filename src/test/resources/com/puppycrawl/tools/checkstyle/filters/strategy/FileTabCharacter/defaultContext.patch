@@ -1,0 +1,22 @@
+diff --git a/Test.java b/Test.java
+index 70fc74a..dc960b0 100644
+--- a/Test.java
++++ b/Test.java
+@@ -2,7 +2,7 @@ package Checker.FileTabCharacter;
+ 
+ public class Test {
+     // Long line ----------------------------------------------------------------
+-    // Contains a tab ->	<- //warns
++    // Contains a tab ->	<- //warn
+     // Contains trailing whitespace ->
+ 
+ 
+@@ -19,6 +19,8 @@ public class Test {
+ 
+     // Long line ----------------------------------------------------------------
+     // Long line ----------------------------------------------------------------
++    // Contains a tab ->	<- //warns
++    // Contains trailing whitespace ->
+ 
+ 
+ }
