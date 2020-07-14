@@ -6,6 +6,7 @@
 <import-control pkg="(com.github.checkstyle)|(com.puppycrawl.tools.checkstyle)" regex="true">
     <allow pkg="com.puppycrawl.tools.checkstyle.api"/>
     <allow pkg="com.puppycrawl.tools.checkstyle.checks"/>
+    <allow pkg="org.eclipse.jgit"/>
     <allow pkg="java.io"/>
     <allow pkg="java.net"/>
     <allow pkg="java.nio"/>
