@@ -4,4 +4,8 @@
           "https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="Checker">
   <module name="UniqueProperties"/>
+  <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
+    <property name="file" value="src/test/resources/com/puppycrawl/tools/checkstyle/filters/strategy/newline/UniqueProperties/defaultSize.patch" />
+    <property name="strategy" value="newline" />
+  </module>
 </module>
