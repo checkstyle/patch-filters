@@ -20,16 +20,20 @@
 package com.puppycrawl.tools.checkstyle.filters;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import com.github.difflib.UnifiedDiffUtils;
-import com.github.difflib.patch.Chunk;
-import com.github.difflib.patch.Patch;
+import org.eclipse.jgit.diff.Edit;
+import org.eclipse.jgit.diff.EditList;
+import org.eclipse.jgit.patch.FileHeader;
+import org.eclipse.jgit.patch.HunkHeader;
+import org.eclipse.jgit.patch.Patch;
+
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
@@ -61,6 +65,11 @@ public class SuppressionPatchFilter extends AutomaticBean
     private boolean optional;
 
     /**
+     * Control if only consider added lines in file.
+     */
+    private String strategy;
+
+    /**
      * Set of individual suppresses.
      */
     private PatchFilterSet filters = new PatchFilterSet();
@@ -72,6 +81,15 @@ public class SuppressionPatchFilter extends AutomaticBean
      */
     public void setFile(String fileName) {
         file = fileName;
+    }
+
+    /**
+     * Setter to control if only consider added lines in file.
+     *
+     * @param strategy tells if only consider added lines is add, should be added or changed.
+     */
+    public void setStrategy(String strategy) {
+        this.strategy = strategy;
     }
 
     /**
@@ -98,19 +116,20 @@ public class SuppressionPatchFilter extends AutomaticBean
      */
     protected void finishLocalSetup() throws CheckstyleException {
         if (file != null) {
-            loadPatchFile(file);
+            loadPatchFile();
         }
     }
 
-    private void loadPatchFile(String patchFileName) throws CheckstyleException {
+    private void loadPatchFile() throws CheckstyleException {
         System.out.print(new File(".").getAbsolutePath());
-        try {
-            final List<String> originPatch = Files.readAllLines(new File(patchFileName).toPath());
-            final List<List<String>> patchList = getPatchList(originPatch);
-            for (List<String> singlePatch : patchList) {
-                final String fileName = getFileName(singlePatch);
-                final Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(singlePatch);
-                final List<List<Integer>> lineRangeList = getLineRange(patch);
+
+        try (InputStream is = new FileInputStream(file)) {
+            final Patch patch = new Patch();
+            patch.parse(is);
+            final List<? extends FileHeader> fileHeaders = patch.getFiles();
+            for (FileHeader fileHeader : fileHeaders) {
+                final String fileName = getFileName(fileHeader);
+                final List<List<Integer>> lineRangeList = getLineRange(fileHeader);
                 final SuppressionPatchFilterElement element =
                         new SuppressionPatchFilterElement(fileName, lineRangeList);
                 filters.addFilter(element);
@@ -121,51 +140,35 @@ public class SuppressionPatchFilter extends AutomaticBean
         }
     }
 
-    /**
-     * To separate different files's diff contents when there are multiple files in patch file.
-     * @param originPatch List of String
-     * @return patchedList List of List of String
-     */
-    private List<List<String>> getPatchList(List<String> originPatch) {
-        final List<List<String>> patchedList = new ArrayList<>();
-        boolean flag = true;
-        List<String> singlePatched = new ArrayList<>();
-        for (String str : originPatch) {
-            if (str.startsWith("diff ")) {
-                if (flag) {
-                    flag = false;
-                }
-                else {
-                    patchedList.add(singlePatched);
-                    singlePatched = new ArrayList<>();
-                }
-            }
-            singlePatched.add(str);
-        }
-        patchedList.add(singlePatched);
-        return patchedList;
+    private String getFileName(FileHeader fileHeader) {
+        return fileHeader.getNewPath();
     }
 
-    private String getFileName(List<String> singlePatch) {
-        String fileName = null;
-        for (String str : singlePatch) {
-            if (str.startsWith("+++ ")) {
-                fileName = str.split("\\s")[1];
-                fileName = fileName.replaceAll("^b/", "");
-                break;
-            }
-        }
-        return fileName;
-    }
-
-    private List<List<Integer>> getLineRange(Patch<String> patch) {
+    private List<List<Integer>> getLineRange(FileHeader fileHeader) {
         final List<List<Integer>> lineRangeList = new ArrayList<>();
-        for (int i = 0; i < patch.getDeltas().size(); i++) {
-            final Chunk targetChunk = patch.getDeltas().get(i).getTarget();
-            final List<Integer> lineRange = new ArrayList<>();
-            lineRange.add(targetChunk.getPosition());
-            lineRange.add(targetChunk.getPosition() + targetChunk.getLines().size());
-            lineRangeList.add(lineRange);
+        if (!"RENAME".equals(fileHeader.getChangeType().name())) {
+            for (HunkHeader hunkHeader : fileHeader.getHunks()) {
+                final EditList edits = hunkHeader.toEditList();
+                for (Edit edit : edits) {
+                    if ("newline".equals(strategy)) {
+                        if (Edit.Type.INSERT.equals(edit.getType())) {
+                            final List<Integer> lineRange = new ArrayList<>();
+                            lineRange.add(edit.getBeginB());
+                            lineRange.add(edit.getEndB());
+                            lineRangeList.add(lineRange);
+                        }
+                    }
+                    else {
+                        if (Edit.Type.INSERT.equals(edit.getType())
+                            || Edit.Type.REPLACE.equals(edit.getType())) {
+                            final List<Integer> lineRange = new ArrayList<>();
+                            lineRange.add(edit.getBeginB());
+                            lineRange.add(edit.getEndB());
+                            lineRangeList.add(lineRange);
+                        }
+                    }
+                }
+            }
         }
         return lineRangeList;
     }
