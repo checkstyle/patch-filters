@@ -1,0 +1,4 @@
+Starting audit...
+[ERROR] /Users/hgh/Downloads/my_file/IDEA_workspace/patchfiltergeneratepatch/src/main/java/Checker/NewlineAtEndOfFile/Test3.java:1: File does not end with a newline. [NewlineAtEndOfFile]
+[ERROR] /Users/hgh/Downloads/my_file/IDEA_workspace/patchfiltergeneratepatch/src/main/java/Checker/NewlineAtEndOfFile/Test.java:1: File does not end with a newline. [NewlineAtEndOfFile]
+Audit done.

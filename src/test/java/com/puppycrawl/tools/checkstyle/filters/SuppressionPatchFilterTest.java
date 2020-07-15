@@ -57,7 +57,7 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
     }
 
     @Test
-    @Ignore
+    @Ignore("until https://github.com/checkstyle/patch-filters/issues/89")
     public void testAccept() throws Exception {
         final String fileName = getPath("MethodCount/MethodCountPatch.txt");
         final SuppressionPatchFilter filter = createSuppressionPatchFilter(fileName);
@@ -70,7 +70,7 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
     }
 
     @Test
-    @Ignore
+    @Ignore("until https://github.com/checkstyle/patch-filters/issues/89")
     public void testMultiChangesOnOneFileOne() throws Exception {
         final String fileName = getPath("MultiChangesOnOneFilePatch.txt");
         final SuppressionPatchFilter filter = createSuppressionPatchFilter(fileName);
@@ -82,7 +82,7 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
     }
 
     @Test
-    @Ignore
+    @Ignore("until https://github.com/checkstyle/patch-filters/issues/89")
     public void testMultiChangedFilesOnOnePatch() throws Exception {
         final String fileName = getPath("MultiChangedFilesOnOnePatch.txt");
         final SuppressionPatchFilter filter = createSuppressionPatchFilter(fileName);
@@ -104,7 +104,7 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
     }
 
     @Test
-    @Ignore
+    @Ignore("until https://github.com/checkstyle/patch-filters/issues/89")
     public void testBoundaryOne() throws Exception {
         final String fileName = getPath("BoundaryTestPatchOne.txt");
         final SuppressionPatchFilter filter = createSuppressionPatchFilter(fileName);
@@ -180,36 +180,245 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         return createSuppressionPatchFilter(fileName, "changed");
     }
 
-    @Ignore
     @Test
-    public void testUniqueProperties() throws Exception {
-        final String configPathOne = "strategy/newline/UniqueProperties/config.xml";
-        final String inputFileOne = "strategy/newline/UniqueProperties/test.properties";
+    @Ignore("until https://github.com/checkstyle/patch-filters/issues/88 "
+            + "when testByConfig can process a directory contains more than one file")
+    public void testFileLength() throws Exception {
+        final String inputFile = "strategy/FileLength/Test";
+
+        final String defaultContextConfigPathOne =
+                "strategy/FileLength/newline/defaultContextConfig.xml";
+        final String zeroContextConfigPathOne =
+                "strategy/FileLength/newline/zeroContextConfig.xml";
         final String[] expectedOne = {
-            "4: Duplicated property 'key.sub' (2 occurrence(s)). [UniqueProperties]",
+            "1: File length is 14 lines (max allowed is 5).",
         };
-        testByConfig(configPathOne, inputFileOne, expectedOne);
+        testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
+        testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
+
+        final String defaultContextConfigPathTwo =
+                "strategy/FileLength/patchedline/defaultContextConfig.xml";
+        final String zeroContextConfigPathTwo =
+                "strategy/FileLength/patchedline/zeroContextConfig.xml";
+        final String[] expectedTwo = {
+            "1: File length is 14 lines (max allowed is 5).",
+        };
+        testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
+        testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
     }
 
     @Test
-    public void testInputRegexpSingleline() throws Exception {
+    public void testLineLength() throws Exception {
+        final String inputFile = "strategy/LineLength/Test.java";
 
-        final String configPathOne = "strategy/newline/InputRegexpSingleline/config.xml";
-        final String inputFileOne = "strategy/newline/InputRegexpSingleline/Input.java";
+        final String defaultContextConfigPathOne =
+                "strategy/LineLength/newline/defaultContextConfig.xml";
+        final String zeroContextConfigPathOne =
+                "strategy/LineLength/newline/zeroContextConfig.xml";
+        final String[] expectedOne = {
+            "10: Line is longer than 80 characters (found 129).",
+        };
+        testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
+        testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
+
+        final String defaultContextConfigPathTwo =
+                "strategy/LineLength/patchedline/defaultContextConfig.xml";
+        final String zeroContextConfigPathTwo =
+                "strategy/LineLength/patchedline/zeroContextConfig.xml";
+        final String[] expectedTwo = {
+            "5: Line is longer than 80 characters (found 129).",
+            "10: Line is longer than 80 characters (found 129).",
+        };
+        testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
+        testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
+    }
+
+    @Test
+    public void testFileTabCharacter() throws Exception {
+        final String inputFile = "strategy/FileTabCharacter/Test.java";
+
+        final String defaultContextConfigPathOne =
+                "strategy/FileTabCharacter/newline/defaultContextConfig.xml";
+        final String zeroContextConfigPathOne =
+                "strategy/FileTabCharacter/newline/zeroContextConfig.xml";
+        final String[] expectedOne = {
+            "22:25: Line contains a tab character.",
+        };
+        testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
+        testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
+
+        final String defaultContextConfigPathTwo =
+                "strategy/FileTabCharacter/patchedline/defaultContextConfig.xml";
+        final String zeroContextConfigPathTwo =
+                "strategy/FileTabCharacter/patchedline/zeroContextConfig.xml";
+        final String[] expectedTwo = {
+            "5:25: Line contains a tab character.",
+            "22:25: Line contains a tab character.",
+        };
+        testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
+        testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
+    }
+
+    @Test
+    @Ignore("until https://github.com/checkstyle/patch-filters/issues/88 "
+            + "when testByConfig can process a directory contains more than one file")
+    public void testRegexpOnFilename() throws Exception {
+        final String inputFile = "strategy/RegexpOnFilename/Test";
+
+        final String defaultContextConfigPathOne =
+                "strategy/RegexpOnFilename/newline/defaultContextConfig.xml";
+        final String zeroContextConfigPathOne =
+                "strategy/RegexpOnFilename/newline/zeroContextConfig.xml";
+        final String[] expectedOne = {
+            "1: File match folder pattern '' and file pattern '\\.java$'.",
+        };
+        testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
+        testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
+
+        final String defaultContextConfigPathTwo =
+                "strategy/RegexpOnFilename/patchedline/defaultContextConfig.xml";
+        final String zeroContextConfigPathTwo =
+                "strategy/RegexpOnFilename/patchedline/zeroContextConfig.xml";
+        final String[] expectedTwo = {
+            "1: File match folder pattern '' and file pattern '\\.java$'.",
+            "1: File match folder pattern '' and file pattern '\\.java$'.",
+        };
+        testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
+        testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
+    }
+
+    @Test
+    @Ignore("until https://github.com/checkstyle/patch-filters/issues/88 "
+            + "when testByConfig can process a directory contains more than one file")
+    public void testNewlineAtEndOfFile() throws Exception {
+        final String inputFile = "strategy/NewlineAtEndOfFile/Test";
+
+        final String defaultContextConfigPathOne =
+                "strategy/NewlineAtEndOfFile/newline/defaultContextConfig.xml";
+        final String zeroContextConfigPathOne =
+                "strategy/NewlineAtEndOfFile/newline/zeroContextConfig.xml";
+        final String[] expectedOne = {
+            "1: File does not end with a newline.",
+        };
+        testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
+        testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
+
+        final String defaultContextConfigPathTwo =
+                "strategy/NewlineAtEndOfFile/patchedline/defaultContextConfig.xml";
+        final String zeroContextConfigPathTwo =
+                "strategy/NewlineAtEndOfFile/patchedline/zeroContextConfig.xml";
+        final String[] expectedTwo = {
+            "1: File does not end with a newline.",
+            "1: File does not end with a newline.",
+        };
+        testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
+        testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
+    }
+
+    @Test
+    public void testOrderedProperties() throws Exception {
+        final String inputFile = "strategy/OrderedProperties/test.properties";
+
+        final String defaultContextConfigPathOne =
+                "strategy/OrderedProperties/newline/defaultContextConfig.xml";
+        final String zeroContextConfigPathOne =
+                "strategy/OrderedProperties/newline/zeroContextConfig.xml";
+        final String[] expectedOne = {
+            "6: Property key 'key.pag' is not in the right order "
+                    + "with previous property 'key.png'.",
+        };
+        testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
+        testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
+
+        final String defaultContextConfigPathTwo =
+                "strategy/OrderedProperties/patchedline/defaultContextConfig.xml";
+        final String zeroContextConfigPathTwo =
+                "strategy/OrderedProperties/patchedline/zeroContextConfig.xml";
+        final String[] expectedTwo = {
+            "6: Property key 'key.pag' is not in the right order "
+                    + "with previous property 'key.png'.",
+        };
+        testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
+        testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
+    }
+
+    @Test
+    @Ignore("UniquePropertiesCheck has a problem is that violation's "
+            + "line information is not on newline,"
+            + " but on original duplicated property, this maybe solve on context strategy?")
+    public void testUniqueProperties() throws Exception {
+        final String inputFile = "strategy/UniqueProperties/test.properties";
+
+        final String defaultContextConfigPathOne =
+                "strategy/UniqueProperties/newline/defaultContextConfig.xml";
+        final String zeroContextConfigPathOne =
+                "strategy/UniqueProperties/newline/zeroContextConfig.xml";
+        final String[] expectedOne = {
+            "4: Duplicated property 'key.sub' (2 occurrence(s)).",
+        };
+        testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
+        testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
+
+        final String defaultContextConfigPathTwo =
+                "strategy/UniqueProperties/patchedline/defaultContextConfig.xml";
+        final String zeroContextConfigPathTwo =
+                "strategy/UniqueProperties/patchedline/zeroContextConfig.xml";
+        final String[] expectedTwo = {
+            "4: Duplicated property 'key.sub' (2 occurrence(s)).",
+            "18: Duplicated property 'key.sub' (2 occurrence(s)).",
+        };
+        testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
+        testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
+    }
+
+    @Test
+    @Ignore("RegexpMultilineCheck has a problem is that violation's "
+            + "line information is not on newline,"
+            + " but on original duplicated property, this maybe solve on context strategy?")
+    public void testRegexpMultiline() throws Exception {
+        final String inputFile = "strategy/RegexpMultiline/Test.java";
+
+        final String defaultContextConfigPathOne =
+                "strategy/RegexpMultiline/newline/defaultContextConfig.xml";
+        final String zeroContextConfigPathOne =
+                "strategy/RegexpMultiline/newline/zeroContextConfig.xml";
+        final String[] expectedOne = {
+            "28: Line matches the illegal pattern 'System\\.out\\.\\n                print\\('.",
+        };
+        testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
+        testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
+
+        final String defaultContextConfigPathTwo =
+                "strategy/RegexpMultiline/patchedline/defaultContextConfig.xml";
+        final String zeroContextConfigPathTwo =
+                "strategy/RegexpMultiline/patchedline/zeroContextConfig.xml";
+        final String[] expectedTwo = {
+            "18: Line matches the illegal pattern 'System\\.out\\.\\n                print\\('.",
+            "28: Line matches the illegal pattern 'System\\.out\\.\\n                print\\('.",
+        };
+        testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
+        testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
+    }
+
+    @Test
+    public void testRegexpSingleline() throws Exception {
+
+        final String inputFile = "strategy/RegexpSingleline/Input.java";
+
+        final String configPathOne = "strategy/RegexpSingleline/newline/config.xml";
         final String[] expectedOne = {
             "7: Line matches the illegal pattern 'System.out.print'.",
             "12: Line matches the illegal pattern 'System.out.print'.",
         };
-        testByConfig(configPathOne, inputFileOne, expectedOne);
+        testByConfig(configPathOne, inputFile, expectedOne);
 
-        final String configPathTwo = "strategy/patchedline/InputRegexpSingleline/config.xml";
-        final String inputFileTwo = "strategy/patchedline/InputRegexpSingleline/Input.java";
+        final String configPathTwo = "strategy/RegexpSingleline/patchedline/config.xml";
         final String[] expectedTwo = {
             "3: Line matches the illegal pattern 'System.out.print'.",
             "7: Line matches the illegal pattern 'System.out.print'.",
             "12: Line matches the illegal pattern 'System.out.print'.",
         };
-        testByConfig(configPathTwo, inputFileTwo, expectedTwo);
+        testByConfig(configPathTwo, inputFile, expectedTwo);
     }
 
     private void testByConfig(String configPath, String inputFile, String[] expected)

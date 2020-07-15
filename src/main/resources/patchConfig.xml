@@ -97,7 +97,7 @@
                  value="Only java files should be located in the ''src/*/java'' folders."/>
     </module>
 
-    <!-- Size Violations -->
+    <!-- Context Violations -->
     <module name="FileLength">
         <property name="fileExtensions" value="java"/>
     </module>

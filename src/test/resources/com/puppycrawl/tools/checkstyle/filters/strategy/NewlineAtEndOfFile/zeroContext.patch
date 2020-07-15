@@ -1,0 +1,26 @@
+diff --git a/Test.java b/Test.java
+index 3d4cda6..bb20409 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1 +1 @@
+-package Checker.NewlineAtEndOfFile;
++package Checker.NewlineAtEndOfFiles;
+diff --git a/Test2.java b/Test2.java
+index 5e458a8..898b639 100644
+--- a/Test2.java
++++ b/Test2.java
+@@ -3,0 +4,3 @@ public class Test2 {
++    public static void main(String[] args) {
++
++    }
+diff --git a/Test3.java b/Test3.java
+new file mode 100644
+index 0000000..0047b33
+--- /dev/null
++++ b/Test3.java
+@@ -0,0 +1,4 @@
++package Checker.NewlineAtEndOfFile;
++
++public class Test3 {
++}
+\ No newline at end of file

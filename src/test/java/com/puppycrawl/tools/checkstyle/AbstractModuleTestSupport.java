@@ -221,7 +221,7 @@ public abstract class AbstractModuleTestSupport extends AbstractPathTestSupport 
      *
      * @param aConfig configuration.
      * @param fileName file name to verify.
-     * @param expected an array of expected messages.
+     * @param expected an array of expected.txt messages.
      * @throws Exception if exception occurs during verification process.
      */
     protected final void verify(Configuration aConfig, String fileName, String... expected)
@@ -238,7 +238,7 @@ public abstract class AbstractModuleTestSupport extends AbstractPathTestSupport 
      *
      * @param checker {@link Checker} instance.
      * @param fileName file name to verify.
-     * @param expected an array of expected messages.
+     * @param expected an array of expected.txt messages.
      * @throws Exception if exception occurs during verification process.
      */
     protected void verify(Checker checker, String fileName, String... expected)
@@ -256,7 +256,7 @@ public abstract class AbstractModuleTestSupport extends AbstractPathTestSupport 
      * @param checker {@link Checker} instance.
      * @param processedFilename file name to verify.
      * @param messageFileName message file name.
-     * @param expected an array of expected messages.
+     * @param expected an array of expected.txt messages.
      * @throws Exception if exception occurs during verification process.
      */
     protected final void verify(Checker checker,
@@ -276,7 +276,7 @@ public abstract class AbstractModuleTestSupport extends AbstractPathTestSupport 
      *  @param checker {@link Checker} instance.
      *  @param processedFiles list of files to verify.
      *  @param messageFileName message file name.
-     *  @param expected an array of expected messages.
+     *  @param expected an array of expected.txt messages.
      *  @throws Exception if exception occurs during verification process.
      */
     protected void verify(Checker checker,
@@ -316,7 +316,7 @@ public abstract class AbstractModuleTestSupport extends AbstractPathTestSupport 
      *
      * @param checker {@link Checker} instance
      * @param processedFiles files to process.
-     * @param expectedViolations a map of expected violations per files.
+     * @param expectedViolations a map of expected.txt violations per files.
      * @throws Exception if exception occurs during verification process.
      */
     protected final void verify(Checker checker,

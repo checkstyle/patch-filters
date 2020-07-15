@@ -126,7 +126,7 @@ public class UnifiedDiffReaderTest extends AbstractModuleTestSupport {
 
     @Test
     @Ignore("error: com.github.difflib.unifieddiff.UnifiedDiffParserException: "
-            + "expected file start line not found "
+            + "expected.txt file start line not found "
             + "until https://github.com/java-diff-utils/java-diff-utils/issues/84")
     public void testGitFormatPatchLinuxTwo() throws Exception {
         final UnifiedDiff diff =

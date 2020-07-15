@@ -122,6 +122,7 @@ public class SuppressionPatchFilter extends AutomaticBean
 
     private void loadPatchFile() throws CheckstyleException {
         System.out.print(new File(".").getAbsolutePath());
+
         try (InputStream is = new FileInputStream(file)) {
             final Patch patch = new Patch();
             patch.parse(is);
@@ -133,7 +134,6 @@ public class SuppressionPatchFilter extends AutomaticBean
                         new SuppressionPatchFilterElement(fileName, lineRangeList);
                 filters.addFilter(element);
             }
-            System.out.println();
         }
         catch (IOException ex) {
             throw new CheckstyleException("an error occurred when load patch file", ex);
@@ -149,21 +149,21 @@ public class SuppressionPatchFilter extends AutomaticBean
         if (!"RENAME".equals(fileHeader.getChangeType().name())) {
             for (HunkHeader hunkHeader : fileHeader.getHunks()) {
                 final EditList edits = hunkHeader.toEditList();
-                for (int i = 0; i < edits.size(); i++) {
+                for (Edit edit : edits) {
                     if ("newline".equals(strategy)) {
-                        if (Edit.Type.INSERT.equals(edits.get(i).getType())) {
+                        if (Edit.Type.INSERT.equals(edit.getType())) {
                             final List<Integer> lineRange = new ArrayList<>();
-                            lineRange.add(edits.get(i).getBeginB());
-                            lineRange.add(edits.get(i).getEndB());
+                            lineRange.add(edit.getBeginB());
+                            lineRange.add(edit.getEndB());
                             lineRangeList.add(lineRange);
                         }
                     }
                     else {
-                        if (Edit.Type.INSERT.equals(edits.get(i).getType())
-                            || Edit.Type.REPLACE.equals(edits.get(i).getType())) {
+                        if (Edit.Type.INSERT.equals(edit.getType())
+                            || Edit.Type.REPLACE.equals(edit.getType())) {
                             final List<Integer> lineRange = new ArrayList<>();
-                            lineRange.add(edits.get(i).getBeginB());
-                            lineRange.add(edits.get(i).getEndB());
+                            lineRange.add(edit.getBeginB());
+                            lineRange.add(edit.getEndB());
                             lineRangeList.add(lineRange);
                         }
                     }
