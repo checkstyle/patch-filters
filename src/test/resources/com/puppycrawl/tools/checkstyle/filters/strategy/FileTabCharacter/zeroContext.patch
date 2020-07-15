@@ -1,0 +1,10 @@
+diff --git a/Test.java b/Test.java
+index 70fc74a..dc960b0 100644
+--- a/Test.java
++++ b/Test.java
+@@ -5 +5 @@ public class Test {
+-    // Contains a tab ->	<- //warns
++    // Contains a tab ->	<- //warn
+@@ -21,0 +22,2 @@ public class Test {
++    // Contains a tab ->	<- //warns
++    // Contains trailing whitespace ->

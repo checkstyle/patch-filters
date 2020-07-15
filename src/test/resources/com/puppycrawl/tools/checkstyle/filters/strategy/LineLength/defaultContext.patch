@@ -1,0 +1,17 @@
+diff --git a/Test.java b/Test.java
+index 5108b81..f6e3b37 100644
+--- a/Test.java
++++ b/Test.java
+@@ -2,10 +2,11 @@ package Checker;
+ 
+ public class LineLength {
+     public static void main(String[] args) {
+-        System.out.println("hhhhh");
++        System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+         System.out.println();
+         System.out.println();
+         System.out.println();
+         System.out.println();
++        System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+     }
+ }

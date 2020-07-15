@@ -1,0 +1,26 @@
+diff --git a/Test.java b/Test.java
+index f8603ef..d10d86a 100644
+--- a/Test.java
++++ b/Test.java
+@@ -10,0 +11 @@ public class Test {
++        System.out.println();
+diff --git a/Test2.java b/Test2.java
+new file mode 100644
+index 0000000..67782f7
+--- /dev/null
++++ b/Test2.java
+@@ -0,0 +1,14 @@
++package Checker.FileLength;
++
++public class Test2 {
++    public static void main(String[] args) {
++        System.out.println();
++        System.out.println();
++        System.out.println();
++        System.out.println();
++        System.out.println();
++        System.out.println();
++        System.out.println();
++        System.out.println();
++    }
++}
