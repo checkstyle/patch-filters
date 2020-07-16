@@ -260,6 +260,114 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
     }
 
     @Test
+    public void testFileTabCharacterMoveCodeInSameFileWithoutChanges() throws Exception {
+        final String inputFile =
+                "strategy/FileTabCharacter/MoveCodeInSameFileWithoutChanges/Test.java";
+
+        final String defaultContextConfigPathOne =
+                "strategy/FileTabCharacter/MoveCodeInSameFileWithoutChanges/"
+                        + "newline/defaultContextConfig.xml";
+        final String zeroContextConfigPathOne =
+                "strategy/FileTabCharacter/MoveCodeInSameFileWithoutChanges/"
+                        + "newline/zeroContextConfig.xml";
+        final String[] expectedOne = {
+            "19:25: Line contains a tab character.",
+        };
+        testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
+        testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
+
+        final String defaultContextConfigPathTwo =
+                "strategy/FileTabCharacter/MoveCodeInSameFileWithoutChanges"
+                        + "/patchedline/defaultContextConfig.xml";
+        final String zeroContextConfigPathTwo =
+                "strategy/FileTabCharacter/MoveCodeInSameFileWithoutChanges/"
+                        + "patchedline/zeroContextConfig.xml";
+        final String[] expectedTwo = {
+            "19:25: Line contains a tab character.",
+        };
+        testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
+        testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
+    }
+
+    @Test
+    public void testFileTabCharacterMoveCodeInSameFileWithMinorChanges() throws Exception {
+        final String inputFile =
+                "strategy/FileTabCharacter/MoveCodeInSameFileWithMinorChanges/Test.java";
+
+        final String defaultContextConfigPathOne =
+                "strategy/FileTabCharacter/"
+                        + "MoveCodeInSameFileWithMinorChanges/newline/defaultContextConfig.xml";
+        final String zeroContextConfigPathOne =
+                "strategy/FileTabCharacter/"
+                        + "MoveCodeInSameFileWithMinorChanges/newline/zeroContextConfig.xml";
+        final String[] expectedOne = {
+            "19:25: Line contains a tab character.",
+        };
+        testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
+        testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
+
+        final String defaultContextConfigPathTwo =
+                "strategy/FileTabCharacter/MoveCodeInSameFileWithMinorChanges"
+                        + "/patchedline/defaultContextConfig.xml";
+        final String zeroContextConfigPathTwo =
+                "strategy/FileTabCharacter/MoveCodeInSameFileWithMinorChanges"
+                        + "/patchedline/zeroContextConfig.xml";
+        final String[] expectedTwo = {
+            "19:25: Line contains a tab character.",
+        };
+        testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
+        testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
+    }
+
+    @Test
+    public void testFileTabCharacterSingleChangedLine() throws Exception {
+        final String inputFile = "strategy/FileTabCharacter/SingleChangedLine/Test.java";
+
+        final String defaultContextConfigPathOne =
+                "strategy/FileTabCharacter/SingleChangedLine/newline/defaultContextConfig.xml";
+        final String zeroContextConfigPathOne =
+                "strategy/FileTabCharacter/SingleChangedLine/newline/zeroContextConfig.xml";
+        final String[] expectedOne = {};
+        testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
+        testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
+
+        final String defaultContextConfigPathTwo =
+                "strategy/FileTabCharacter/SingleChangedLine/patchedline/defaultContextConfig.xml";
+        final String zeroContextConfigPathTwo =
+                "strategy/FileTabCharacter/SingleChangedLine/patchedline/zeroContextConfig.xml";
+        final String[] expectedTwo = {
+            "19:25: Line contains a tab character.",
+        };
+        testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
+        testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
+    }
+
+    @Test
+    public void testFileTabCharacterSingleNewLine() throws Exception {
+        final String inputFile = "strategy/FileTabCharacter/SingleNewLine/Test.java";
+
+        final String defaultContextConfigPathOne =
+                "strategy/FileTabCharacter/SingleNewLine/newline/defaultContextConfig.xml";
+        final String zeroContextConfigPathOne =
+                "strategy/FileTabCharacter/SingleNewLine/newline/zeroContextConfig.xml";
+        final String[] expectedOne = {
+            "20:25: Line contains a tab character.",
+        };
+        testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
+        testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
+
+        final String defaultContextConfigPathTwo =
+                "strategy/FileTabCharacter/SingleNewLine/patchedline/defaultContextConfig.xml";
+        final String zeroContextConfigPathTwo =
+                "strategy/FileTabCharacter/SingleNewLine/patchedline/zeroContextConfig.xml";
+        final String[] expectedTwo = {
+            "20:25: Line contains a tab character.",
+        };
+        testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
+        testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
+    }
+
+    @Test
     @Ignore("until https://github.com/checkstyle/patch-filters/issues/88 "
             + "when testByConfig can process a directory contains more than one file")
     public void testRegexpOnFilename() throws Exception {
