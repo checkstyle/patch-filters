@@ -216,7 +216,7 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         final String zeroContextConfigPathOne =
                 "strategy/LineLength/newline/zeroContextConfig.xml";
         final String[] expectedOne = {
-            "10: Line is longer than 80 characters (found 129).",
+            "10: Line is longer than 80 characters (found 163).",
         };
         testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
         testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
@@ -226,8 +226,8 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         final String zeroContextConfigPathTwo =
                 "strategy/LineLength/patchedline/zeroContextConfig.xml";
         final String[] expectedTwo = {
-            "5: Line is longer than 80 characters (found 129).",
-            "10: Line is longer than 80 characters (found 129).",
+            "5: Line is longer than 80 characters (found 155).",
+            "10: Line is longer than 80 characters (found 163).",
         };
         testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
         testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
@@ -242,7 +242,7 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         final String zeroContextConfigPathOne =
                 "strategy/FileTabCharacter/newline/zeroContextConfig.xml";
         final String[] expectedOne = {
-            "22:25: Line contains a tab character.",
+            "21:25: Line contains a tab character.",
         };
         testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
         testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
@@ -253,7 +253,7 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
                 "strategy/FileTabCharacter/patchedline/zeroContextConfig.xml";
         final String[] expectedTwo = {
             "5:25: Line contains a tab character.",
-            "22:25: Line contains a tab character.",
+            "21:25: Line contains a tab character.",
         };
         testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
         testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);

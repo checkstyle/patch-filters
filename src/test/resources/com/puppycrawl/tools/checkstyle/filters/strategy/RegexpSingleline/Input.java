@@ -1,14 +1,14 @@
 class Input {
     public void a() {
-        System.out.print("changed"); // no violation, because it's not a new line
+        System.out.print("changed");  // violation patchedline
     }
 
     public boolean b() {
-        System.out.print("b"); // violation
+        System.out.print("b");  // violation newline/patchedline
         return false;
     }
 
     public void c() {
-        System.out.print("c"); // violation
+        System.out.print("c");  // violation newline/patchedline
     }
 }
