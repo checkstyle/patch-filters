@@ -29,7 +29,6 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -122,9 +121,6 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
     }
 
     @Test
-    @Ignore("FileLength has a problem is that violation's "
-            + "line information is not on newline/patchedline, but on the first line,"
-            + "this maybe solve on context strategy")
     public void testFileLength() throws Exception {
         final String inputFile = "strategy/FileLength/Test";
 
@@ -133,7 +129,7 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         final String zeroContextConfigPathOne =
                 "strategy/FileLength/newline/zeroContextConfig.xml";
         final String[] expectedOne = {
-            "Test.java:1: File length is 13 lines (max allowed is 5).",
+            "Test.java:1: File length is 12 lines (max allowed is 5).",
             "Test2.java:1: File length is 14 lines (max allowed is 5).",
         };
         testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
@@ -144,7 +140,7 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         final String zeroContextConfigPathTwo =
                 "strategy/FileLength/patchedline/zeroContextConfig.xml";
         final String[] expectedTwo = {
-            "Test.java:1: File length is 13 lines (max allowed is 5).",
+            "Test.java:1: File length is 12 lines (max allowed is 5).",
             "Test2.java:1: File length is 14 lines (max allowed is 5).",
         };
         testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
@@ -312,9 +308,6 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
     }
 
     @Test
-    @Ignore("RegexpOnFilename has a problem is that violation's "
-            + "line information is not on newline/patchedline, but on the first line,"
-            + "this maybe solve on context strategy")
     public void testRegexpOnFilename() throws Exception {
         final String inputFile = "strategy/RegexpOnFilename/Test";
 
@@ -344,9 +337,6 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
     }
 
     @Test
-    @Ignore("NewlineAtEndOfFile has a problem is that violation's "
-            + "line information is not on newline/patchedline, but on the first line,"
-            + "this maybe solve on context strategy")
     public void testNewlineAtEndOfFile() throws Exception {
         final String inputFile = "strategy/NewlineAtEndOfFile/Test";
 
