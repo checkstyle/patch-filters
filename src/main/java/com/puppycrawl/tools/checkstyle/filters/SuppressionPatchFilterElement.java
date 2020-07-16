@@ -26,22 +26,25 @@ import com.puppycrawl.tools.checkstyle.api.Filter;
 
 /**
  * This filter element is immutable and processes.
- *
  */
 public class SuppressionPatchFilterElement implements Filter {
 
-    /** The String of file names. */
+    /**
+     * The String of file names.
+     */
     private final String fileName;
 
-    /** The list of line range. */
+    /**
+     * The list of line range.
+     */
     private final List<List<Integer>> lineRangeList;
 
     /**
      * Constructs a {@code SuppressPatchFilterElement} for a
      * file name pattern.
      *
-     * @param fileName names of filtered files.
-     * @param lineRangeList   list of line range for line number filtering.
+     * @param fileName      names of filtered files.
+     * @param lineRangeList list of line range for line number filtering.
      */
     public SuppressionPatchFilterElement(String fileName, List<List<Integer>> lineRangeList) {
         this.fileName = fileName;
@@ -50,7 +53,8 @@ public class SuppressionPatchFilterElement implements Filter {
 
     @Override
     public boolean accept(AuditEvent event) {
-        return isFileNameMatching(event) && isLineMatching(event);
+        return isFileNameMatching(event)
+                && (isContextStrategyCheck(event) || isLineMatching(event));
     }
 
     /**
@@ -83,6 +87,24 @@ public class SuppressionPatchFilterElement implements Filter {
                     break;
                 }
             }
+        }
+        return result;
+    }
+
+    /**
+     * Is matching by context strategy check.
+     *
+     * @param event event
+     * @return true if it is matching
+     */
+    private boolean isContextStrategyCheck(AuditEvent event) {
+        boolean result = false;
+        final String[] checkNames = event.getLocalizedMessage().getSourceName().split("\\.");
+        final String checkShortName = checkNames[checkNames.length - 1];
+        if ("RegexpOnFilenameCheck".equals(checkShortName)
+                || "FileLengthCheck".equals(checkShortName)
+                || "NewlineAtEndOfFileCheck".equals(checkShortName)) {
+            result = true;
         }
         return result;
     }
