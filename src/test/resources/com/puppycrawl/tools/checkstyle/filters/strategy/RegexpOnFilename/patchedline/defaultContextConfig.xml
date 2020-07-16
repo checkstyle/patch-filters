@@ -5,9 +5,9 @@
 <module name="Checker">
   <module name="RegexpOnFilename">
     <property name="fileNamePattern" value="\.java$"/>
-    <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
-      <property name="file" value="src/test/resources/com/puppycrawl/tools/checkstyle/filters/strategy/RegexpOnFilename/defaultContext.patch" />
-      <property name="strategy" value="patchedline" />
-    </module>
+  </module>
+  <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
+    <property name="file" value="src/test/resources/com/puppycrawl/tools/checkstyle/filters/strategy/RegexpOnFilename/defaultContext.patch" />
+    <property name="strategy" value="patchedline" />
   </module>
 </module>

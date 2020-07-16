@@ -30,7 +30,6 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -122,8 +121,9 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
     }
 
     @Test
-    @Ignore("until https://github.com/checkstyle/patch-filters/issues/88 "
-            + "when testByConfig can process a directory contains more than one file")
+    @Ignore("FileLength has a problem is that violation's "
+            + "line information is not on newline/patchedline, but on the first line,"
+            + "this maybe solve on context strategy")
     public void testFileLength() throws Exception {
         final String inputFile = "strategy/FileLength/Test";
 
@@ -132,7 +132,8 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         final String zeroContextConfigPathOne =
                 "strategy/FileLength/newline/zeroContextConfig.xml";
         final String[] expectedOne = {
-            "1: File length is 14 lines (max allowed is 5).",
+            "Test.java:1: File length is 13 lines (max allowed is 5).",
+            "Test2.java:1: File length is 14 lines (max allowed is 5).",
         };
         testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
         testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
@@ -142,7 +143,8 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         final String zeroContextConfigPathTwo =
                 "strategy/FileLength/patchedline/zeroContextConfig.xml";
         final String[] expectedTwo = {
-            "1: File length is 14 lines (max allowed is 5).",
+            "Test.java:1: File length is 13 lines (max allowed is 5).",
+            "Test2.java:1: File length is 14 lines (max allowed is 5).",
         };
         testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
         testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
@@ -309,8 +311,9 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
     }
 
     @Test
-    @Ignore("until https://github.com/checkstyle/patch-filters/issues/88 "
-            + "when testByConfig can process a directory contains more than one file")
+    @Ignore("RegexpOnFilename has a problem is that violation's "
+            + "line information is not on newline/patchedline, but on the first line,"
+            + "this maybe solve on context strategy")
     public void testRegexpOnFilename() throws Exception {
         final String inputFile = "strategy/RegexpOnFilename/Test";
 
@@ -319,7 +322,9 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         final String zeroContextConfigPathOne =
                 "strategy/RegexpOnFilename/newline/zeroContextConfig.xml";
         final String[] expectedOne = {
-            "1: File match folder pattern '' and file pattern '\\.java$'.",
+            "Test.java:1: File match folder pattern '' and file pattern '\\.java$'.",
+            "Test2.java:1: File match folder pattern '' and file pattern '\\.java$'.",
+            "Test3.java:1: File match folder pattern '' and file pattern '\\.java$'.",
         };
         testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
         testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
@@ -329,16 +334,18 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         final String zeroContextConfigPathTwo =
                 "strategy/RegexpOnFilename/patchedline/zeroContextConfig.xml";
         final String[] expectedTwo = {
-            "1: File match folder pattern '' and file pattern '\\.java$'.",
-            "1: File match folder pattern '' and file pattern '\\.java$'.",
+            "Test.java:1: File match folder pattern '' and file pattern '\\.java$'.",
+            "Test2.java:1: File match folder pattern '' and file pattern '\\.java$'.",
+            "Test3.java:1: File match folder pattern '' and file pattern '\\.java$'.",
         };
         testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
         testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
     }
 
     @Test
-    @Ignore("until https://github.com/checkstyle/patch-filters/issues/88 "
-            + "when testByConfig can process a directory contains more than one file")
+    @Ignore("NewlineAtEndOfFile has a problem is that violation's "
+            + "line information is not on newline/patchedline, but on the first line,"
+            + "this maybe solve on context strategy")
     public void testNewlineAtEndOfFile() throws Exception {
         final String inputFile = "strategy/NewlineAtEndOfFile/Test";
 
@@ -347,7 +354,9 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         final String zeroContextConfigPathOne =
                 "strategy/NewlineAtEndOfFile/newline/zeroContextConfig.xml";
         final String[] expectedOne = {
-            "1: File does not end with a newline.",
+            "Test.java:1: File does not end with a newline.",
+            "Test2.java:1: File does not end with a newline.",
+            "Test3.java:1: File does not end with a newline.",
         };
         testByConfig(defaultContextConfigPathOne, inputFile, expectedOne);
         testByConfig(zeroContextConfigPathOne, inputFile, expectedOne);
@@ -357,8 +366,9 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         final String zeroContextConfigPathTwo =
                 "strategy/NewlineAtEndOfFile/patchedline/zeroContextConfig.xml";
         final String[] expectedTwo = {
-            "1: File does not end with a newline.",
-            "1: File does not end with a newline.",
+            "Test.java:1: File does not end with a newline.",
+            "Test2.java:1: File does not end with a newline.",
+            "Test3.java:1: File does not end with a newline.",
         };
         testByConfig(defaultContextConfigPathTwo, inputFile, expectedTwo);
         testByConfig(zeroContextConfigPathTwo, inputFile, expectedTwo);
@@ -393,8 +403,8 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
 
     @Test
     @Ignore("UniquePropertiesCheck has a problem is that violation's "
-            + "line information is not on newline,"
-            + " but on original duplicated property, this maybe solve on context strategy?")
+            + "line information is not on newline/patchedline,"
+            + " but on original duplicated property, this maybe solve on context strategy")
     public void testUniqueProperties() throws Exception {
         final String inputFile = "strategy/UniqueProperties/test.properties";
 
@@ -422,8 +432,8 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
 
     @Test
     @Ignore("RegexpMultilineCheck has a problem is that violation's "
-            + "line information is not on newline,"
-            + " but on original duplicated property, this maybe solve on context strategy?")
+            + "line information is not on newline/patchedline,"
+            + "this maybe solve on context strategy")
     public void testRegexpMultiline() throws Exception {
         final String inputFile = "strategy/RegexpMultiline/Test.java";
 
@@ -488,9 +498,16 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
 
         // run RootModule
         final String path = getPath(inputFile);
-        final List<File> files = Collections.singletonList(
-                new File(path));
-        final int errorCounter = rootModule.process(files);
+        final File file = new File(path);
+        final int errorCounter;
+        final List<File> theFiles;
+        if (file.isDirectory()) {
+            theFiles = Arrays.asList(new File(path).listFiles());
+        }
+        else {
+            theFiles = Arrays.asList(new File(path));
+        }
+        errorCounter = rootModule.process(theFiles);
 
         // process each of the lines
         try (ByteArrayInputStream inputStream =
@@ -502,7 +519,14 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
             Arrays.sort(expected);
 
             for (int i = 0; i < expected.length; i++) {
-                final String expectedResult = path + ":" + expected[i];
+                final String seperate;
+                if (file.isDirectory()) {
+                    seperate = "/";
+                }
+                else {
+                    seperate = ":";
+                }
+                final String expectedResult = path + seperate + expected[i];
                 assertEquals("error message " + i, expectedResult, actuals.get(i));
             }
 
