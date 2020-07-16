@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -500,6 +501,7 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
         final String path = getPath(inputFile);
         final File file = new File(path);
         final int errorCounter;
+
         final List<File> theFiles;
         if (file.isDirectory()) {
             theFiles = Arrays.asList(new File(path).listFiles());
