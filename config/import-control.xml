@@ -15,7 +15,6 @@
     <allow pkg="org.apache.commons.beanutils"/>
     <allow pkg="org.apache.commons.logging"/>
     <allow pkg="org.xml.sax"/>
-    <allow pkg="com.github.difflib"/>
 
     <subpackage name="generatepatchfile">
         <allow pkg="org.eclipse.jgit"/>
