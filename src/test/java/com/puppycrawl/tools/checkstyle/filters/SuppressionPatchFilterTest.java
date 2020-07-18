@@ -474,6 +474,7 @@ public class SuppressionPatchFilterTest extends AbstractModuleTestSupport {
     private void testByConfig(String configPath, String inputFile, String[] expected)
             throws Exception {
         // we can add here any variable to provide path to patch name by PropertiesExpander
+        System.setProperty("tp", "src/test/resources/com/puppycrawl/tools/checkstyle/filters");
         final Configuration config = ConfigurationLoader.loadConfiguration(
                 getPath(configPath),
                 new PropertiesExpander(System.getProperties()));

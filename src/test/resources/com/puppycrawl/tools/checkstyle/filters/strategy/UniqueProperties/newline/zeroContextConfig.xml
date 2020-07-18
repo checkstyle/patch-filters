@@ -5,7 +5,7 @@
 <module name="Checker">
   <module name="UniqueProperties"/>
   <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
-    <property name="file" value="src/test/resources/com/puppycrawl/tools/checkstyle/filters/strategy/UniqueProperties/zeroContext.patch" />
+    <property name="file" value="${tp}/strategy/UniqueProperties/zeroContext.patch" />
     <property name="strategy" value="newline" />
   </module>
 </module>

@@ -7,7 +7,7 @@
     <property name="fileNamePattern" value="\.java$"/>
   </module>
   <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
-    <property name="file" value="src/test/resources/com/puppycrawl/tools/checkstyle/filters/strategy/RegexpOnFilename/zeroContext.patch" />
+    <property name="file" value="${tp}/strategy/RegexpOnFilename/zeroContext.patch" />
     <property name="strategy" value="newline" />
   </module>
 </module>
