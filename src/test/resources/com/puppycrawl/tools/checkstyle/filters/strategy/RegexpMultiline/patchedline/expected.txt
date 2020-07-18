@@ -1,4 +1,2 @@
-Starting audit...
-[ERROR] /Users/hgh/Downloads/my_file/IDEA_workspace/patchfiltergeneratepatch/src/main/java/Checker/RegexpMultiline/Test.java:18: Line matches the illegal pattern 'System\.out\.\n                print\('. [RegexpMultiline]
-[ERROR] /Users/hgh/Downloads/my_file/IDEA_workspace/patchfiltergeneratepatch/src/main/java/Checker/RegexpMultiline/Test.java:28: Line matches the illegal pattern 'System\.out\.\n                print\('. [RegexpMultiline]
-Audit done.
+Test.java:18: Line matches the illegal pattern 'System\.out\.\n                print\('.
+Test.java:28: Line matches the illegal pattern 'System\.out\.\n                print\('.

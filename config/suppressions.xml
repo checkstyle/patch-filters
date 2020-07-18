@@ -10,7 +10,7 @@
                      |CheckstyleAntTaskTest|
                      |TranslationCheckTest|LocalizedMessageTest|AbstractFileSetCheckTest|
                      |AbstractCheckTest|AutomaticBeanTest|GeneratePatchFile|
-                     |SuppressionPatchFilterTest|SuppressionPatchXpathFilterTest)\.java"/>
+                     |AbstractPatchFilterEvaluationTest)\.java"/>
     <suppress checks="MagicNumber"
             files="GeneratePatchFileLauncher|GeneratePatchFileWithGitCommandLauncher\.java"/>
     <suppress checks="UncommentedMain"

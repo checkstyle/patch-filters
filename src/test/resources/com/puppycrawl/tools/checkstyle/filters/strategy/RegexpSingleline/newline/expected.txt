@@ -1,4 +1,2 @@
-Starting audit...
-[ERROR] C:\Users\Baratali\git\test_checkstyle\line-strategy\Input.java:7: Line matches the illegal pattern 'System.out.print'. [RegexpSingleline]
-[ERROR] C:\Users\Baratali\git\test_checkstyle\line-strategy\Input.java:12: Line matches the illegal pattern 'System.out.print'. [RegexpSingleline]
-Audit done.
+Input.java:12: Line matches the illegal pattern 'System.out.print'.
+Input.java:7: Line matches the illegal pattern 'System.out.print'.
