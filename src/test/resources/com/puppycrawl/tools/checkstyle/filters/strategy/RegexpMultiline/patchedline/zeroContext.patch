@@ -1,0 +1,10 @@
+diff --git a/Test.java b/Test.java
+index d0937d7..ab5fa09 100644
+--- a/Test.java
++++ b/Test.java
+@@ -19 +19 @@ public class Test {
+-                printf("Example");
++                print("Example");
+@@ -27,0 +28,2 @@ public class Test {
++        System.out.
++                print("Example");

@@ -24,6 +24,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.nio.charset.StandardCharsets;
@@ -63,19 +64,23 @@ abstract class AbstractPatchFilterEvaluationTest extends AbstractModuleTestSuppo
 
         // run RootModule
         final String inputFile = configPath.replaceFirst(
-                "(newline|patchedline)/(default|zero)ContextConfig.xml", "Test/");
+                "(default|zero)ContextConfig.xml", "");
+
         final String path = getPath(inputFile);
         final File file = new File(path);
         final int errorCounter;
 
         final List<File> theFiles;
-        if (file.isDirectory()) {
-            theFiles = Arrays.asList(file.listFiles());
+        final File[] files = file.listFiles((dir, name) -> {
+            return name.endsWith(".java") || name.endsWith(".properties");
+        });
+        if (files != null) {
+            theFiles = Arrays.asList(files);
+            errorCounter = rootModule.process(theFiles);
         }
         else {
-            theFiles = Arrays.asList(file);
+            throw new IOException("there is no java file in this directory.");
         }
-        errorCounter = rootModule.process(theFiles);
 
         // process each of the lines
         try (ByteArrayInputStream inputStream =
@@ -89,13 +94,7 @@ abstract class AbstractPatchFilterEvaluationTest extends AbstractModuleTestSuppo
                     .collect(Collectors.toList());
 
             for (int i = 0; i < expected.size(); i++) {
-                final String seperate;
-                if (file.isDirectory()) {
-                    seperate = "/";
-                }
-                else {
-                    seperate = ":";
-                }
+                final String seperate = "/";
                 final String expectedResult = path + seperate + expected.get(i);
                 assertEquals("error message " + i, expectedResult, actuals.get(i));
             }
