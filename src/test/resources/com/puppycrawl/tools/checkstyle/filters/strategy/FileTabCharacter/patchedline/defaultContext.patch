@@ -1,0 +1,21 @@
+diff --git a/Test.java b/Test.java
+index 6730df1..aea01e2 100644
+--- a/Test.java
++++ b/Test.java
+@@ -2,7 +2,7 @@ package Checker.FileTabCharacter;
+ 
+ public class Test {
+     // Long line ----------------------------------------------------------------
+-    // Contains a tab ->	<- //warns
++    // Contains a tab ->	<- //warn
+ 
+ 
+ 
+@@ -18,6 +18,7 @@ public class Test {
+ 
+     // Long line ----------------------------------------------------------------
+     // Long line ----------------------------------------------------------------
++    // Contains a tab ->	<- //warns
+ 
+ 
+ }

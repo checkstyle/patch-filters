@@ -8,7 +8,7 @@
     <property name="format" value="System\.out\.\n                print\("/>
   </module>
   <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
-    <property name="file" value="${tp}/strategy/RegexpMultiline/defaultContext.patch" />
+    <property name="file" value="${tp}/strategy/RegexpMultiline/newline/defaultContext.patch" />
     <property name="strategy" value="newline" />
   </module>
 </module>

@@ -7,7 +7,7 @@
     <property name="max" value="5"/>
   </module>
   <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
-    <property name="file" value="${tp}/strategy/FileLength/defaultContext.patch" />
+    <property name="file" value="${tp}/strategy/FileLength/patchedline/defaultContext.patch" />
     <property name="strategy" value="patchedline" />
   </module>
 </module>

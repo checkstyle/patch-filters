@@ -1,0 +1,9 @@
+diff --git a/src/main/java/Checker/FileTabCharacter/Test.java b/src/main/java/Checker/FileTabCharacter/Test.java
+index 6730df1..aea01e2 100644
+--- a/Test.java
++++ b/Test.java
+@@ -5 +5 @@ public class Test {
+-    // Contains a tab ->	<- //warns
++    // Contains a tab ->	<- //warn
+@@ -20,0 +21 @@ public class Test {
++    // Contains a tab ->	<- //warns
