@@ -1,0 +1,14 @@
+diff --git a/test.properties b/test.properties
+index d0c3d93..9f88fd7 100644
+--- a/test.properties
++++ b/test.properties
+@@ -1,3 +1,4 @@
++check=100
+ A =65
+ a =97
+ key =107 than nothing
+@@ -17,3 +18,4 @@ key.sub =k is 107 and dot is 46
+ 
+ key.pag =value - violation
+ key.pag =value - violation
++check=200

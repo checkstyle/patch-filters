@@ -19,7 +19,6 @@
 
 package com.puppycrawl.tools.checkstyle.filters;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTest {
@@ -27,6 +26,18 @@ public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTes
     @Override
     protected String getPackageLocation() {
         return "com/puppycrawl/tools/checkstyle/filters/suppressionpatchfilter/";
+    }
+
+    @Test
+    public void testNeverSuppressedChecks() throws Exception {
+        testByConfig(
+                "neversuppressedchecks/UniqueProperties/checkID/defaultContextConfig.xml");
+        testByConfig(
+                "neversuppressedchecks/UniqueProperties/checkShortName/defaultContextConfig.xml");
+        testByConfig(
+                "neversuppressedchecks/RegexpMultiline/checkID/defaultContextConfig.xml");
+        testByConfig(
+                "neversuppressedchecks/RegexpMultiline/checkShortName/defaultContextConfig.xml");
     }
 
     @Test
@@ -134,21 +145,21 @@ public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTes
     }
 
     @Test
-    @Ignore("UniquePropertiesCheck has a problem is that violation's "
-            + "line information is not on newline/patchedline,"
-            + " but on original duplicated property, this maybe solve on context strategy")
     public void testUniqueProperties() throws Exception {
-        testByConfig("UniqueProperties/newline/defaultContextConfig.xml");
-        testByConfig("UniqueProperties/newline/zeroContextConfig.xml");
+        testByConfig("UniqueProperties/caseOne/newline/defaultContextConfig.xml");
+        testByConfig("UniqueProperties/caseOne/newline/zeroContextConfig.xml");
 
-        testByConfig("UniqueProperties/patchedline/defaultContextConfig.xml");
-        testByConfig("UniqueProperties/patchedline/zeroContextConfig.xml");
+        testByConfig("UniqueProperties/caseOne/patchedline/defaultContextConfig.xml");
+        testByConfig("UniqueProperties/caseOne/patchedline/zeroContextConfig.xml");
+
+        testByConfig("UniqueProperties/caseOne/newline/defaultContextConfig.xml");
+        testByConfig("UniqueProperties/caseOne/newline/zeroContextConfig.xml");
+
+        testByConfig("UniqueProperties/caseTwo/newline/defaultContextConfig.xml");
+        testByConfig("UniqueProperties/caseTwo/patchedline/defaultContextConfig.xml");
     }
 
     @Test
-    @Ignore("RegexpMultilineCheck has a problem is that violation's "
-            + "line information is not on newline/patchedline,"
-            + "this maybe solve on context strategy")
     public void testRegexpMultiline() throws Exception {
         testByConfig("RegexpMultiline/newline/defaultContextConfig.xml");
         testByConfig("RegexpMultiline/newline/zeroContextConfig.xml");

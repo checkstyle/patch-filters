@@ -1,0 +1,1 @@
+test.properties:1: Duplicated property 'check' (2 occurrence(s)).
