@@ -1,0 +1,2 @@
+Test.java:7:8: Unused @param tag for 'arg2'.
+Test.java:25:44: Expected @param tag for 'arg2'.

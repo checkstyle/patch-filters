@@ -74,10 +74,10 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
         boolean result = false;
         if (event.getLocalizedMessage() != null) {
             for (List<Integer> singleLineRangeList : lineRangeList) {
-                final int startLine = singleLineRangeList.get(0);
-                final int endLine = singleLineRangeList.get(1);
+                final int startLine = singleLineRangeList.get(0) + 1;
+                final int endLine = singleLineRangeList.get(1) + 1;
                 final int currentLine = event.getLine();
-                result = currentLine >= startLine && currentLine <= endLine;
+                result = currentLine >= startLine && currentLine < endLine;
                 if (result) {
                     break;
                 }
