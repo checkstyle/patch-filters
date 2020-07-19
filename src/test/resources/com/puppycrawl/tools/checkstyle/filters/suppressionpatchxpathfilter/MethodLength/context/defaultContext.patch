@@ -1,0 +1,11 @@
+diff --git a/Test.java b/Test.java
+index d85e94c..bcd3588 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,4 +1,6 @@
+ public class Test {
++    private String name;
++
+     public void test() {
+         int a = 123;
+         int b = 234;

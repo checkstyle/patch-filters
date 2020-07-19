@@ -122,4 +122,21 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
         testByConfig(
                 "MemberName/patchedline/defaultContextConfig.xml");
     }
+
+    @Test
+    @Ignore("MethodLength should have a violation when method length"
+            + " is more than threshold, but not. It should be solved by"
+            + "context strategy.")
+    public void testMethodLengthContextStrategy() throws Exception {
+        testByConfig(
+                "MethodLength/contexttwo/defaultContextConfig.xml");
+    }
+
+    @Test
+    @Ignore("MethodLength should have no violations after patching,"
+            + " but should show violations before patching.")
+    public void testMethodLengthViolationShouldBeSuppressedAfterPatch() throws Exception {
+        testByConfig(
+                "MethodLength/context/defaultContextConfig.xml");
+    }
 }
