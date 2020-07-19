@@ -1,0 +1,19 @@
+diff --git a/Test.java b/Test.java
+index bc9451d..ad14cca 100644
+--- a/Test.java
++++ b/Test.java
+@@ -2,9 +2,11 @@ package TreeWalker.AvoidNestedBlocks;
+ 
+ public class Test {
+     public void fun(boolean valid) {
+-        if (valid) {
+-            {
+-                System.out.println("ok");
++        {
++            if (valid) {
++                {
++                    System.out.println("ok");
++                }
+             }
+         }
+     }

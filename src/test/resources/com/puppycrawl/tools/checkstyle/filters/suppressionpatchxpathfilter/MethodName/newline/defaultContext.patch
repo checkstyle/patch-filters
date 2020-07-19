@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index 25daab5..3eec9b8 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,5 +1,7 @@
+ package TreeWalker.MethodName;
+ 
+ public class Test {
++    public void MyMethod(int a, int b) { }
+     public void MyMethod(int a) { }
++    public void MyMethod(String a) { }
+ }

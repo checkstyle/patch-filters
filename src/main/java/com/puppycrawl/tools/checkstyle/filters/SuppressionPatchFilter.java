@@ -109,7 +109,7 @@ public class SuppressionPatchFilter extends AutomaticBean
      *
      * @throws CheckstyleException if there is a configuration error.
      */
-    protected void finishLocalSetup() throws CheckstyleException {
+    public void finishLocalSetup() throws CheckstyleException {
         if (file != null) {
             loadPatchFile();
         }

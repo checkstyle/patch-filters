@@ -1,0 +1,2 @@
+Test.java:5:9: Avoid nested blocks.
+Test.java:7:17: Avoid nested blocks.

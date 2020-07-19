@@ -113,7 +113,7 @@ public class SuppressionPatchXpathFilter extends AutomaticBean implements
     }
 
     @Override
-    protected void finishLocalSetup() throws CheckstyleException {
+    public void finishLocalSetup() throws CheckstyleException {
         if (file != null) {
             loadPatchFile();
         }
