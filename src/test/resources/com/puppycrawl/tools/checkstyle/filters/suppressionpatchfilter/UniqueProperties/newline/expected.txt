@@ -1,1 +1,0 @@
-test.properties:4: Duplicated property 'key.sub' (2 occurrence(s)).

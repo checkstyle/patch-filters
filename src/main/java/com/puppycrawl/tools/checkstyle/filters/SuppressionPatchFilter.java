@@ -22,7 +22,9 @@ package com.puppycrawl.tools.checkstyle.filters;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -45,6 +47,10 @@ import com.puppycrawl.tools.checkstyle.api.Filter;
  */
 public class SuppressionPatchFilter extends AutomaticBean
         implements Filter, ExternalResourceHolder {
+    /**
+     * To split never Suppressed Checks and Ids's string.
+     */
+    private static final String COMMA = ",";
 
     /**
      * Specify the location of the patch file.
@@ -63,6 +69,11 @@ public class SuppressionPatchFilter extends AutomaticBean
      * Control if only consider added lines in file.
      */
     private String strategy;
+
+    /**
+     * Set has user defined Checks to never suppress if files are touched.
+     */
+    private Set<String> neverSuppressedChecks;
 
     /**
      * Set of individual suppresses.
@@ -85,6 +96,17 @@ public class SuppressionPatchFilter extends AutomaticBean
      */
     public void setStrategy(String strategy) {
         this.strategy = strategy;
+    }
+
+    /**
+     * Setter to set has user defined list of Checks to NEVER suppress if files are touched.
+     *
+     * @param neverSuppressedChecks string has user defined Checks to never suppress
+     *                              if files are touched, split by comma
+     */
+    public void setNeverSuppressedChecks(String neverSuppressedChecks) {
+        final String[] checksArray = neverSuppressedChecks.split(COMMA);
+        this.neverSuppressedChecks = new HashSet<>(Arrays.asList(checksArray));
     }
 
     /**
@@ -126,7 +148,8 @@ public class SuppressionPatchFilter extends AutomaticBean
                 final String fileName = loadPatchFileUtils.getFileName();
                 final List<List<Integer>> lineRangeList = loadPatchFileUtils.getLineRange();
                 final SuppressionPatchFilterElement element =
-                        new SuppressionPatchFilterElement(fileName, lineRangeList);
+                        new SuppressionPatchFilterElement(fileName, lineRangeList,
+                                neverSuppressedChecks);
                 filters.addFilter(element);
             }
         }

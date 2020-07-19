@@ -15,7 +15,7 @@ public class Test {
 
 
 
-        System.out.  // violation patchedline
+        System.out.
                 print("Example");
 
 
@@ -25,7 +25,7 @@ public class Test {
 
 
         ////
-        System.out.  // violation newline/patchedline
+        System.out.
                 print("Example");
 
 

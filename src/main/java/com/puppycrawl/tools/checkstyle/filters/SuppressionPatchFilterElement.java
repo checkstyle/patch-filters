@@ -20,6 +20,7 @@
 package com.puppycrawl.tools.checkstyle.filters;
 
 import java.util.List;
+import java.util.Set;
 
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.Filter;
@@ -40,21 +41,31 @@ public class SuppressionPatchFilterElement implements Filter {
     private final List<List<Integer>> lineRangeList;
 
     /**
+     * Set has user defined Checks to never suppress if files are touched.
+     */
+    private final Set<String> neverSuppressedChecks;
+
+    /**
      * Constructs a {@code SuppressPatchFilterElement} for a
      * file name pattern.
      *
-     * @param fileName      names of filtered files.
-     * @param lineRangeList list of line range for line number filtering.
+     * @param fileName      names of filtered files
+     * @param lineRangeList list of line range for line number filtering
+     * @param neverSuppressedChecks set has user defined Checks to never suppress
+     *                              if files are touched
      */
-    public SuppressionPatchFilterElement(String fileName, List<List<Integer>> lineRangeList) {
+    public SuppressionPatchFilterElement(String fileName, List<List<Integer>> lineRangeList,
+                                         Set<String> neverSuppressedChecks) {
         this.fileName = fileName;
         this.lineRangeList = lineRangeList;
+        this.neverSuppressedChecks = neverSuppressedChecks;
     }
 
     @Override
     public boolean accept(AuditEvent event) {
         return isFileNameMatching(event)
-                && (isContextStrategyCheck(event) || isLineMatching(event));
+                && (isNeverSuppressCheck(event)
+                || isContextStrategyCheck(event) || isLineMatching(event));
     }
 
     /**
@@ -99,13 +110,35 @@ public class SuppressionPatchFilterElement implements Filter {
      */
     private boolean isContextStrategyCheck(AuditEvent event) {
         boolean result = false;
-        final String[] checkNames = event.getLocalizedMessage().getSourceName().split("\\.");
-        final String checkShortName = checkNames[checkNames.length - 1];
+        final String checkShortName = getCheckShortName(event);
         if ("RegexpOnFilenameCheck".equals(checkShortName)
                 || "FileLengthCheck".equals(checkShortName)
                 || "NewlineAtEndOfFileCheck".equals(checkShortName)) {
             result = true;
         }
         return result;
+    }
+
+    /**
+     * Is matching by never suppress check.
+     *
+     * @param event event
+     * @return true if it is matching
+     */
+    private boolean isNeverSuppressCheck(AuditEvent event) {
+        boolean result = false;
+        final String checkShortName = getCheckShortName(event);
+        if (neverSuppressedChecks != null) {
+            if (neverSuppressedChecks.contains(checkShortName)
+                    || neverSuppressedChecks.contains(event.getModuleId())) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    private String getCheckShortName(AuditEvent event) {
+        final String[] checkNames = event.getLocalizedMessage().getSourceName().split("\\.");
+        return checkNames[checkNames.length - 1];
     }
 }
