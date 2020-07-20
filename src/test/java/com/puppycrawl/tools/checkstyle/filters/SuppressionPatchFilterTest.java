@@ -146,9 +146,6 @@ public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTes
     }
 
     @Test
-    @Ignore("RegexpMultilineCheck has a problem is that violation's "
-            + "line information is not on newline/patchedline,"
-            + "this maybe solve on context strategy")
     public void testRegexpMultiline() throws Exception {
         testByConfig("RegexpMultiline/newline/defaultContextConfig.xml");
         testByConfig("RegexpMultiline/newline/zeroContextConfig.xml");
