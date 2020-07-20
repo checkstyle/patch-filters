@@ -162,4 +162,16 @@ public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTes
         testByConfig("RegexpSingleline/newline/defaultContextConfig.xml");
         testByConfig("RegexpSingleline/patchedline/defaultContextConfig.xml");
     }
+
+    @Test
+    public void testTranslation() throws Exception {
+        testByConfig("Translation/caseOne/newline/defaultContextConfig.xml");
+        testByConfig("Translation/caseOne/patchedline/defaultContextConfig.xml");
+
+        testByConfig("Translation/caseTwo/newline/defaultContextConfig.xml");
+        testByConfig("Translation/caseTwo/patchedline/defaultContextConfig.xml");
+
+        testByConfig("Translation/caseThree/newline/defaultContextConfig.xml");
+        testByConfig("Translation/caseThree/patchedline/defaultContextConfig.xml");
+    }
 }

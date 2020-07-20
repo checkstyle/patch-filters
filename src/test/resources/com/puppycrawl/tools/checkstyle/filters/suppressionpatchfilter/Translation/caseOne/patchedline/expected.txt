@@ -1,0 +1,1 @@
+messages_test_de.properties:1: Key 'only.english' missing.

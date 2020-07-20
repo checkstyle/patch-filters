@@ -1,0 +1,14 @@
+diff --git a/messages_test_de.properties b/messages_test_de.properties
+index 1593dac..1902159 100644
+--- a/messages_test_de.properties
++++ b/messages_test_de.properties
+@@ -1,7 +1,8 @@
+ # input file for TranslationCheck
+ 
+ # a key that is available in all translations
+-hello=Hallo
++hell=Hallo
++ok=OK
+ 
+ # whitespace at end of key should be trimmed before comparing.
+ # the german translation does not contain whitespace, no violation should
