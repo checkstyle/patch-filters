@@ -1,0 +1,12 @@
+diff --git a/messages_test.properties b/messages_test.properties
+index 1eddeb4..866427d 100644
+--- a/messages_test.properties
++++ b/messages_test.properties
+@@ -2,6 +2,7 @@
+ 
+ # a key that is available in all translations
+ hello=Hello
++check=check
+ 
+ # whitespace at end of key should be trimmed before comparing.
+ # the german translation does not contain whitespace, no violation should
