@@ -14,7 +14,7 @@ public class Test {
 
 
 
-
+        // violation is on line above changed
         System.out.
                 print("Example");
 
@@ -24,7 +24,7 @@ public class Test {
 
 
 
-        ////
+        // violation is on code below
         System.out.
                 print("Example");
 
