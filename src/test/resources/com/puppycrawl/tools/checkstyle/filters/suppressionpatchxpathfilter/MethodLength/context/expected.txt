@@ -1,1 +1,0 @@
-Test.java:4:5: Method length is 5 lines (max allowed is 3).

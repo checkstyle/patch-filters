@@ -51,11 +51,11 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     @Test
     public void testMethodLength() throws Exception {
         testByConfig(
-                "MethodLength/newline/defaultContextConfig.xml");
+                "sizes/MethodLength/newline/defaultContextConfig.xml");
         testByConfig(
-                "MethodLength/patchedline/defaultContextConfig.xml");
+                "sizes/MethodLength/patchedline/defaultContextConfig.xml");
         testByConfig(
-                "MethodLength/context/defaultContextConfig.xml");
+                "sizes/MethodLength/context/defaultContextConfig.xml");
     }
 
     @Test
@@ -69,11 +69,11 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     @Test
     public void testMethodCount() throws Exception {
         testByConfig(
-                "MethodCount/newline/defaultContextConfig.xml");
+                "sizes/MethodCount/newline/defaultContextConfig.xml");
         testByConfig(
-                "MethodCount/patchedline/defaultContextConfig.xml");
+                "sizes/MethodCount/patchedline/defaultContextConfig.xml");
         testByConfig(
-                "MethodCount/context/defaultContextConfig.xml");
+                "sizes/MethodCount/context/defaultContextConfig.xml");
     }
 
     @Test
@@ -123,30 +123,30 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     @Test
     public void testAnonInnerLength() throws Exception {
         testByConfig(
-                "AnonInnerLength/newline/defaultContextConfig.xml");
+                "sizes/AnonInnerLength/newline/defaultContextConfig.xml");
         testByConfig(
-                "AnonInnerLength/patchedline/defaultContextConfig.xml");
+                "sizes/AnonInnerLength/patchedline/defaultContextConfig.xml");
         testByConfig(
-                "AnonInnerLength/context/defaultContextConfig.xml");
+                "sizes/AnonInnerLength/context/defaultContextConfig.xml");
     }
 
     @Test
     public void testExecutableStatementCount() throws Exception {
         testByConfig(
-                "ExecutableStatementCount/newline/defaultContextConfig.xml");
+                "sizes/ExecutableStatementCount/newline/defaultContextConfig.xml");
         testByConfig(
-                "ExecutableStatementCount/patchedline/defaultContextConfig.xml");
+                "sizes/ExecutableStatementCount/patchedline/defaultContextConfig.xml");
         testByConfig(
-                "ExecutableStatementCount/context/defaultContextConfig.xml");
+                "sizes/ExecutableStatementCount/context/defaultContextConfig.xml");
     }
 
     @Test
     public void testOuterTypeNumber() throws Exception {
         testByConfig(
-                "OuterTypeNumber/newline/defaultContextConfig.xml");
+                "sizes/OuterTypeNumber/newline/defaultContextConfig.xml");
         testByConfig(
-                "OuterTypeNumber/patchedline/defaultContextConfig.xml");
+                "sizes/OuterTypeNumber/patchedline/defaultContextConfig.xml");
         testByConfig(
-                "OuterTypeNumber/context/defaultContextConfig.xml");
+                "sizes/OuterTypeNumber/context/defaultContextConfig.xml");
     }
 }
