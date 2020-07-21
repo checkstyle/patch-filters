@@ -137,6 +137,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testParameterNumber() throws Exception {
+        testByConfig("ParameterNumber/newline/defaultContextConfig.xml");
+        testByConfig("ParameterNumber/patchedline/defaultContextConfig.xml");
+        testByConfig("ParameterNumber/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testAnonInnerLength() throws Exception {
         testByConfig(
                 "sizes/AnonInnerLength/newline/defaultContextConfig.xml");
