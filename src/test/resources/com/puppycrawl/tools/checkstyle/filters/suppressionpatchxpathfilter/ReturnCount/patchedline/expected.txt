@@ -1,1 +1,0 @@
-Test.java:4:5: Return count is 3 (max allowed for void methods/constructors/lambdas is 0).
