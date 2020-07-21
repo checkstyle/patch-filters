@@ -1,0 +1,18 @@
+diff --git a/Test.java b/Test.java
+index 378ab7e..31e960f 100644
+--- a/Test.java
++++ b/Test.java
+@@ -3,12 +3,12 @@ package TreeWalker.Annotation.MissingOverride;
+ public class Test {
+ 
+     /** {@inheritDoc} */
+-    @Override
+     public void test1() {}  // violation without filter
+ 
+     /** {@inheritDoc} */
+     public void test2() {}  // violation without filter
+ 
++    /** {@inheritDoc} */
+     private void test3() {}  // violation without filter
+ 
+ }

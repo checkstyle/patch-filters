@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index 31e960f..165f205 100644
+--- a/Test.java
++++ b/Test.java
+@@ -11,4 +11,7 @@ public class Test {
+     /** {@inheritDoc} */
+     private void test3() {}  // violation without filter
+ 
++    /** {@inheritDoc} */
++    private void test4() {}  // violation without filter
++
+ }

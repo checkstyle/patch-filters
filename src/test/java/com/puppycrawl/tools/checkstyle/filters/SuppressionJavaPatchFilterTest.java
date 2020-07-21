@@ -108,6 +108,14 @@ public class SuppressionJavaPatchFilterTest extends AbstractPatchFilterEvaluatio
     }
 
     @Test
+    public void testMissingOverride() throws Exception {
+        testByConfig("MissingOverride/newline/defaultContextConfig.xml");
+        testByConfig("MissingOverride/patchedline/defaultContextConfig.xml");
+        testByConfig("MissingOverride/context/defaultContextConfig.xml");
+        testByConfig("MissingOverride/context/case2/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testMethodLength() throws Exception {
         testByConfig("MethodLength/case1/newline/defaultContextConfig.xml");
         testByConfig("MethodLength/case1/patchedline/defaultContextConfig.xml");
