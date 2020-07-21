@@ -7,7 +7,7 @@
 
   <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
     <property name="file" value=
-            "${tp}/suppressionpatchfilter/Translation/caseOne/patchedline/defaultContext.patch" />
+            "${tp}/defaultContext.patch" />
     <property name="strategy" value="patchedline" />
   </module>
 </module>

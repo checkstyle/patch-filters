@@ -8,7 +8,7 @@
             <property name="maxForVoid" value="0"/>
         </module>
         <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchXpathFilter">
-            <property name="file" value="${tp}/suppressionpatchxpathfilter/ReturnCount/newline/defaultContext.patch" />
+            <property name="file" value="${tp}/defaultContext.patch" />
             <property name="strategy" value="newline" />
         </module>
     </module>

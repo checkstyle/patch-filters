@@ -24,6 +24,12 @@ import org.junit.Test;
 public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTest {
 
     @Override
+    protected String getPatchFileLocation() {
+        return "src/test/resources/com/puppycrawl/tools"
+                + "/checkstyle/filters/suppressionpatchfilter/";
+    }
+
+    @Override
     protected String getPackageLocation() {
         return "com/puppycrawl/tools/checkstyle/filters/suppressionpatchfilter/";
     }
@@ -94,6 +100,24 @@ public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTes
     }
 
     @Test
+    public void testFileTabCharacterMoveCodeToAnotherFileWithoutChanges() throws Exception {
+        testByConfig("FileTabCharacter/MoveCodeToAnotherFileWithoutChanges/"
+                + "newline/defaultContextConfig.xml");
+
+        testByConfig("FileTabCharacter/MoveCodeToAnotherFileWithoutChanges"
+                + "/patchedline/defaultContextConfig.xml");
+    }
+
+    @Test
+    public void testFileTabCharacterMoveCodeToAnotherFileWithMinorChanges() throws Exception {
+        testByConfig("FileTabCharacter/MoveCodeToAnotherFileWithMinorChanges/"
+                + "newline/defaultContextConfig.xml");
+
+        testByConfig("FileTabCharacter/MoveCodeToAnotherFileWithMinorChanges"
+                + "/patchedline/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testFileTabCharacterSingleChangedLine() throws Exception {
         testByConfig(
                 "FileTabCharacter/SingleChangedLine/newline/defaultContextConfig.xml");
@@ -115,6 +139,14 @@ public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTes
         testByConfig("FileTabCharacter/SingleNewLine/"
                 + "patchedline/defaultContextConfig.xml");
         testByConfig("FileTabCharacter/SingleNewLine/patchedline/zeroContextConfig.xml");
+    }
+
+    @Test
+    public void testFileTabCharacterSingleDeleteLine() throws Exception {
+        testByConfig("FileTabCharacter/SingleDeleteLine/newline/defaultContextConfig.xml");
+
+        testByConfig("FileTabCharacter/SingleDeleteLine/"
+                + "patchedline/defaultContextConfig.xml");
     }
 
     @Test

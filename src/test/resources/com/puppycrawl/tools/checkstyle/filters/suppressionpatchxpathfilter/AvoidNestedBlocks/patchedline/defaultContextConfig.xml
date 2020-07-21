@@ -7,7 +7,7 @@
         <module name="AvoidNestedBlocks"/>
 
         <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchXpathFilter">
-            <property name="file" value="${tp}/suppressionpatchxpathfilter/AvoidNestedBlocks/patchedline/defaultContext.patch" />
+            <property name="file" value="${tp}/defaultContext.patch" />
             <property name="strategy" value="patchedline" />
         </module>
     </module>

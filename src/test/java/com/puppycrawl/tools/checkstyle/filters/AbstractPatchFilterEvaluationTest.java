@@ -45,10 +45,14 @@ import com.puppycrawl.tools.checkstyle.internal.utils.BriefUtLogger;
 
 abstract class AbstractPatchFilterEvaluationTest extends AbstractModuleTestSupport {
 
+    protected abstract String getPatchFileLocation();
+
     protected void testByConfig(String configPath)
             throws Exception {
+        final String inputFile = configPath.replaceFirst(
+                "(default|zero)ContextConfig.xml", "");
         // we can add here any variable to provide path to patch name by PropertiesExpander
-        System.setProperty("tp", "src/test/resources/com/puppycrawl/tools/checkstyle/filters");
+        System.setProperty("tp", getPatchFileLocation() + inputFile);
         final Configuration config = ConfigurationLoader.loadConfiguration(
                 getPath(configPath),
                 new PropertiesExpander(System.getProperties()));
@@ -63,9 +67,6 @@ abstract class AbstractPatchFilterEvaluationTest extends AbstractModuleTestSuppo
         rootModule.addListener(new BriefUtLogger(stream));
 
         // run RootModule
-        final String inputFile = configPath.replaceFirst(
-                "(default|zero)ContextConfig.xml", "");
-
         final String path = getPath(inputFile);
         final File file = new File(path);
         final int errorCounter;

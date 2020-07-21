@@ -11,7 +11,7 @@
         </module>
 
         <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchXpathFilter">
-            <property name="file" value="${tp}/suppressionpatchxpathfilter/JavadocMethod/newline/defaultContext.patch" />
+            <property name="file" value="${tp}/defaultContext.patch" />
             <property name="strategy" value="patchedline" />
         </module>
     </module>

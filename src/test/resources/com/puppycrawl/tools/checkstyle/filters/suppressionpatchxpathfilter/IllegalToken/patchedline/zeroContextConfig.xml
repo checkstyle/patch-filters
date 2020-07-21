@@ -7,7 +7,7 @@
         <module name="IllegalToken"/>
 
         <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchXpathFilter">
-            <property name="file" value="${tp}/suppressionpatchxpathfilter/IllegalToken/patchedline/zeroContext.patch" />
+            <property name="file" value="${tp}/zeroContext.patch" />
             <property name="strategy" value="patchedline" />
         </module>
     </module>
