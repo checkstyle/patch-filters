@@ -9,7 +9,7 @@
   </module>
   <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
     <property name="file" value=
-            "${tp}/suppressionpatchfilter/neversuppressedchecks/RegexpMultiline/checkShortName/defaultContext.patch" />
+            "${tp}/defaultContext.patch" />
     <property name="strategy" value="newline" />
     <property name="neverSuppressedChecks" value="RegexpMultilineCheck" />
   </module>

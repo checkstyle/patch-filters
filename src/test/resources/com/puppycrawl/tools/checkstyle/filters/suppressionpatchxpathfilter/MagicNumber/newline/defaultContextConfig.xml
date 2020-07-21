@@ -7,7 +7,7 @@
         <module name="MagicNumber"/>
 
         <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchXpathFilter">
-            <property name="file" value="${tp}/suppressionpatchxpathfilter/MagicNumber/newline/defaultContext.patch" />
+            <property name="file" value="${tp}/defaultContext.patch" />
             <property name="strategy" value="newline" />
         </module>
     </module>

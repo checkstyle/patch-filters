@@ -23,6 +23,13 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluationTest {
+
+    @Override
+    protected String getPatchFileLocation() {
+        return "src/test/resources/com/puppycrawl/tools"
+                + "/checkstyle/filters/suppressionpatchxpathfilter/";
+    }
+
     @Override
     protected String getPackageLocation() {
         return "com/puppycrawl/tools/checkstyle/filters/suppressionpatchxpathfilter/";
