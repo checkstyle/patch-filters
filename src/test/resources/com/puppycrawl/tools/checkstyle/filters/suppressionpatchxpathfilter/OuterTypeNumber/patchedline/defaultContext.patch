@@ -1,0 +1,11 @@
+diff --git a/Test.java b/Test.java
+index 2acad50..210f28e 100644
+--- a/Test.java
++++ b/Test.java
+@@ -5,3 +5,6 @@ public class Test {
+ 
+ class Test2 {
+ }
++
++class Test3 {
++}

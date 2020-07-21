@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index 6ef08a3..8e76ad9 100644
+--- a/Test.java
++++ b/Test.java
+@@ -3,5 +3,7 @@ package TreeWalker.MethodLength;
+ public class Test {
+     public void test1() {  // violation context
+         System.out.println();
++        System.out.println();
++        System.out.println();
+     }
+ }

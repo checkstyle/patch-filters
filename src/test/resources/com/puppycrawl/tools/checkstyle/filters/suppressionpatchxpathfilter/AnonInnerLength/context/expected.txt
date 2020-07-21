@@ -1,0 +1,1 @@
+Test.java:4:35: Anonymous inner class length is 22 lines (max allowed is 20).

@@ -49,14 +49,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
-    @Ignore("MethodLength should have a violation when method length"
-            + " is more than threshold, but not. It should be solved by"
-            + "context strategy.")
     public void testMethodLength() throws Exception {
         testByConfig(
                 "MethodLength/newline/defaultContextConfig.xml");
         testByConfig(
                 "MethodLength/patchedline/defaultContextConfig.xml");
+        testByConfig(
+                "MethodLength/context/defaultContextConfig.xml");
     }
 
     @Test
@@ -68,14 +67,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
-    @Ignore("MethodCount should have a violation when method count"
-            + " is more than threshold, but not. It should be solved by"
-            + "context strategy.")
     public void testMethodCount() throws Exception {
         testByConfig(
                 "MethodCount/newline/defaultContextConfig.xml");
         testByConfig(
                 "MethodCount/patchedline/defaultContextConfig.xml");
+        testByConfig(
+                "MethodCount/context/defaultContextConfig.xml");
     }
 
     @Test
@@ -87,14 +85,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
-    @Ignore("ReturnCount should have a violation when return count"
-            + " is more than threshold, but not. It should be solved by"
-            + "context strategy.")
     public void testReturnCount() throws Exception {
         testByConfig(
                 "ReturnCount/newline/defaultContextConfig.xml");
         testByConfig(
                 "ReturnCount/patchedline/defaultContextConfig.xml");
+        testByConfig(
+                "ReturnCount/context/defaultContextConfig.xml");
     }
 
     @Test
@@ -121,5 +118,35 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
                 "MemberName/newline/defaultContextConfig.xml");
         testByConfig(
                 "MemberName/patchedline/defaultContextConfig.xml");
+    }
+
+    @Test
+    public void testAnonInnerLength() throws Exception {
+        testByConfig(
+                "AnonInnerLength/newline/defaultContextConfig.xml");
+        testByConfig(
+                "AnonInnerLength/patchedline/defaultContextConfig.xml");
+        testByConfig(
+                "AnonInnerLength/context/defaultContextConfig.xml");
+    }
+
+    @Test
+    public void testExecutableStatementCount() throws Exception {
+        testByConfig(
+                "ExecutableStatementCount/newline/defaultContextConfig.xml");
+        testByConfig(
+                "ExecutableStatementCount/patchedline/defaultContextConfig.xml");
+        testByConfig(
+                "ExecutableStatementCount/context/defaultContextConfig.xml");
+    }
+
+    @Test
+    public void testOuterTypeNumber() throws Exception {
+        testByConfig(
+                "OuterTypeNumber/newline/defaultContextConfig.xml");
+        testByConfig(
+                "OuterTypeNumber/patchedline/defaultContextConfig.xml");
+        testByConfig(
+                "OuterTypeNumber/context/defaultContextConfig.xml");
     }
 }

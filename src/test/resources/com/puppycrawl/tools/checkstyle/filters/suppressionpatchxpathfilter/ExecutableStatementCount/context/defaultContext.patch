@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index a1cd091..cbdc4da 100644
+--- a/Test.java
++++ b/Test.java
+@@ -9,6 +9,7 @@ public class Test {  // violation context
+                     }
+                 }
+             };
++            System.out.println();
+             new Thread(runnable).start();
+         }
+     }

@@ -130,7 +130,7 @@ public class SuppressionPatchXpathFilter extends AutomaticBean implements
                 final String fileName = loadPatchFileUtils.getFileName();
                 final List<List<Integer>> lineRangeList = loadPatchFileUtils.getLineRange();
                 final PatchXpathFilterElement element =
-                        new PatchXpathFilterElement(fileName, lineRangeList);
+                        new PatchXpathFilterElement(fileName, lineRangeList, strategy);
                 filters.add(element);
             }
         }

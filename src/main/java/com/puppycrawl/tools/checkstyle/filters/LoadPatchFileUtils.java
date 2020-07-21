@@ -32,12 +32,23 @@ import org.eclipse.jgit.patch.HunkHeader;
  */
 public class LoadPatchFileUtils {
     /**
+     * New line strategy that suppress all violations except from new lines.
+     */
+    public static final String NEWLINE = "newline";
+
+    /**
+     * Context line strategy that suppress all violations except from new/changed lines
+     * or matching context strategy.
+     */
+    public static final String CONTEXT = "context";
+
+    /**
      * FileHeader to load.
      */
     private final FileHeader fileHeader;
 
     /**
-     * Strategy that should use.
+     * Strategy that used.
      */
     private final String strategy;
 
@@ -69,7 +80,7 @@ public class LoadPatchFileUtils {
             for (HunkHeader hunkHeader : fileHeader.getHunks()) {
                 final EditList edits = hunkHeader.toEditList();
                 for (Edit edit : edits) {
-                    if ("newline".equals(strategy)) {
+                    if (NEWLINE.equals(strategy)) {
                         if (Edit.Type.INSERT.equals(edit.getType())) {
                             final List<Integer> lineRange = new ArrayList<>();
                             lineRange.add(edit.getBeginB());

@@ -1,0 +1,14 @@
+diff --git a/Test.java b/Test.java
+index 729a114..877bf70 100644
+--- a/Test.java
++++ b/Test.java
+@@ -18,6 +18,9 @@ public class Test {  // violation context
+             System.identityHashCode("running");
+             System.identityHashCode("running");
+             System.identityHashCode("running");
++            System.identityHashCode("running");
++            System.identityHashCode("running");
++            System.identityHashCode("running");
+         }
+     };
+ }
