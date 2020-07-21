@@ -22,6 +22,7 @@ package com.puppycrawl.tools.checkstyle.filters;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -46,6 +47,10 @@ import com.puppycrawl.tools.checkstyle.api.ExternalResourceHolder;
  */
 public class SuppressionPatchXpathFilter extends AutomaticBean implements
         TreeWalkerFilter, ExternalResourceHolder {
+    /**
+     * To split never Suppressed Checks and Ids's string.
+     */
+    private static final String COMMA = ",";
 
     /**
      * Specify the location of the patch file.
@@ -64,6 +69,12 @@ public class SuppressionPatchXpathFilter extends AutomaticBean implements
      * Control if only consider added lines in file.
      */
     private String strategy;
+
+    /**
+     * Set has user defined Checks that need modify violation nodes
+     * to their parent abstract nodes to get their child nodes.
+     */
+    private Set<String> checkNamesForContextStrategyByTokenOrParentSet;
 
     /**
      * Set of individual suppresses.
@@ -86,6 +97,21 @@ public class SuppressionPatchXpathFilter extends AutomaticBean implements
      */
     public void setStrategy(String strategy) {
         this.strategy = strategy;
+    }
+
+    /**
+     * Setter to set has user defined list of Checks need modify violation nodes
+     * to their parent abstract nodes to get their child nodes.
+     *
+     * @param checkNamesForContextStrategyByTokenOrParentSet string has user defined Checks to never
+     *                                                   suppress if files are touched, split
+     *                                                   by comma
+     */
+    public void setCheckNamesForContextStrategyByTokenOrParentSet(
+            String checkNamesForContextStrategyByTokenOrParentSet) {
+        final String[] checksArray = checkNamesForContextStrategyByTokenOrParentSet.split(COMMA);
+        this.checkNamesForContextStrategyByTokenOrParentSet =
+                new HashSet<>(Arrays.asList(checksArray));
     }
 
     /**
@@ -130,7 +156,8 @@ public class SuppressionPatchXpathFilter extends AutomaticBean implements
                 final String fileName = loadPatchFileUtils.getFileName();
                 final List<List<Integer>> lineRangeList = loadPatchFileUtils.getLineRangeList();
                 final PatchXpathFilterElement element =
-                        new PatchXpathFilterElement(fileName, lineRangeList, strategy);
+                        new PatchXpathFilterElement(fileName, lineRangeList,
+                                strategy, checkNamesForContextStrategyByTokenOrParentSet);
                 filters.add(element);
             }
         }

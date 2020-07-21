@@ -56,6 +56,12 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
     private static final List<String> ALWAYS_MATCHING_CONTEXT_STRATEGY_CHECKS =
             Arrays.asList("OuterTypeNumberCheck");
 
+    /**
+     * Set of checks that support context strategy but need modify violation nodes
+     * to their parent abstract nodes to get their child nodes.
+     */
+    private final Set<String> checkNamesForContextStrategyByTokenOrParentSet = new HashSet<>();
+
     /** The String of file names. */
     private final String fileName;
 
@@ -71,16 +77,25 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
      * Constructs a {@code SuppressPatchFilterElement} for a
      * file name pattern.
      *
-     * @param fileName names of filtered files.
-     * @param lineRangeList   list of line range for line number filtering.
-     * @param strategy      strategy that used.
+     * @param fileName                                   names of filtered files
+     * @param lineRangeList                              list of line range for line number
+     *                                                   filtering
+     * @param strategy                                   strategy that used
+     * @param checkNameForContextStrategyByTokenOrParent user defined Checks that need modify
+     *                                                   violation nodes to their parent abstract
+     *                                                   nodes to get their child nodes
      */
     public PatchXpathFilterElement(String fileName,
                                    List<List<Integer>> lineRangeList,
-                                   String strategy) {
+                                   String strategy,
+                                   Set<String> checkNameForContextStrategyByTokenOrParent) {
         this.fileName = fileName;
         this.lineRangeList = lineRangeList;
         this.strategy = strategy;
+        if (checkNameForContextStrategyByTokenOrParent != null) {
+            this.checkNamesForContextStrategyByTokenOrParentSet.addAll(
+                    checkNameForContextStrategyByTokenOrParent);
+        }
     }
 
     @Override
@@ -156,8 +171,15 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
         if (ALWAYS_MATCHING_CONTEXT_STRATEGY_CHECKS.contains(checkShortName)) {
             result = true;
         }
-        else if (SUPPORT_CONTEXT_STRATEGY_CHECKS.contains(checkShortName)) {
-            final DetailAST eventAst = getEventAst(event);
+        else if (SUPPORT_CONTEXT_STRATEGY_CHECKS.contains(checkShortName)
+                || checkNamesForContextStrategyByTokenOrParentSet.contains(checkShortName)) {
+            final DetailAST eventAst;
+            if (checkNamesForContextStrategyByTokenOrParentSet.contains(checkShortName)) {
+                eventAst = getEventAst(event).getParent();
+            }
+            else {
+                eventAst = getEventAst(event);
+            }
             final Set<Integer> childAstLineNoList = getChildAstLineNo(eventAst);
             final int min = Collections.min(childAstLineNoList);
             final int max = Collections.max(childAstLineNoList);
