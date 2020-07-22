@@ -1,13 +1,9 @@
-package TreeWalker.AvoidNestedBlocks;
+package TreeWalker.blocks.AvoidNestedBlocks;
 
 public class Test {
     public void fun(boolean valid) {
         {  // violation without filter
-            if (valid) {
-                {  // violation without filter
-                    System.out.println("ok");
-                }
-            }
+            System.out.println(valid);
         }
     }
 }
