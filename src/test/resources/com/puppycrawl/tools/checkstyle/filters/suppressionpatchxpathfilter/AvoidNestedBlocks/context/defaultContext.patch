@@ -1,0 +1,37 @@
+diff --git a/Test.java b/Test.java
+index cf7b319..81ce376 100644
+--- a/Test.java
++++ b/Test.java
+@@ -8,14 +8,14 @@ public class Test {
+             int z = 1;
+             int y = z;
+             int h = z;
++            h = 0;
+         }
+ 
+-        if (x == 1)
+         {  // violation without filter
+             x = 2;
+         }
+ 
+-        if (x == 1)
++//        if (x == 1)
+         {  // violation without filter
+             x = 2;
+         }
+@@ -29,6 +29,7 @@ public class Test {
+                 {  // violation without filter
+                     x = 1;
+                 }
++                break;
+             case 2:
+                 {
+                     x = 1;
+@@ -36,6 +37,7 @@ public class Test {
+                 }
+             case 3: // test fallthrough
+             default:
++                System.identityHashCode("Hello");
+                 {  // violation without filter
+                     x = 2;
+                 }

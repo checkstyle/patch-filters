@@ -1,19 +1,15 @@
 diff --git a/Test.java b/Test.java
-index bc9451d..ad14cca 100644
---- a/Test.java
+new file mode 100644
+index 0000000..024e7da
+--- /dev/null
 +++ b/Test.java
-@@ -2,9 +2,11 @@ package TreeWalker.AvoidNestedBlocks;
- 
- public class Test {
-     public void fun(boolean valid) {
--        if (valid) {
--            {
--                System.out.println("ok");
+@@ -0,0 +1,9 @@
++package TreeWalker.blocks.AvoidNestedBlocks;
++
++public class Test {
++    public void fun(boolean valid) {
 +        {  // violation without filter
-+            if (valid) {
-+                {  // violation without filter
-+                    System.out.println("ok");
-+                }
-             }
-         }
-     }
++            System.out.println(valid);
++        }
++    }
++}
