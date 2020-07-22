@@ -71,7 +71,10 @@ public class SuppressionPatchFilter extends AutomaticBean
     private String strategy;
 
     /**
-     * Set has user defined Checks to never suppress if files are touched.
+     * Set has user defined Checks to never suppress if files are referenced in patch.
+     * This property is useful for Checks that place violation on whole file oron not
+     * all (first/last) occurrence of cause/violated code. Example: Translation,
+     * UniqueProperty, RegexpMultiline.
      */
     private Set<String> neverSuppressedChecks;
 
