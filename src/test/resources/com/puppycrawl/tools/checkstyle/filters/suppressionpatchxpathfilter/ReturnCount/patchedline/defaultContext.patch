@@ -2,7 +2,7 @@ diff --git a/Test.java b/Test.java
 index 32200a4..c49bf43 100644
 --- a/Test.java
 +++ b/Test.java
-@@ -8,6 +8,10 @@ public class Test {
+@@ -8,6 +8,10 @@ public class Test {  // violation context
              return;
          } else if (error > 40) {
              System.out.println("ok");

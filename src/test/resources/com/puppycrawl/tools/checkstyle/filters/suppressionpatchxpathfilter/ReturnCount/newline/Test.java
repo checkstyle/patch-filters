@@ -1,7 +1,7 @@
 package TreeWalker.ReturnCount;
 
 public class Test {
-    public void test(int error) {
+    public void test(int error) {  // violation context
         if (error > 100) {
             return;
         } else if (error > 50) {

@@ -4,7 +4,7 @@ index 0000000..1593dac
 --- /dev/null
 +++ b/messages_test_de.properties
 @@ -0,0 +1,12 @@
-+# input file for TranslationCheck
++# input file for TranslationCheck  // violation 'only.english' missing
 +
 +# a key that is available in all translations
 +hello=Hallo

@@ -4,7 +4,7 @@ public class Test {
     /**
      * test
      * @param arg1 text
-     * @param arg2 text
+     * @param arg2 text  // violation
      * @return text
      */
     public int test1(Integer arg1) {
@@ -22,7 +22,7 @@ public class Test {
      * @param arg1 text
      * @return text
      */
-    public int test2(Integer arg1, Integer arg2) {
+    public int test2(Integer arg1, Integer arg2) {  // violation
         return 1;
     }
 }

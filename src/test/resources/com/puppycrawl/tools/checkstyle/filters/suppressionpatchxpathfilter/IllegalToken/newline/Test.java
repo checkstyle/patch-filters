@@ -2,7 +2,7 @@ package TreeWalker.illegalToken;
 
 public class Test {
     public void myTest() {
-        outer: // violation
+        outer:
         for (int i = 0; i < 5; i++) {
             if (i == 1) {
                 break outer;
@@ -12,7 +12,7 @@ public class Test {
 
 
     public void Test() {
-        outer: // violation  // violation newline/patchedline
+        outer:  // violation newline/patchedline
         for (int i = 0; i < 5; i++) {
             if (i == 1) {
                 break outer;

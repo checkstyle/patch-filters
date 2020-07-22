@@ -5,4 +5,4 @@ index aea01e2..5982414 100644
 @@ -5 +4,0 @@ public class Test {
 -    // Contains a tab ->	<- //warn
 @@ -19,0 +19 @@ public class Test {
-+    // Contains a tab ->	<- //warns
++    // Contains a tab ->	<- //warns  // violation newline/patchedline

@@ -4,6 +4,6 @@ index 6730df1..aea01e2 100644
 +++ b/Test.java
 @@ -5 +5 @@ public class Test {
 -    // Contains a tab ->	<- //warns
-+    // Contains a tab ->	<- //warn
++    // Contains a tab ->	<- //warn  // violation patchedline
 @@ -20,0 +21 @@ public class Test {
-+    // Contains a tab ->	<- //warns
++    // Contains a tab ->	<- //warns  // violation newline/patchedline

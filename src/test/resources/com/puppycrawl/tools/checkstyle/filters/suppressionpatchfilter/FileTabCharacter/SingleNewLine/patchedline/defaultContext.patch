@@ -6,7 +6,7 @@ index 5982414..7dd3e99 100644
  
      // Long line ----------------------------------------------------------------
      // Contains a tab ->	<- //warn
-+    // Contains a tab ->	<- //warn
++    // Contains a tab ->	<- //warn  // violation newline/patchedline
      // Long line ----------------------------------------------------------------
      // Contains a tab ->	<- //warns
  

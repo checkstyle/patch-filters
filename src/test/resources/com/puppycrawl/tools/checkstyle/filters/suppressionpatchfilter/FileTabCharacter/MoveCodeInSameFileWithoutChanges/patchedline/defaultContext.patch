@@ -14,7 +14,7 @@ index aea01e2..5982414 100644
  
  
      // Long line ----------------------------------------------------------------
-+    // Contains a tab ->	<- //warn
++    // Contains a tab ->	<- //warn  // violation newline/patchedline
      // Long line ----------------------------------------------------------------
      // Contains a tab ->	<- //warns
  
