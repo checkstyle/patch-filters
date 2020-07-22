@@ -4,7 +4,7 @@ index 3d4cda6..bb20409 100644
 +++ b/Test.java
 @@ -1 +1 @@
 -package Checker.NewlineAtEndOfFile;
-+package Checker.NewlineAtEndOfFiles;
++package Checker.NewlineAtEndOfFiles;  // violation patchedline
 diff --git a/Test2.java b/Test2.java
 index 5e458a8..898b639 100644
 --- a/Test2.java
@@ -19,7 +19,7 @@ index 0000000..0047b33
 --- /dev/null
 +++ b/Test3.java
 @@ -0,0 +1,4 @@
-+package Checker.NewlineAtEndOfFile;
++package Checker.NewlineAtEndOfFile;  // violation newline/patchedline
 +
 +public class Test3 {
 +}

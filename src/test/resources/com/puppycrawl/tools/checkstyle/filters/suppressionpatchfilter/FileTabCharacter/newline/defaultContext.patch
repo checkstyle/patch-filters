@@ -7,7 +7,7 @@ index 6730df1..aea01e2 100644
  public class Test {
      // Long line ----------------------------------------------------------------
 -    // Contains a tab ->	<- //warns
-+    // Contains a tab ->	<- //warn
++    // Contains a tab ->	<- //warn  // violation patchedline
  
  
  
@@ -15,7 +15,7 @@ index 6730df1..aea01e2 100644
  
      // Long line ----------------------------------------------------------------
      // Long line ----------------------------------------------------------------
-+    // Contains a tab ->	<- //warns
++    // Contains a tab ->	<- //warns  // violation newline/patchedline
  
  
  }

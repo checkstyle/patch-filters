@@ -15,7 +15,7 @@ index 0000000..67782f7
 --- /dev/null
 +++ b/Test2.java
 @@ -0,0 +1,14 @@
-+package Checker.FileLength;
++package Checker.FileLength; // violation
 +
 +public class Test2 {
 +    public static void main(String[] args) {
