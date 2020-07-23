@@ -1,13 +1,13 @@
 diff --git a/Test.java b/Test.java
-index 404df53..5982414 100644
+index 63f6e7c..d57b91c 100644
 --- a/Test.java
 +++ b/Test.java
-@@ -16,7 +16,7 @@ public class Test {
- 
- 
+@@ -10,7 +10,7 @@ public class Test {
      // Long line ----------------------------------------------------------------
--    // Contains a tab ->	<- //warns
-+    // Contains a tab ->	<- //warn  // violation patchedline
      // Long line ----------------------------------------------------------------
      // Contains a tab ->	<- //warns
+-    // Contains a tab ->	<- //warns
++    // Contains a tab ->	<- //warn  // violation patchedline
  
+ 
+ }

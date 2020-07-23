@@ -1,8 +1,8 @@
 diff --git a/Test.java b/Test.java
-index aea01e2..5982414 100644
+index aa44011..63f6e7c 100644
 --- a/Test.java
 +++ b/Test.java
 @@ -5 +4,0 @@ public class Test {
 -    // Contains a tab ->	<- //warn
-@@ -19,0 +19 @@ public class Test {
+@@ -13,0 +13 @@ public class Test {
 +    // Contains a tab ->	<- //warns  // violation newline/patchedline

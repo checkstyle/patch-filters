@@ -7,18 +7,10 @@ public class Test {
 
 
 
-
-
-
-
-
-
-
-
     // Long line ----------------------------------------------------------------
-    // Contains a tab ->	<- //warn  // violation patchedline
     // Long line ----------------------------------------------------------------
     // Contains a tab ->	<- //warns
+    // Contains a tab ->	<- //warn  // violation patchedline
 
 
 }
