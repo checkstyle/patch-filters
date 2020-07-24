@@ -1,0 +1,13 @@
+diff --git a/Test.java b/Test.java
+index be9c189..061cde2 100644
+--- a/Test.java
++++ b/Test.java
+@@ -9,6 +9,8 @@ public class Test {
+                 break;
+             default:  // violation context
+                 break;
++            case 3:
++                break;
+         }
+     }
+ }
