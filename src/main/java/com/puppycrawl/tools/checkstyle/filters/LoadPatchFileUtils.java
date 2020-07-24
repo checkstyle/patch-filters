@@ -34,7 +34,12 @@ public class LoadPatchFileUtils {
     /**
      * New line strategy that suppress all violations except from new lines.
      */
-    public static final String NEWLINE = "newline";
+    public static final String NEW_LINE = "newline";
+
+    /**
+     * Patched line strategy that suppress all violations except from new/changed lines.
+     */
+    public static final String PATCHED_LINE = "patchedline";
 
     /**
      * Context line strategy that suppress all violations except from new/changed lines
@@ -80,26 +85,38 @@ public class LoadPatchFileUtils {
             for (HunkHeader hunkHeader : fileHeader.getHunks()) {
                 final EditList edits = hunkHeader.toEditList();
                 for (Edit edit : edits) {
-                    if (NEWLINE.equals(strategy)) {
-                        if (Edit.Type.INSERT.equals(edit.getType())) {
-                            final List<Integer> lineRange = new ArrayList<>();
-                            lineRange.add(edit.getBeginB());
-                            lineRange.add(edit.getEndB());
-                            lineRangeList.add(lineRange);
-                        }
-                    }
-                    else {
-                        if (Edit.Type.INSERT.equals(edit.getType())
-                                || Edit.Type.REPLACE.equals(edit.getType())) {
-                            final List<Integer> lineRange = new ArrayList<>();
-                            lineRange.add(edit.getBeginB());
-                            lineRange.add(edit.getEndB());
-                            lineRangeList.add(lineRange);
-                        }
-                    }
+                    addSingleLineRange(lineRangeList, edit);
                 }
             }
         }
         return lineRangeList;
+    }
+
+    private void addSingleLineRange(List<List<Integer>> lineRangeList, Edit edit) {
+        if (NEW_LINE.equals(strategy)) {
+            if (Edit.Type.INSERT.equals(edit.getType())) {
+                final List<Integer> lineRange = new ArrayList<>();
+                lineRange.add(edit.getBeginB());
+                lineRange.add(edit.getEndB());
+                lineRangeList.add(lineRange);
+            }
+        }
+        else if (PATCHED_LINE.equals(strategy)) {
+            if (Edit.Type.INSERT.equals(edit.getType())
+                    || Edit.Type.REPLACE.equals(edit.getType())) {
+                final List<Integer> lineRange = new ArrayList<>();
+                lineRange.add(edit.getBeginB());
+                lineRange.add(edit.getEndB());
+                lineRangeList.add(lineRange);
+            }
+        }
+        else if (Edit.Type.INSERT.equals(edit.getType())
+                || Edit.Type.REPLACE.equals(edit.getType())
+                || Edit.Type.DELETE.equals(edit.getType())) {
+            final List<Integer> lineRange = new ArrayList<>();
+            lineRange.add(edit.getBeginB());
+            lineRange.add(edit.getEndB());
+            lineRangeList.add(lineRange);
+        }
     }
 }

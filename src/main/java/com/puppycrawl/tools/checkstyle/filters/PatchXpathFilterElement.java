@@ -20,6 +20,7 @@
 package com.puppycrawl.tools.checkstyle.filters;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -124,7 +125,12 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
         for (List<Integer> singleLineRangeList : lineRangeList) {
             final int startLine = singleLineRangeList.get(0) + 1;
             final int endLine = singleLineRangeList.get(1) + 1;
-            result = currentLine >= startLine && currentLine < endLine;
+            if (startLine == endLine) {
+                result = currentLine == startLine;
+            }
+            else {
+                result = currentLine >= startLine && currentLine < endLine;
+            }
             if (result) {
                 break;
             }
@@ -147,7 +153,9 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
         else if (SUPPORT_CONTEXT_STRATEGY_CHECKS.contains(checkShortName)) {
             final DetailAST eventAst = getEventAst(event);
             final Set<Integer> childAstLineNoList = getChildAstLineNo(eventAst);
-            for (Integer currentLine : childAstLineNoList) {
+            final int min = Collections.min(childAstLineNoList);
+            final int max = Collections.max(childAstLineNoList);
+            for (int currentLine = min; currentLine <= max; currentLine++) {
                 result = lineMatching(currentLine);
                 if (result) {
                     break;
@@ -182,15 +190,20 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
 
     private Set<Integer> getChildAstLineNo(DetailAST ast) {
         final Set<Integer> childAstLineNoSet = new HashSet<>();
+        childAstLineNoSet.add(ast.getLineNo());
         DetailAST curNode = ast;
         while (curNode != null) {
             DetailAST toVisit = curNode.getFirstChild();
-            if (toVisit != null) {
-                childAstLineNoSet.add(toVisit.getLineNo());
-            }
+            addChildAstLineNo(childAstLineNoSet, toVisit);
             while (curNode != null && toVisit == null) {
                 toVisit = curNode.getNextSibling();
                 curNode = curNode.getParent();
+                if (curNode != null && curNode.equals(ast.getParent())) {
+                    break;
+                }
+            }
+            if (curNode != null && curNode.equals(ast.getParent())) {
+                break;
             }
             curNode = toVisit;
             if (curNode != null && curNode.equals(ast.getNextSibling())) {
@@ -198,6 +211,12 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
             }
         }
         return childAstLineNoSet;
+    }
+
+    private void addChildAstLineNo(Set<Integer> childAstLineNoSet, DetailAST ast) {
+        if (ast != null) {
+            childAstLineNoSet.add(ast.getLineNo());
+        }
     }
 
     private boolean isMatchingAst(DetailAST root, TreeWalkerAuditEvent event) {
