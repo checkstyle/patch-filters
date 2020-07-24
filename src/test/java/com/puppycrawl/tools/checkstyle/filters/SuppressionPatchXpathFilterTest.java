@@ -243,6 +243,17 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testFallThrough() throws Exception {
+        testByConfig("FallThrough/case1/newline/defaultContextConfig.xml");
+        testByConfig("FallThrough/case1/patchedline/defaultContextConfig.xml");
+        testByConfig("FallThrough/case1/context/defaultContextConfig.xml");
+
+        testByConfig("FallThrough/case2/newline/defaultContextConfig.xml");
+        testByConfig("FallThrough/case2/patchedline/defaultContextConfig.xml");
+        testByConfig("FallThrough/case2/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testEmptyBlock() throws Exception {
         testByConfig("EmptyBlock/newline/defaultContextConfig.xml");
         testByConfig("EmptyBlock/patchedline/defaultContextConfig.xml");
