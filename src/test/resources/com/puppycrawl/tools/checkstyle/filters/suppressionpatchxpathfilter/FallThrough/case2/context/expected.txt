@@ -1,0 +1,3 @@
+Test.java:15:13: Fall through from previous branch of the switch statement.
+Test.java:23:13: Fall through from previous branch of the switch statement.
+Test.java:8:13: Fall through from previous branch of the switch statement.

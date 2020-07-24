@@ -1,0 +1,29 @@
+diff --git a/Test.java b/Test.java
+index cac02d9..351265a 100644
+--- a/Test.java
++++ b/Test.java
+@@ -7,7 +7,6 @@ public class Test {
+                 i++;
+             case 7:  // violation without filter
+                 i++;
+-                break;
+         }
+ 
+         switch (i) {
+@@ -15,7 +14,7 @@ public class Test {
+                 i++;
+             case 9:  // violation without filter
+                 i++;
+-                break;
++                System.out.println();
+         }
+ 
+         switch (i) {
+@@ -23,6 +22,7 @@ public class Test {
+                 i++;
+             case 11:  // violation without filter
+                 i++;
++                System.out.println();
+         }
+     }
+ }
