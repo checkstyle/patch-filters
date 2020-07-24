@@ -1,0 +1,27 @@
+diff --git a/Test.java b/Test.java
+index 35c9af9..369bbd3 100644
+--- a/Test.java
++++ b/Test.java
+@@ -4,19 +4,20 @@ public class Test {
+     public void test() {
+         {
+             try {  // violation context
++
+             }
+             finally {
+             }
+             try {  // violation context
+-                // something
++
+             }
+             finally {  // violation context
+-                // something
+             }
+             try {
+                 ; // something
+             }
+             finally {
++                System.out.println();
+                 ; // statement
+             }
+         }
