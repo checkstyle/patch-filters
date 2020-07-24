@@ -1,0 +1,1 @@
+Test.java:10:13: Default should be last label in the switch.
