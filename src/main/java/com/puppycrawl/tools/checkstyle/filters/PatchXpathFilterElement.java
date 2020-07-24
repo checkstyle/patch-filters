@@ -20,6 +20,7 @@
 package com.puppycrawl.tools.checkstyle.filters;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,7 +41,8 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
                     "MethodCountCheck",
                     "AnonInnerLengthCheck",
                     "ExecutableStatementCountCheck",
-                    "MethodLengthCheck");
+                    "MethodLengthCheck",
+                    "EmptyCatchBlockCheck");
 
     /**
      * List of checks that always matching context strategy.
@@ -123,7 +125,12 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
         for (List<Integer> singleLineRangeList : lineRangeList) {
             final int startLine = singleLineRangeList.get(0) + 1;
             final int endLine = singleLineRangeList.get(1) + 1;
-            result = currentLine >= startLine && currentLine < endLine;
+            if (startLine == endLine) {
+                result = currentLine == startLine;
+            }
+            else {
+                result = currentLine >= startLine && currentLine < endLine;
+            }
             if (result) {
                 break;
             }
@@ -146,7 +153,9 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
         else if (SUPPORT_CONTEXT_STRATEGY_CHECKS.contains(checkShortName)) {
             final DetailAST eventAst = getEventAst(event);
             final Set<Integer> childAstLineNoList = getChildAstLineNo(eventAst);
-            for (Integer currentLine : childAstLineNoList) {
+            final int min = Collections.min(childAstLineNoList);
+            final int max = Collections.max(childAstLineNoList);
+            for (int currentLine = min; currentLine <= max; currentLine++) {
                 result = lineMatching(currentLine);
                 if (result) {
                     break;
@@ -182,21 +191,26 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
     private Set<Integer> getChildAstLineNo(DetailAST ast) {
         final Set<Integer> childAstLineNoSet = new HashSet<>();
         DetailAST curNode = ast;
-        while (curNode != null) {
+        while (curNode != null && curNode != ast.getNextSibling()) {
             DetailAST toVisit = curNode.getFirstChild();
-            if (toVisit != null) {
-                childAstLineNoSet.add(toVisit.getLineNo());
-            }
-            while (curNode != null && toVisit == null) {
+            addChildAstLineNo(childAstLineNoSet, curNode);
+            addChildAstLineNo(childAstLineNoSet, toVisit);
+            while (curNode != null && toVisit == null && curNode != ast.getParent()) {
                 toVisit = curNode.getNextSibling();
                 curNode = curNode.getParent();
             }
-            curNode = toVisit;
-            if (curNode != null && curNode.equals(ast.getNextSibling())) {
+            if (curNode == ast.getParent()) {
                 break;
             }
+            curNode = toVisit;
         }
         return childAstLineNoSet;
+    }
+
+    private void addChildAstLineNo(Set<Integer> childAstLineNoSet, DetailAST ast) {
+        if (ast != null) {
+            childAstLineNoSet.add(ast.getLineNo());
+        }
     }
 
     private boolean isMatchingAst(DetailAST root, TreeWalkerAuditEvent event) {

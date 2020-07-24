@@ -149,7 +149,7 @@ public class SuppressionPatchFilter extends AutomaticBean
                 final LoadPatchFileUtils loadPatchFileUtils =
                         new LoadPatchFileUtils(fileHeader, strategy);
                 final String fileName = loadPatchFileUtils.getFileName();
-                final List<List<Integer>> lineRangeList = loadPatchFileUtils.getLineRange();
+                final List<List<Integer>> lineRangeList = loadPatchFileUtils.getLineRangeList();
                 final SuppressionPatchFilterElement element =
                         new SuppressionPatchFilterElement(fileName, lineRangeList,
                                 neverSuppressedChecks);

@@ -20,6 +20,7 @@
 package com.puppycrawl.tools.checkstyle.filters;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.jgit.diff.Edit;
@@ -34,7 +35,12 @@ public class LoadPatchFileUtils {
     /**
      * New line strategy that suppress all violations except from new lines.
      */
-    public static final String NEWLINE = "newline";
+    public static final String NEW_LINE = "newline";
+
+    /**
+     * Patched line strategy that suppress all violations except from new/changed lines.
+     */
+    public static final String PATCHED_LINE = "patchedline";
 
     /**
      * Context line strategy that suppress all violations except from new/changed lines
@@ -74,32 +80,51 @@ public class LoadPatchFileUtils {
      * Get LineRange list from FileHeader.
      * @return List
      */
-    public List<List<Integer>> getLineRange() {
+    public List<List<Integer>> getLineRangeList() {
         final List<List<Integer>> lineRangeList = new ArrayList<>();
         if (!"RENAME".equals(fileHeader.getChangeType().name())) {
             for (HunkHeader hunkHeader : fileHeader.getHunks()) {
                 final EditList edits = hunkHeader.toEditList();
                 for (Edit edit : edits) {
-                    if (NEWLINE.equals(strategy)) {
-                        if (Edit.Type.INSERT.equals(edit.getType())) {
-                            final List<Integer> lineRange = new ArrayList<>();
-                            lineRange.add(edit.getBeginB());
-                            lineRange.add(edit.getEndB());
-                            lineRangeList.add(lineRange);
-                        }
-                    }
-                    else {
-                        if (Edit.Type.INSERT.equals(edit.getType())
-                                || Edit.Type.REPLACE.equals(edit.getType())) {
-                            final List<Integer> lineRange = new ArrayList<>();
-                            lineRange.add(edit.getBeginB());
-                            lineRange.add(edit.getEndB());
-                            lineRangeList.add(lineRange);
-                        }
-                    }
+                    addSingleLineRange(lineRangeList, edit);
                 }
             }
         }
         return lineRangeList;
+    }
+
+    private void addSingleLineRange(List<List<Integer>> lineRangeList, Edit edit) {
+        if (NEW_LINE.equals(strategy)) {
+            final List<Integer> lineRange = getLineRange(edit,
+                    Arrays.asList(Edit.Type.INSERT));
+            if (lineRange != null) {
+                lineRangeList.add(lineRange);
+            }
+        }
+        else if (PATCHED_LINE.equals(strategy)) {
+            final List<Integer> lineRange = getLineRange(edit,
+                    Arrays.asList(Edit.Type.INSERT, Edit.Type.REPLACE));
+            if (lineRange != null) {
+                lineRangeList.add(lineRange);
+            }
+        }
+        else {
+            final List<Integer> lineRange = getLineRange(edit,
+                    Arrays.asList(Edit.Type.INSERT, Edit.Type.REPLACE,
+                            Edit.Type.DELETE));
+            if (lineRange != null) {
+                lineRangeList.add(lineRange);
+            }
+        }
+    }
+
+    private List<Integer> getLineRange(Edit edit, List<Edit.Type> typeList) {
+        List<Integer> lineRange = null;
+        if (typeList.contains(edit.getType())) {
+            lineRange = new ArrayList<>();
+            lineRange.add(edit.getBeginB());
+            lineRange.add(edit.getEndB());
+        }
+        return lineRange;
     }
 }
