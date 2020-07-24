@@ -1,0 +1,1 @@
+Test.java:5:38: Empty catch block.

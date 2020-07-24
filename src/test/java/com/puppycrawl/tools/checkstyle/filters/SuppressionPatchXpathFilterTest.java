@@ -149,4 +149,12 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
         testByConfig(
                 "OuterTypeNumber/context/defaultContextConfig.xml");
     }
+
+    @Ignore("Issue #160: Do not suppress violations caused by code deletion in context strategy")
+    @Test
+    public void testEmptyCatchBlock() throws Exception {
+        testByConfig("EmptyCatchBlock/newline/defaultContextConfig.xml");
+        testByConfig("EmptyCatchBlock/patchedline/defaultContextConfig.xml");
+        testByConfig("EmptyCatchBlock/context/defaultContextConfig.xml");
+    }
 }

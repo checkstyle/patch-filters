@@ -1,0 +1,13 @@
+diff --git a/Test.java b/Test.java
+index 1407d82..9edb47a 100644
+--- a/Test.java
++++ b/Test.java
+@@ -3,8 +3,6 @@ public class Test {
+         try {
+             throw new RuntimeException();
+         } catch (RuntimeException e) { // violation context
+-            System.out.println(e);
+-            e.printStackTrace();
+         }
+     }
+ }
