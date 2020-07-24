@@ -1,0 +1,20 @@
+diff --git a/Test.java b/Test.java
+new file mode 100644
+index 0000000..b2ada7e
+--- /dev/null
++++ b/Test.java
+@@ -0,0 +1,14 @@
++package TreeWalker.blocks.RightCurly;
++
++public class Test {
++    public void test(int x) {
++        if (x > 0)
++        {
++            System.out.println(x);
++        }  // violation without filter
++        else if (x < 0)
++        {
++            ;
++        }
++    }
++}

@@ -416,6 +416,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testRightCurly() throws Exception {
+        testByConfig("RightCurly/newline/defaultContextConfig.xml");
+        testByConfig("RightCurly/patchedline/defaultContextConfig.xml");
+        testByConfig("RightCurly/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testEmptyStatement() throws Exception {
         testByConfig("EmptyStatement/newline/defaultContextConfig.xml");
         testByConfig("EmptyStatement/patchedline/defaultContextConfig.xml");
