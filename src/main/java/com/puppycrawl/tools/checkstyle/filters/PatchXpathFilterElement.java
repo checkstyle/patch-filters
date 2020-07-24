@@ -57,6 +57,11 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
     private final List<List<Integer>> lineRangeList;
 
     /**
+     * Set has user defined Checks to never suppress if files are touched.
+     */
+    private final Set<String> neverSuppressedChecks;
+
+    /**
      * Strategy that used.
      */
     private final String strategy;
@@ -74,12 +79,15 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
      *                                                   nodes to get their child nodes
      * @param supportContextStrategyChecks               user defined Checks that support context
      *                                                   strategy
+     * @param neverSuppressedChecks                      set has user defined Checks to never
+     *                                                   suppress if files are touched
      */
     public PatchXpathFilterElement(String fileName,
                                    List<List<Integer>> lineRangeList,
                                    String strategy,
                                    Set<String> checkNameForContextStrategyByTokenOrParent,
-                                   Set<String> supportContextStrategyChecks) {
+                                   Set<String> supportContextStrategyChecks,
+                                   Set<String> neverSuppressedChecks) {
         this.fileName = fileName;
         this.lineRangeList = lineRangeList;
         this.strategy = strategy;
@@ -90,6 +98,7 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
         if (supportContextStrategyChecks != null) {
             this.supportContextStrategyChecks.addAll(supportContextStrategyChecks);
         }
+        this.neverSuppressedChecks = neverSuppressedChecks;
     }
 
     @Override
@@ -98,12 +107,14 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
 
         if (strategy.equals(LoadPatchFileUtils.CONTEXT)) {
             result = isFileNameMatching(event)
-                    && (isMatchingByContextStrategy(event)
+                    && (isNeverSuppressCheck(event)
+                    || isMatchingByContextStrategy(event)
                     || isLineMatching(event));
         }
         else {
             result = isFileNameMatching(event)
-                    && isLineMatching(event);
+                    && (isNeverSuppressCheck(event)
+                    || isLineMatching(event));
         }
 
         return result;
@@ -119,6 +130,24 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
         return event.getFileName() != null
                 && ((event.getFileName()).equals(fileName)
                 || event.getFileName().contains(fileName));
+    }
+
+    /**
+     * Is matching by never suppress check.
+     *
+     * @param event event
+     * @return true if it is matching
+     */
+    private boolean isNeverSuppressCheck(TreeWalkerAuditEvent event) {
+        boolean result = false;
+        final String checkShortName = getCheckShortName(event);
+        if (neverSuppressedChecks != null) {
+            if (neverSuppressedChecks.contains(checkShortName)
+                    || neverSuppressedChecks.contains(event.getModuleId())) {
+                result = true;
+            }
+        }
+        return result;
     }
 
     /**
