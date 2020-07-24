@@ -1,0 +1,11 @@
+diff --git a/Test.java b/Test.java
+index d3ec7a1..8e76ad9 100644
+--- a/Test.java
++++ b/Test.java
+@@ -5,6 +5,5 @@ public class Test {
+         System.out.println();
+         System.out.println();
+         System.out.println();
+-        System.out.println();
+     }
+ }

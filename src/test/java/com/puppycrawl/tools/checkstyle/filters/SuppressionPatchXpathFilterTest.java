@@ -50,12 +50,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
 
     @Test
     public void testMethodLength() throws Exception {
-        testByConfig(
-                "sizes/MethodLength/newline/defaultContextConfig.xml");
-        testByConfig(
-                "sizes/MethodLength/patchedline/defaultContextConfig.xml");
-        testByConfig(
-                "sizes/MethodLength/context/defaultContextConfig.xml");
+        testByConfig("MethodLength/case1/newline/defaultContextConfig.xml");
+        testByConfig("MethodLength/case1/patchedline/defaultContextConfig.xml");
+        testByConfig("MethodLength/case1/context/defaultContextConfig.xml");
+
+        testByConfig("MethodLength/case2/newline/defaultContextConfig.xml");
+        testByConfig("MethodLength/case2/patchedline/defaultContextConfig.xml");
+        testByConfig("MethodLength/case2/context/defaultContextConfig.xml");
     }
 
     @Test
@@ -148,5 +149,12 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
                 "sizes/OuterTypeNumber/patchedline/defaultContextConfig.xml");
         testByConfig(
                 "sizes/OuterTypeNumber/context/defaultContextConfig.xml");
+    }
+
+    @Test
+    public void testEmptyCatchBlock() throws Exception {
+        testByConfig("EmptyCatchBlock/newline/defaultContextConfig.xml");
+        testByConfig("EmptyCatchBlock/patchedline/defaultContextConfig.xml");
+        testByConfig("EmptyCatchBlock/context/defaultContextConfig.xml");
     }
 }
