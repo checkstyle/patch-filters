@@ -149,4 +149,16 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
         testByConfig(
                 "OuterTypeNumber/context/defaultContextConfig.xml");
     }
+
+    @Test
+    @Ignore("until https://github.com/checkstyle/patch-filters/issues/139")
+    public void testEmptyBlock() throws Exception {
+        testByConfig(
+                "EmptyBlock/newline/defaultContextConfig.xml");
+        testByConfig(
+                "EmptyBlock/patchedline/defaultContextConfig.xml");
+        testByConfig(
+                "EmptyBlock/context/defaultContextConfig.xml");
+    }
+
 }
