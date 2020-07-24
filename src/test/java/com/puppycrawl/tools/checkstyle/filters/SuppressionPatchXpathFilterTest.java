@@ -356,6 +356,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testArrayTrailingComma() throws Exception {
+        testByConfig("ArrayTrailingComma/newline/defaultContextConfig.xml");
+        testByConfig("ArrayTrailingComma/patchedline/defaultContextConfig.xml");
+        testByConfig("ArrayTrailingComma/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testExecutableStatementCount() throws Exception {
         testByConfig(
                 "sizes/ExecutableStatementCount/newline/defaultContextConfig.xml");

@@ -1,0 +1,16 @@
+diff --git a/Test.java b/Test.java
+index 3a74722..91799e1 100644
+--- a/Test.java
++++ b/Test.java
+@@ -12,4 +12,11 @@ public class Test {
+                 2  // violation without filter
+         };
+     }
++
++    public void test1() {
++        int[] a4 = new int[]{
++                3,
++                4  // violation without filter
++        };
++    }
+ }
