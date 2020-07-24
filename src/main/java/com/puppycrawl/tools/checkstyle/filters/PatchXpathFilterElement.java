@@ -42,7 +42,8 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
                     "AnonInnerLengthCheck",
                     "ExecutableStatementCountCheck",
                     "MethodLengthCheck",
-                    "EmptyCatchBlockCheck");
+                    "EmptyCatchBlockCheck",
+                    "EmptyStatementCheck");
 
     /**
      * List of checks that always matching context strategy.
