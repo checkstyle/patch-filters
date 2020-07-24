@@ -62,6 +62,7 @@ public class SuppressionPatchXpathFilter extends AutomaticBean implements
                     "ThrowsCountCheck",
                     "ExecutableStatementCountCheck",
                     "MethodLengthCheck",
+                    "CovariantEqualsCheck",
                     "EmptyCatchBlockCheck",
                     "EmptyStatementCheck",
                     "EmptyBlockCheck",
@@ -97,6 +98,13 @@ public class SuppressionPatchXpathFilter extends AutomaticBean implements
      * Set has user defined Checks that support context strategy.
      */
     private Set<String> supportContextStrategyChecks;
+
+    /**
+     * Set has user defined Checks to never suppress if files are referenced in patch.
+     * This property is useful for Checks that current context strategy can not cover all
+     * violations.
+     */
+    private Set<String> neverSuppressedChecks;
 
     /**
      * Set of individual suppresses.
@@ -149,6 +157,17 @@ public class SuppressionPatchXpathFilter extends AutomaticBean implements
     }
 
     /**
+     * Setter to set has user defined list of Checks to NEVER suppress if files are touched.
+     *
+     * @param neverSuppressedChecks string has user defined Checks to never suppress
+     *                              if files are touched, split by comma
+     */
+    public void setNeverSuppressedChecks(String neverSuppressedChecks) {
+        final String[] checksArray = neverSuppressedChecks.split(COMMA);
+        this.neverSuppressedChecks = new HashSet<>(Arrays.asList(checksArray));
+    }
+
+    /**
      * Setter to control what to do when the file is not existing.
      * If {@code optional} is set to {@code false} the file must exist, or else
      * it ends with error. On the other hand if optional is {@code true}
@@ -191,8 +210,10 @@ public class SuppressionPatchXpathFilter extends AutomaticBean implements
                 final List<List<Integer>> lineRangeList = loadPatchFileUtils.getLineRangeList();
                 final PatchXpathFilterElement element =
                         new PatchXpathFilterElement(fileName, lineRangeList,
-                                strategy, checkNamesForContextStrategyByTokenOrParentSet,
-                                supportContextStrategyChecks);
+                                strategy,
+                                checkNamesForContextStrategyByTokenOrParentSet,
+                                supportContextStrategyChecks,
+                                neverSuppressedChecks);
                 filters.add(element);
             }
         }

@@ -36,6 +36,22 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testNeverSuppressedChecks() throws Exception {
+        testByConfig("neversuppressedchecks/CovariantEquals/"
+                + "checkID/context/defaultContextConfig.xml");
+        testByConfig("neversuppressedchecks/CovariantEquals/"
+                + "checkID/newline/defaultContextConfig.xml");
+        testByConfig("neversuppressedchecks/CovariantEquals"
+                        + "/checkID/patchedline/defaultContextConfig.xml");
+        testByConfig("neversuppressedchecks/CovariantEquals/"
+                + "checkShortName/context/defaultContextConfig.xml");
+        testByConfig("neversuppressedchecks/CovariantEquals/"
+                + "checkShortName/newline/defaultContextConfig.xml");
+        testByConfig("neversuppressedchecks/CovariantEquals/"
+                + "checkShortName/patchedline/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testIllegalToken() throws Exception {
         testByConfig(
                 "IllegalToken/newline/defaultContextConfig.xml");
@@ -199,5 +215,12 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
         testByConfig("SimplifyBooleanReturn/newline/defaultContextConfig.xml");
         testByConfig("SimplifyBooleanReturn/patchedline/defaultContextConfig.xml");
         testByConfig("SimplifyBooleanReturn/context/defaultContextConfig.xml");
+    }
+
+    @Test
+    public void testCovariantEquals() throws Exception {
+        testByConfig("CovariantEquals/newline/defaultContextConfig.xml");
+        testByConfig("CovariantEquals/patchedline/defaultContextConfig.xml");
+        testByConfig("CovariantEquals/context/defaultContextConfig.xml");
     }
 }

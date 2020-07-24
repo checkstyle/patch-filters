@@ -1,0 +1,25 @@
+diff --git a/Test.java b/Test.java
+index cfa1cc7..6011bfc 100644
+--- a/Test.java
++++ b/Test.java
+@@ -5,9 +5,6 @@ public class Test {
+         return false;
+     }
+ 
+-    public boolean equals(Object i) {
+-        return false;
+-    }
+ }
+ 
+ class Test2 {
+@@ -15,7 +12,7 @@ class Test2 {
+         return false;
+     }
+ 
+-    public boolean equals(Object i) {
+-        return false;
+-    }
++//    public boolean equals(Object i) {
++//        return false;
++//    }
+ }
