@@ -1,0 +1,1 @@
+Test.java:26:20: covariant equals without overriding equals(java.lang.Object).
