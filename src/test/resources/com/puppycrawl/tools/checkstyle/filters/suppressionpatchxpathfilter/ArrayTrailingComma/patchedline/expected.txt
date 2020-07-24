@@ -1,0 +1,1 @@
+Test.java:19:17: Array should contain trailing comma.
