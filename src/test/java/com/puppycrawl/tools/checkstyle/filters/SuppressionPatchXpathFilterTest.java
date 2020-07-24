@@ -244,9 +244,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
 
     @Test
     public void testEmptyCatchBlock() throws Exception {
-        testByConfig("EmptyCatchBlock/newline/defaultContextConfig.xml");
-        testByConfig("EmptyCatchBlock/patchedline/defaultContextConfig.xml");
-        testByConfig("EmptyCatchBlock/context/defaultContextConfig.xml");
+        testByConfig("EmptyCatchBlock/case1/newline/defaultContextConfig.xml");
+        testByConfig("EmptyCatchBlock/case1/patchedline/defaultContextConfig.xml");
+        testByConfig("EmptyCatchBlock/case1/context/defaultContextConfig.xml");
+
+        testByConfig("EmptyCatchBlock/case2/newline/defaultContextConfig.xml");
+        testByConfig("EmptyCatchBlock/case2/patchedline/defaultContextConfig.xml");
+        testByConfig("EmptyCatchBlock/case2/context/defaultContextConfig.xml");
     }
 
     @Test
