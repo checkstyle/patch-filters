@@ -1,0 +1,18 @@
+diff --git a/Test.java b/Test.java
+index 212a471..7157e7b 100644
+--- a/Test.java
++++ b/Test.java
+@@ -39,4 +39,12 @@ public class Test {
+         }
+     }
+ 
++    private void foo5() {
++        try {
++            throw new IOException();
+             // violation without filter at next line
++        } catch (IOException | NullPointerException | ArithmeticException ignore) {
++
++        }
++    }
++
+ }

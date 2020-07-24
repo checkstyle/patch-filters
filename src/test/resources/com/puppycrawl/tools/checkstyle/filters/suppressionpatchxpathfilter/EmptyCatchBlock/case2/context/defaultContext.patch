@@ -1,0 +1,29 @@
+diff --git a/Test.java b/Test.java
+index f8d834b..a82a493 100644
+--- a/Test.java
++++ b/Test.java
+@@ -8,7 +8,6 @@ public class Test {
+             throw new RuntimeException();
+             // violation without filter at next line
+         } catch (Exception expected) {
+-            //Expected
+         }
+     }
+ 
+@@ -16,7 +15,7 @@ public class Test {
+         try {
+             throw new RuntimeException();
+             // violation without filter at next line
+-        } catch (Exception e) {}
++        } catch (Exception e) { }
+ 
+     }
+ 
+@@ -25,6 +24,7 @@ public class Test {
+             throw new IOException();
+             // violation without filter at next line
+         } catch (IOException | NullPointerException | ArithmeticException ignore) {
++
+         }
+     }
+ 

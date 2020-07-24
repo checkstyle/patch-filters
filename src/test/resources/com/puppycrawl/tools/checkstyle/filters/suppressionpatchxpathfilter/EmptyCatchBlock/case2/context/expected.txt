@@ -1,0 +1,3 @@
+Test.java:10:38: Empty catch block.
+Test.java:18:31: Empty catch block.
+Test.java:26:83: Empty catch block.
