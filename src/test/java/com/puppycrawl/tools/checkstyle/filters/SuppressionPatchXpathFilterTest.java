@@ -282,6 +282,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testCovariantEquals() throws Exception {
+        testByConfig("CovariantEquals/newline/defaultContextConfig.xml");
+        testByConfig("CovariantEquals/patchedline/defaultContextConfig.xml");
+        testByConfig("CovariantEquals/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testAnonInnerLength() throws Exception {
         testByConfig(
                 "sizes/AnonInnerLength/newline/defaultContextConfig.xml");
@@ -482,13 +489,6 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
         testByConfig("SimplifyBooleanReturn/newline/defaultContextConfig.xml");
         testByConfig("SimplifyBooleanReturn/patchedline/defaultContextConfig.xml");
         testByConfig("SimplifyBooleanReturn/context/defaultContextConfig.xml");
-    }
-
-    @Test
-    public void testCovariantEquals() throws Exception {
-        testByConfig("CovariantEquals/newline/defaultContextConfig.xml");
-        testByConfig("CovariantEquals/patchedline/defaultContextConfig.xml");
-        testByConfig("CovariantEquals/context/defaultContextConfig.xml");
     }
 
     @Test

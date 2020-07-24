@@ -16,3 +16,9 @@ class Test2 {
 //        return false;
 //    }
 }
+
+class Test3 {
+    public boolean equals(TreeWalker.coding.CovariantEquals.Test i) {  // violation without filter
+        return false;
+    }
+}
