@@ -1,0 +1,24 @@
+diff --git a/Test.java b/Test.java
+index 3ab8d24..5eb7274 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,17 +1,15 @@
+ package TreeWalker.coding.MissingCtor;
+ 
+ public class Test {  // violation without filter
++    private int a;
+ }
+ 
+ class Test1 {  // violation without filter
+     private int a;
+-    Test1(int a) {
+-        this.a = a;
+-    }
+ }
+ class Test2 {  // violation without filter
+     private String s;
+-    Test2() {
++    void Test() {
+         s = "foobar";
+     }
+ }

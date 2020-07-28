@@ -1,0 +1,21 @@
+diff --git a/Test.java b/Test.java
+index 5eb7274..e3b2554 100644
+--- a/Test.java
++++ b/Test.java
+@@ -4,7 +4,7 @@ public class Test {
+     private int a;
+ }
+ 
+-class Test1 {
++class Test0 {  // violation without filter
+     private int a;
+ }
+ class Test2 {
+@@ -13,3 +13,7 @@ class Test2 {
+         s = "foobar";
+     }
+ }
++
++class Test3 {  // violation without filter
++    private int a;
++}
