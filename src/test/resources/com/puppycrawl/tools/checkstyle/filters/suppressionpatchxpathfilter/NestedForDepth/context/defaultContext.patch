@@ -1,0 +1,33 @@
+diff --git a/Test.java b/Test.java
+index 6b02f09..4d53980 100644
+--- a/Test.java
++++ b/Test.java
+@@ -5,7 +5,7 @@ public class Test {
+         for (int i = 0; i < 10; i++) {
+             for (int j = 0; j < 10; j++) {
+                 for (int k = 0; k < 10; k++){  // violation without filter
+-
++                    System.out.println();
+                 }
+             }
+         }
+@@ -15,9 +15,6 @@ public class Test {
+         for (int i = 0; i < 10; i++) {
+             for (int j = 0; j < 10; j++) {
+                 for (int k = 0; k < 10; k++){  // violation without filter
+-                    for (int l = 0; l < 10; l++) {
+-
+-                    }
+                 }
+             }
+         }
+@@ -27,7 +24,9 @@ public class Test {
+         for (int i = 0; i < 10; i++) {
+             for (int j = 0; j < 10; j++) {
+                 for (int k = 0; k < 10; k++){  // violation without filter
++                    for (int l = 0; l < 10; l++) {  // violation without filter
+ 
++                    }
+                 }
+             }
+         }
