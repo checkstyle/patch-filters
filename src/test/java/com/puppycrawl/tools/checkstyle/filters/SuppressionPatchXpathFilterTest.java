@@ -282,6 +282,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testNestedForDepth() throws Exception {
+        testByConfig("NestedForDepth/newline/defaultContextConfig.xml");
+        testByConfig("NestedForDepth/patchedline/defaultContextConfig.xml");
+        testByConfig("NestedForDepth/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testEmptyBlock() throws Exception {
         testByConfig("EmptyBlock/newline/defaultContextConfig.xml");
         testByConfig("EmptyBlock/patchedline/defaultContextConfig.xml");

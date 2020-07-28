@@ -1,0 +1,4 @@
+Test.java:17:17: Nested for depth is 2 (max allowed is 1).
+Test.java:26:17: Nested for depth is 2 (max allowed is 1).
+Test.java:27:21: Nested for depth is 3 (max allowed is 1).
+Test.java:7:17: Nested for depth is 2 (max allowed is 1).
