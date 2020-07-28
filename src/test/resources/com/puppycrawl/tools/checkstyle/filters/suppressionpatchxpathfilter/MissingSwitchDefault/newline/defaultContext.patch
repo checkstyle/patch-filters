@@ -1,0 +1,28 @@
+diff --git a/Test.java b/Test.java
+index e01767d..6773a78 100644
+--- a/Test.java
++++ b/Test.java
+@@ -2,7 +2,7 @@ package TreeWalker.coding.MissingSwitchDefault;
+ 
+ public class Test {
+     public void test(int i) {
+-        switch (i) {
++        switch (i)  {  // violation without filter
+             case 1:
+                 break;
+             case 2:
+@@ -10,3 +10,14 @@ public class Test {
+         }
+     }
+ }
++
++class Test1 {
++    public void test1(int i) {
++        switch (i) {  // violation without filter
++            case 3:
++                break;
++            case 4:
++                break;
++        }
++    }
++}

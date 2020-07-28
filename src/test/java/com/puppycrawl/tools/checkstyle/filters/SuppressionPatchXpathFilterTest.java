@@ -229,6 +229,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testMissingSwitchDefault() throws Exception {
+        testByConfig("MissingSwitchDefault/newline/defaultContextConfig.xml");
+        testByConfig("MissingSwitchDefault/patchedline/defaultContextConfig.xml");
+        testByConfig("MissingSwitchDefault/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testEmptyBlock() throws Exception {
         testByConfig("EmptyBlock/newline/defaultContextConfig.xml");
         testByConfig("EmptyBlock/patchedline/defaultContextConfig.xml");
