@@ -225,6 +225,14 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testHiddenField() throws Exception {
+        testByConfig("HiddenField/newline/defaultContextConfig.xml");
+        testByConfig("HiddenField/patchedline/defaultContextConfig.xml");
+        testByConfig("HiddenField/context/defaultContextConfig.xml");
+        testByConfig("HiddenField/context/case2/defaultContextConfig.xml");
+    }
+
+    @Test
     @Ignore("JavadocMethod should have a violation, but not. It should be solved by"
             + "context strategy.")
     public void testJavadocMethod() throws Exception {
