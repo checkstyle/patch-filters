@@ -101,6 +101,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testMissingCtor() throws Exception {
+        testByConfig("MissingCtor/newline/defaultContextConfig.xml");
+        testByConfig("MissingCtor/patchedline/defaultContextConfig.xml");
+        testByConfig("MissingCtor/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testMagicNumber() throws Exception {
         testByConfig(
                 "MagicNumber/newline/defaultContextConfig.xml");
