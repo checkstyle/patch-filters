@@ -1,0 +1,6 @@
+Test.java:18:17: Nested try depth is 2 (max allowed is 1).
+Test.java:19:21: Nested try depth is 3 (max allowed is 1).
+Test.java:31:17: Nested try depth is 2 (max allowed is 1).
+Test.java:41:17: Nested try depth is 2 (max allowed is 1).
+Test.java:51:17: Nested try depth is 2 (max allowed is 1).
+Test.java:7:17: Nested try depth is 2 (max allowed is 1).
