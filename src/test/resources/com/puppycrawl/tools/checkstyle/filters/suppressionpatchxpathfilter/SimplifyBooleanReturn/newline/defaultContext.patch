@@ -1,0 +1,20 @@
+diff --git a/Test.java b/Test.java
+index 78b86e6..5189eae 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,12 +1,12 @@
+ package TreeWalker.coding.SimplifyBooleanReturn;
+ 
+ public class Test {
+-    public int test(boolean cond) {
++    public boolean test(boolean cond) {
+         if (cond) {  // violation context
+-            return 1;
++            return true;
+         }
+         else {
+-            return 2;
++            return false;
+         }
+     }
+ }
