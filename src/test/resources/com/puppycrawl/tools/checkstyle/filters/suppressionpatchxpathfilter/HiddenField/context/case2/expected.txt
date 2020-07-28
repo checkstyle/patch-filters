@@ -1,0 +1,1 @@
+Test.java:13:19: 'test' hides a field.

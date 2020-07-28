@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index f9f6c5b..7e271c5 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,6 +1,7 @@
+ package TreeWalker.coding.HiddenField;
+ 
+ public class Test {
++    private int test;
+ 
+     private void addTest(int test)  // violation without filter
+     {

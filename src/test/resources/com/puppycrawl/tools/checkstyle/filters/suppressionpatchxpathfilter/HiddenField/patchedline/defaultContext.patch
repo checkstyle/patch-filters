@@ -1,0 +1,16 @@
+diff --git a//Test.java b//Test.java
+index 7e271c5..2efb892 100644
+--- a//Test.java
++++ b//Test.java
+@@ -8,6 +8,11 @@ public class Test {
+         System.out.println(test);
+     }
+ 
++    private void addTest1(int test)  // violation without filter
++    {
++        System.out.println(test);
++    }
++
+     private void foo()
+     {
+         final int test = 1;  // violation without filter
