@@ -1,0 +1,33 @@
+diff --git a/Test.java b/Test.java
+index d31cd69..c08f609 100644
+--- a/Test.java
++++ b/Test.java
+@@ -5,7 +5,7 @@ public class Test {
+         if (a > 10) {
+             if (a == 10) {
+                 if (a < 10) {  // violation without filter
+-                    System.out.println();
++                    System.out.println("a");
+                 }
+             }
+         }
+@@ -15,9 +15,6 @@ public class Test {
+         if (a > 10) {
+             if (a == 10) {
+                 if (a < 10) {  // violation without filter
+-                    if (a < 10) {
+-
+-                    }
+                 }
+             }
+         }
+@@ -27,7 +24,9 @@ public class Test {
+         if (a > 10) {
+             if (a == 10) {
+                 if (a < 10) { // violation without filter
++                    if (a < 10) {  // violation without filter
+ 
++                    }
+                 }
+             }
+         }
