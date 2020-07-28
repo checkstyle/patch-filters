@@ -391,6 +391,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testNestedTryDepth() throws Exception {
+        testByConfig("NestedTryDepth/newline/defaultContextConfig.xml");
+        testByConfig("NestedTryDepth/patchedline/defaultContextConfig.xml");
+        testByConfig("NestedTryDepth/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testSimplifyBooleanReturn() throws Exception {
         testByConfig("SimplifyBooleanReturn/newline/defaultContextConfig.xml");
         testByConfig("SimplifyBooleanReturn/patchedline/defaultContextConfig.xml");

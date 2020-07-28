@@ -1,0 +1,51 @@
+diff --git a/Test.java b/Test.java
+index b76571c..5247e2a 100644
+--- a/Test.java
++++ b/Test.java
+@@ -5,6 +5,7 @@ public class Test {
+         try {
+             try {
+                 try {  // violation without filter
++
+                 } catch (Exception e) {}
+             } catch (Exception e) {}
+         } catch (Exception e) {}
+@@ -15,7 +16,9 @@ public class Test {
+         try {
+             try {
+                 try {  // violation without filter
++                    try {  // violation without filter
+ 
++                    } catch (Exception e) {}
+                 } catch (Exception e) {}
+             } catch (Exception e) {}
+         } catch (Exception e) {}
+@@ -26,9 +29,6 @@ public class Test {
+         try {
+             try {
+                 try {  // violation without filter
+-                    try {
+-
+-                    } catch (Exception e) {}
+                 } catch (Exception e) {}
+             } catch (Exception e) {}
+         } catch (Exception e) {}
+@@ -39,7 +39,17 @@ public class Test {
+         try {
+             try {
+                 try {
+-                } catch (Exception e) {}
++                } catch (Exception e) { }
++            } catch (Exception e) {}
++        } catch (Exception e) {}
++
++    }
++
++    public void test4() {
++        try {
++            try {
++                try {  // violation without filter
++                } catch (Exception e) { }
+             } catch (Exception e) {}
+         } catch (Exception e) {}
+ 
