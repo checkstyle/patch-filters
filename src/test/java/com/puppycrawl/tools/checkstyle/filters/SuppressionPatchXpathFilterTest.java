@@ -171,4 +171,11 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
         testByConfig("EmptyBlock/patchedline/defaultContextConfig.xml");
         testByConfig("EmptyBlock/context/defaultContextConfig.xml");
     }
+
+    @Test
+    public void testSimplifyBooleanReturn() throws Exception {
+        testByConfig("SimplifyBooleanReturn/newline/defaultContextConfig.xml");
+        testByConfig("SimplifyBooleanReturn/patchedline/defaultContextConfig.xml");
+        testByConfig("SimplifyBooleanReturn/context/defaultContextConfig.xml");
+    }
 }

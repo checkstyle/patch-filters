@@ -44,7 +44,8 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
                     "MethodLengthCheck",
                     "EmptyCatchBlockCheck",
                     "EmptyStatementCheck",
-                    "EmptyBlockCheck"
+                    "EmptyBlockCheck",
+                    "SimplifyBooleanReturnCheck"
             );
 
     /**
