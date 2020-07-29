@@ -19,9 +19,10 @@
 
 package com.puppycrawl.tools.checkstyle.filters;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.puppycrawl.tools.checkstyle.TreeWalkerAuditEvent;
@@ -32,6 +33,16 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
  * This filter element is immutable and processes.
  */
 public class PatchXpathFilterElement implements TreeWalkerFilter {
+    /**
+     * The key of minimum line in child ast lines.
+     */
+    private static final String MIN = "min";
+
+    /**
+     * The key of maximum line in child ast lines.
+     */
+    private static final String MAX = "max";
+
     /**
      * Set of checks that support context strategy but need modify violation nodes
      * to their parent abstract nodes to get their child nodes.
@@ -174,6 +185,25 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
         return result;
     }
 
+    private boolean lineMatching(int childAstStartLine, int childAstEndLine) {
+        boolean result = false;
+        for (List<Integer> singleLineRangeList : lineRangeList) {
+            final int startLine = singleLineRangeList.get(0) + 1;
+            int endLine = singleLineRangeList.get(1) + 1;
+            if (startLine == endLine) {
+                endLine++;
+            }
+
+            result = (childAstStartLine <= startLine && startLine <= childAstEndLine)
+                    || (childAstStartLine <= endLine - 1 && endLine - 1 <= childAstEndLine);
+
+            if (result) {
+                break;
+            }
+        }
+        return result;
+    }
+
     /**
      * Is matching by context strategy.
      *
@@ -192,15 +222,10 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
                 eventAst = getEventAst(event);
             }
             if (eventAst != null) {
-                final Set<Integer> childAstLineNoList = getChildAstLineNo(eventAst);
-                final int min = Collections.min(childAstLineNoList);
-                final int max = Collections.max(childAstLineNoList);
-                for (int currentLine = min; currentLine <= max; currentLine++) {
-                    result = lineMatching(currentLine);
-                    if (result) {
-                        break;
-                    }
-                }
+                final Map<String, Integer> childAstLineNoMap = getChildAstLineNo(eventAst);
+                final int childAstStartLine = childAstLineNoMap.get(MIN);
+                final int childAstEndLine = childAstLineNoMap.get(MAX);
+                result = lineMatching(childAstStartLine, childAstEndLine);
             }
         }
         return result;
@@ -238,13 +263,15 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
         return eventAst;
     }
 
-    private Set<Integer> getChildAstLineNo(DetailAST ast) {
-        final Set<Integer> childAstLineNoSet = new HashSet<>();
+    private Map<String, Integer> getChildAstLineNo(DetailAST ast) {
+        final Map<String, Integer> childAstLineNoMap = new HashMap<>();
         DetailAST curNode = ast;
+        childAstLineNoMap.put(MIN, curNode.getLineNo());
+        childAstLineNoMap.put(MAX, curNode.getLineNo());
         while (curNode != null && curNode != ast.getNextSibling()) {
             DetailAST toVisit = curNode.getFirstChild();
-            addChildAstLineNo(childAstLineNoSet, curNode);
-            addChildAstLineNo(childAstLineNoSet, toVisit);
+            setChildAstLineNo(childAstLineNoMap, curNode);
+            setChildAstLineNo(childAstLineNoMap, toVisit);
             while (curNode != null && toVisit == null && curNode != ast.getParent()) {
                 toVisit = curNode.getNextSibling();
                 curNode = curNode.getParent();
@@ -254,12 +281,18 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
             }
             curNode = toVisit;
         }
-        return childAstLineNoSet;
+        return childAstLineNoMap;
     }
 
-    private void addChildAstLineNo(Set<Integer> childAstLineNoSet, DetailAST ast) {
+    private void setChildAstLineNo(Map<String, Integer> childAstLineNoMap, DetailAST ast) {
         if (ast != null) {
-            childAstLineNoSet.add(ast.getLineNo());
+            final int lineNo = ast.getLineNo();
+            if (lineNo < childAstLineNoMap.get(MIN)) {
+                childAstLineNoMap.put(MIN, lineNo);
+            }
+            else if (lineNo > childAstLineNoMap.get(MAX)) {
+                childAstLineNoMap.put(MAX, lineNo);
+            }
         }
     }
 
