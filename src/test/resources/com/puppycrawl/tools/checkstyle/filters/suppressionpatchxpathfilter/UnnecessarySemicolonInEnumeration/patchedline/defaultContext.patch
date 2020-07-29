@@ -1,0 +1,25 @@
+diff --git a/Test.java b/Test.java
+index cf2814c..1773bcb 100644
+--- a/Test.java
++++ b/Test.java
+@@ -2,10 +2,10 @@ package TreeWalker.coding.UnnecessarySemicolonInEnumeration;
+ 
+ public class Test {
+     enum One {
+-        A,B
++        A,B,;  // violation without filter
+     }
+     enum Two {
+-        A,B,;
++        A,;  // violation without filter
+     }
+     enum Three {
+         A,B();  // violation without filter
+@@ -23,7 +23,6 @@ public class Test {
+         A,
+         B,
+         ;  // violation without filter
+-        six(){}
+     }
+     enum seven {
+         A, B
