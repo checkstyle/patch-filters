@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index 282fb80..6ad6ae5 100644
+--- a/Test.java
++++ b/Test.java
+@@ -10,4 +10,7 @@ public class Test {
+     enum Three {
+         A,B();  // violation without filter
+     }
++    enum Four {
++        A,B,;  // violation without filter
++    }
+ }
