@@ -1,0 +1,19 @@
+diff --git a/Test.java b/Test.java
+index 6d5e669..ecb7271 100644
+--- a/Test.java
++++ b/Test.java
+@@ -2,13 +2,12 @@ package TreeWalker.coding.SuperClone;
+ 
+ public class Test {
+     public Object clone() throws CloneNotSupportedException {  // violation without filter
+-        return super.clone();
++        return new Object();
+     }
+ }
+ 
+ class Test1 {
+     public Object clone() throws CloneNotSupportedException {  // violation without filter
+-        System.out.println();
+         return new Object();
+     }
+ }
