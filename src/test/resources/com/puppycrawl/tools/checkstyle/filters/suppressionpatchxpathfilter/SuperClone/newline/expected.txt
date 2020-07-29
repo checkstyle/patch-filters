@@ -1,0 +1,1 @@
+Test.java:22:19: Method 'clone' should call 'super.clone'.

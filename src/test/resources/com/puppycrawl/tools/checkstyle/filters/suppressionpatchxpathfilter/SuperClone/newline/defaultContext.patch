@@ -1,0 +1,23 @@
+diff --git a/Test.java b/Test.java
+index ecb7271..b06042d 100644
+--- a/Test.java
++++ b/Test.java
+@@ -7,7 +7,7 @@ public class Test {
+ }
+ 
+ class Test1 {
+-    public Object clone() throws CloneNotSupportedException {  // violation without filter
++    public Object clone() throws CloneNotSupportedException  {  // violation without filter
+         return new Object();
+     }
+ }
+@@ -18,3 +18,9 @@ class Test2 {
+     }
+ }
+ 
++class Test3 {
++    public Object clone() throws CloneNotSupportedException {  // violation without filter
++        return new Object();
++    }
++}
++

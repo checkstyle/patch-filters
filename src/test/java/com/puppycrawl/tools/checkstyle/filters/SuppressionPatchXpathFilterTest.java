@@ -326,4 +326,11 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
         testByConfig("CovariantEquals/patchedline/defaultContextConfig.xml");
         testByConfig("CovariantEquals/context/defaultContextConfig.xml");
     }
+
+    @Test
+    public void testSuperClone() throws Exception {
+        testByConfig("SuperClone/newline/defaultContextConfig.xml");
+        testByConfig("SuperClone/patchedline/defaultContextConfig.xml");
+        testByConfig("SuperClone/context/defaultContextConfig.xml");
+    }
 }
