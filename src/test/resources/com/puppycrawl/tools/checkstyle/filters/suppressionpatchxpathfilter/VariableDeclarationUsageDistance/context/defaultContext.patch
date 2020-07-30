@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index 343bb6c..d706ba4 100644
+--- a/Test.java
++++ b/Test.java
+@@ -6,6 +6,7 @@ public class Test {
+         a = a + b;
+         b = a + a;
+         System.out.println(a);
++        System.out.println(b);
+         count = b;  // violation context
+     }
+ }
