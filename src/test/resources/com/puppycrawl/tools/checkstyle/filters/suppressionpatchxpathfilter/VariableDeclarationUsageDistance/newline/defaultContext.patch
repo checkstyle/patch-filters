@@ -1,0 +1,18 @@
+diff --git a/Test.java b/Test.java
+index d706ba4..a713696 100644
+--- a/Test.java
++++ b/Test.java
+@@ -3,10 +3,12 @@ package TreeWalker.VariableDeclarationUsageDistance;
+ public class Test {
+     public void test(int a, int b) {
+         int count;
++        int size;
+         a = a + b;
+         b = a + a;
+         System.out.println(a);
+         System.out.println(b);
+         count = b;  // violation without filter
++        size = b;  // violation without filter
+     }
+ }
+

@@ -52,6 +52,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testVariableDeclarationUsageDistance() throws Exception {
+        testByConfig("VariableDeclarationUsageDistance/newline/defaultContextConfig.xml");
+        testByConfig("VariableDeclarationUsageDistance/patchedline/defaultContextConfig.xml");
+        testByConfig("VariableDeclarationUsageDistance/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testIllegalToken() throws Exception {
         testByConfig(
                 "IllegalToken/newline/defaultContextConfig.xml");
