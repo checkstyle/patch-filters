@@ -55,8 +55,7 @@ public class SuppressionPatchXpathFilter extends AutomaticBean implements
     /**
      * List of checks that support context strategy.
      */
-    private static final List<String> SUPPORT_CONTEXT_STRATEGY_CHECKS =
-            Arrays.asList();
+    private static final List<String> SUPPORT_CONTEXT_STRATEGY_CHECKS = Arrays.asList();
 
     /**
      * Specify the location of the patch file.
