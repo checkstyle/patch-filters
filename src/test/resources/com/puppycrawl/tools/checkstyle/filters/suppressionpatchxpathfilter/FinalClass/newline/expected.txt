@@ -1,0 +1,1 @@
+Test.java:22:1: Class Test4 should be declared as final.
