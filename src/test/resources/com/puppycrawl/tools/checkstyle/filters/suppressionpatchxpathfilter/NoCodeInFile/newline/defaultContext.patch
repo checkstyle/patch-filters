@@ -1,0 +1,10 @@
+diff --git a/Test.java b/Test.java
+index c820703..4d34f09 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,4 +1,5 @@
+ /* only  // violation without filter
+ comment
++add one line
+ present
+ */
