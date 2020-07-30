@@ -114,6 +114,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testThrowsCount() throws Exception {
+        testByConfig("ThrowsCount/newline/defaultContextConfig.xml");
+        testByConfig("ThrowsCount/patchedline/defaultContextConfig.xml");
+        testByConfig("ThrowsCount/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testMemberName() throws Exception {
         testByConfig(
                 "MemberName/newline/defaultContextConfig.xml");

@@ -1,0 +1,27 @@
+diff --git a/Test.java b/Test.java
+index 6e5e330..1e63b38 100644
+--- a/Test.java
++++ b/Test.java
+@@ -4,13 +4,14 @@ public class Test {
+     public void myFunction() throws CloneNotSupportedException,  // violation context
+             ArrayIndexOutOfBoundsException,
+             StringIndexOutOfBoundsException,
++
+             IllegalStateException,
+             NullPointerException {
+         // body
+     }
+ 
+     public void myFunc() throws CloneNotSupportedException,  // violation context
+-            ArrayIndexOutOfBoundsException,
++            StringIndexOutOfBoundsException,
+             StringIndexOutOfBoundsException,
+             IllegalStateException,
+             NullPointerException {
+@@ -23,5 +24,6 @@ public class Test {
+             ArithmeticException,
+             ClassCastException {
+         // body
++        System.out.println();
+     }
+ }

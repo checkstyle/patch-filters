@@ -40,6 +40,7 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
             Arrays.asList("ReturnCountCheck",
                     "MethodCountCheck",
                     "AnonInnerLengthCheck",
+                    "ThrowsCountCheck",
                     "ExecutableStatementCountCheck",
                     "MethodLengthCheck",
                     "EmptyCatchBlockCheck",
