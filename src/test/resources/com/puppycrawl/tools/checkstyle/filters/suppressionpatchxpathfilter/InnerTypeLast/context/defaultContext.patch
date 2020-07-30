@@ -1,0 +1,18 @@
+diff --git a/Test.java b/Test.java
+index 8968f94..3ed22b2 100644
+--- a/Test.java
++++ b/Test.java
+@@ -5,11 +5,12 @@ public class Test {
+ 
+ class Test1 {
+     private String s; // OK
++    class InnerTest1 {}
+     public void test() {} // violation without filter
+ }
+ 
+ class Test2 {
+     private String s; // OK
+-    public void InnerTest1() {}
++    class InnerTest1 {}
+     public void test() {} // violation without filter
+ }

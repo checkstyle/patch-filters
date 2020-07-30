@@ -108,6 +108,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testInnerTypeLast() throws Exception {
+        testByConfig("InnerTypeLast/newline/defaultContextConfig.xml");
+        testByConfig("InnerTypeLast/patchedline/defaultContextConfig.xml");
+        testByConfig("InnerTypeLast/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testMagicNumber() throws Exception {
         testByConfig(
                 "MagicNumber/newline/defaultContextConfig.xml");

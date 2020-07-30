@@ -1,0 +1,2 @@
+Test.java:16:5: Fields and methods should be before inner classes.
+Test.java:9:5: Fields and methods should be before inner classes.
