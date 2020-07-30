@@ -1,0 +1,3 @@
+Test.java:10:1: interfaces should describe a type and hence have methods.
+Test.java:15:1: interfaces should describe a type and hence have methods.
+Test.java:6:1: interfaces should describe a type and hence have methods.

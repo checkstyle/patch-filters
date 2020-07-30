@@ -1,0 +1,21 @@
+diff --git a/Test.java b/Test.java
+index f45c59e..bc3ea95 100644
+--- a/Test.java
++++ b/Test.java
+@@ -4,14 +4,14 @@ public class Test {
+ }
+ 
+ interface Test1 {  // violation context
+-    int a = 3;
++    int a = 32;
+ }
+ 
+ interface Test2 { // violation context
+ 
++    int a = 32;
+ }
+ 
+ interface Test3 { // violation context
+     int a = 3;
+-    void test();
+ }

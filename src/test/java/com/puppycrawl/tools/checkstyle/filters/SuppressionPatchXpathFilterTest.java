@@ -102,6 +102,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testInterfaceIsType() throws Exception {
+        testByConfig("InterfaceIsType/newline/defaultContextConfig.xml");
+        testByConfig("InterfaceIsType/patchedline/defaultContextConfig.xml");
+        testByConfig("InterfaceIsType/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testReturnCount() throws Exception {
         testByConfig(
                 "ReturnCount/newline/defaultContextConfig.xml");

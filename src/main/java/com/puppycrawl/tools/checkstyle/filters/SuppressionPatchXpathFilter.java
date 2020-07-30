@@ -67,6 +67,7 @@ public class SuppressionPatchXpathFilter extends AutomaticBean implements
                     "EmptyStatementCheck",
                     "EmptyBlockCheck",
                     "DefaultComesLast",
+                    "InterfaceIsTypeCheck",
                     "SimplifyBooleanReturnCheck"
             );
 
