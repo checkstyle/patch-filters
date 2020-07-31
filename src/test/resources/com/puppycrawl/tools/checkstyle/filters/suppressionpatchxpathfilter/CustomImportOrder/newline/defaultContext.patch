@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index 9ce99d6..34774c8 100644
+--- a/Test.java
++++ b/Test.java
+@@ -16,6 +16,7 @@ import java.io.File;  // violation without filter
+ import java.io.IOException;  // violation without filter
+ import java.io.InputStream;  // violation without filter
+ import java.io.Reader;  // violation without filter
++import java.io.Writer;  // violation without filter
+ 
+ import com.puppycrawl.tools.checkstyle.*;
+ 

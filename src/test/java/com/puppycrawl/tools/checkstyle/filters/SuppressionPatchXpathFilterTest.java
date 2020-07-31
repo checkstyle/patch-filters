@@ -229,6 +229,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testCustomImportOrder() throws Exception {
+        testByConfig("CustomImportOrder/newline/defaultContextConfig.xml");
+        testByConfig("CustomImportOrder/patchedline/defaultContextConfig.xml");
+        testByConfig("CustomImportOrder/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testEmptyStatement() throws Exception {
         testByConfig("EmptyStatement/newline/defaultContextConfig.xml");
         testByConfig("EmptyStatement/patchedline/defaultContextConfig.xml");
