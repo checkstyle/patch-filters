@@ -133,6 +133,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testEmptyLineSeparator() throws Exception {
+        testByConfig("EmptyLineSeparator/newline/defaultContextConfig.xml");
+        testByConfig("EmptyLineSeparator/patchedline/defaultContextConfig.xml");
+        testByConfig("EmptyLineSeparator/context/defaultContextConfig.xml");
+    }
+
+    @Test
     @Ignore("JavadocMethod should have a violation, but not. It should be solved by"
             + "context strategy.")
     public void testJavadocMethod() throws Exception {

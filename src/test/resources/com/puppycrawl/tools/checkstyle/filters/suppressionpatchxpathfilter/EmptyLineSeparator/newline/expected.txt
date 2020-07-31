@@ -1,0 +1,1 @@
+Test.java:9: 'METHOD_DEF' should be separated from previous statement.

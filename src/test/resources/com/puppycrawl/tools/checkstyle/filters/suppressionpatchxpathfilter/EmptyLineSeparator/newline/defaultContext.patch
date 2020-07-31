@@ -1,0 +1,10 @@
+diff --git a/Test.java b/Test.java
+index f3825c2..4441b50 100644
+--- a/Test.java
++++ b/Test.java
+@@ -6,4 +6,5 @@ package TreeWalker.EmptyLineSeparator;  // violation without filter
+ public class Test {
+     public static final int FOO_CONST = 1;
+     public void foo() {}  // violation without filter
++    public void foo2() {}  // violation without filter
+ }

@@ -1,0 +1,16 @@
+diff --git a/Test.java b/Test.java
+index ebee1d9..f3825c2 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,11 +1,9 @@
+ ///////////////////////////////////////////////////
+ //HEADER
+ ///////////////////////////////////////////////////
+-
+ package TreeWalker.EmptyLineSeparator;  // violation without filter
+ 
+ public class Test {
+     public static final int FOO_CONST = 1;
+-
+     public void foo() {}  // violation without filter
+ }
