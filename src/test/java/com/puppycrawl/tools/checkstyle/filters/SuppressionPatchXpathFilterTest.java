@@ -118,6 +118,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testDescendantToken() throws Exception {
+        testByConfig("DescendantToken/newline/defaultContextConfig.xml");
+        testByConfig("DescendantToken/patchedline/defaultContextConfig.xml");
+        testByConfig("DescendantToken/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testMethodName() throws Exception {
         testByConfig(
                 "MethodName/newline/defaultContextConfig.xml");
