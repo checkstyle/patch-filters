@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index 857bf64..e60e365 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,6 +1,7 @@
+ package TreeWalker.UnusedImports;
+ 
+ import java.io.File;  // violation without filter
++import java.io.FileInputStream;  // violation without filter
+ 
+ public class Test {
+     public void test(String input) {

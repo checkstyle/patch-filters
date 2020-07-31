@@ -363,6 +363,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testUnusedImports() throws Exception {
+        testByConfig("UnusedImports/newline/defaultContextConfig.xml");
+        testByConfig("UnusedImports/patchedline/defaultContextConfig.xml");
+        testByConfig("UnusedImports/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testEmptyBlock() throws Exception {
         testByConfig("EmptyBlock/newline/defaultContextConfig.xml");
         testByConfig("EmptyBlock/patchedline/defaultContextConfig.xml");

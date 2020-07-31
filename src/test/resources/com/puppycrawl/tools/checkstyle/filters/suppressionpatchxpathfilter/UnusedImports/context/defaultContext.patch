@@ -1,0 +1,11 @@
+diff --git a/Test.java b/Test.java
+index 23675e8..857bf64 100644
+--- a/Test.java
++++ b/Test.java
+@@ -4,6 +4,5 @@ import java.io.File;  // violation without filter
+ 
+ public class Test {
+     public void test(String input) {
+-        File file = new File(input);
+     }
+ }
