@@ -197,6 +197,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testOuterTypeFilename() throws Exception {
+        testByConfig("OuterTypeFilename/newline/defaultContextConfig.xml");
+        testByConfig("OuterTypeFilename/patchedline/defaultContextConfig.xml");
+        testByConfig("OuterTypeFilename/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testEmptyCatchBlock() throws Exception {
         testByConfig("EmptyCatchBlock/newline/defaultContextConfig.xml");
         testByConfig("EmptyCatchBlock/patchedline/defaultContextConfig.xml");
