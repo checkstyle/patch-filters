@@ -1,0 +1,1 @@
+Test.java:0: Required pattern '// This code is copyrighted\n// \(c\) MyCompany' missing in file.

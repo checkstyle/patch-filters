@@ -193,6 +193,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testRegexp() throws Exception {
+        testByConfig("Regexp/newline/defaultContextConfig.xml");
+        testByConfig("Regexp/patchedline/defaultContextConfig.xml");
+        testByConfig("Regexp/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testAvoidNestedBlocks() throws Exception {
         testByConfig(
                 "AvoidNestedBlocks/newline/defaultContextConfig.xml");
