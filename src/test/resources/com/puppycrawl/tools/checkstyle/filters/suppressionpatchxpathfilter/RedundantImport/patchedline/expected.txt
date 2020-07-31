@@ -1,0 +1,1 @@
+Test.java:6:1: Duplicate import to line 5 - java.io.FileInputStream.

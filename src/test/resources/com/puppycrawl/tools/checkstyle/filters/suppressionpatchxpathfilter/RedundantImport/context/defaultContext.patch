@@ -1,0 +1,11 @@
+diff --git a/Test.java b/Test.java
+index e4b5c13..305b97c 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,5 +1,5 @@
+ package TreeWalker.RedundantImport;
+-import java.io.FileInputStream;
++import java.io.File;
+ import java.io.File;  // violation without filter
+ 
+ 

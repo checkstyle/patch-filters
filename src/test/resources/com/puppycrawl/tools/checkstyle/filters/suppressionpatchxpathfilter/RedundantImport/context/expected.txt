@@ -1,0 +1,1 @@
+Test.java:3:1: Duplicate import to line 2 - java.io.File.

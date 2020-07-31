@@ -181,6 +181,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testRedundantImport() throws Exception {
+        testByConfig("RedundantImport/newline/defaultContextConfig.xml");
+        testByConfig("RedundantImport/patchedline/defaultContextConfig.xml");
+        testByConfig("RedundantImport/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testAnonInnerLength() throws Exception {
         testByConfig(
                 "sizes/AnonInnerLength/newline/defaultContextConfig.xml");
