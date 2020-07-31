@@ -1,0 +1,29 @@
+diff --git a/Test.java b/Test.java
+index 4af5d0b..8cff66f 100644
+--- a/Test.java
++++ b/Test.java
+@@ -2,13 +2,14 @@ package TreeWalker.DescendantToken;
+ 
+ public class Test {
+     public void test(Integer i) {
+-        if (i != null) {
++        if (i == null) {  // violation without filter
+             System.out.println();
+         }
+ 
+         switch (i)  // violation without filter
+         {
+             default:
++                System.out.println();
+                 break;
+         }
+ 
+@@ -18,5 +19,8 @@ public class Test {
+         if (i == null) {  // violation without filter
+             System.out.println();
+         }
++        if (i == null) {  // violation without filter
++            System.out.println();
++        }
+     }
+ }

@@ -1,0 +1,1 @@
+Test.java:22:15: Count of 1 for 'EQUAL' descendant 'LITERAL_NULL' exceeds maximum count 0.
