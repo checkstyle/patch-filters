@@ -54,7 +54,9 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
      * List of checks that always matching context strategy.
      */
     private static final List<String> ALWAYS_MATCHING_CONTEXT_STRATEGY_CHECKS =
-            Arrays.asList("OuterTypeNumberCheck");
+            Arrays.asList("OuterTypeNumberCheck",
+                    "OuterTypeFilenameCheck"
+            );
 
     /** The String of file names. */
     private final String fileName;
