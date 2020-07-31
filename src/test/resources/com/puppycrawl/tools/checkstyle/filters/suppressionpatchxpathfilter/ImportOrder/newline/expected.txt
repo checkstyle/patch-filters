@@ -1,0 +1,1 @@
+Test.java:5:1: Wrong order for 'java.awt.DefaultFocusTraversalPolicy' import.
