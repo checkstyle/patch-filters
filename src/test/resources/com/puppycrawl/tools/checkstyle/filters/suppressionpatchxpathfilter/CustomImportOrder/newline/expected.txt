@@ -1,0 +1,1 @@
+Test.java:19:1: Import statement for 'java.io.Writer' is in the wrong order. Should be in the 'STANDARD_JAVA_PACKAGE' group, expecting group 'THIRD_PARTY_PACKAGE' on this line.
