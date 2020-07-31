@@ -307,6 +307,14 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testCommentsIndentation() throws Exception {
+        testByConfig("CommentsIndentation/newline/defaultContextConfig.xml");
+        testByConfig("CommentsIndentation/patchedline/defaultContextConfig.xml");
+        testByConfig("CommentsIndentation/context/defaultContextConfig.xml");
+        testByConfig("CommentsIndentation/context/case2/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testAnonInnerLength() throws Exception {
         testByConfig(
                 "sizes/AnonInnerLength/newline/defaultContextConfig.xml");
