@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index 86a4b0f..d9ef535 100644
+--- a/Test.java
++++ b/Test.java
+@@ -2,6 +2,7 @@ package TreeWalker.ImportOrder;
+ import java.awt.Button;
+ import java.awt.Frame;
+ import java.awt.Dialog;  // violation without filter
++import java.awt.DefaultFocusTraversalPolicy;  // violation without filter
+ import java.awt.event.ActionEvent;
+ 
+ public class Test {
