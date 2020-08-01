@@ -53,6 +53,23 @@ public class SuppressionPatchXpathFilter extends AutomaticBean implements
     private static final String COMMA = ",";
 
     /**
+     * List of checks that support context strategy.
+     */
+    private static final List<String> SUPPORT_CONTEXT_STRATEGY_CHECKS =
+            Arrays.asList("ReturnCountCheck",
+                    "MethodCountCheck",
+                    "AnonInnerLengthCheck",
+                    "ThrowsCountCheck",
+                    "ExecutableStatementCountCheck",
+                    "MethodLengthCheck",
+                    "EmptyCatchBlockCheck",
+                    "EmptyStatementCheck",
+                    "EmptyBlockCheck",
+                    "DefaultComesLast",
+                    "SimplifyBooleanReturnCheck"
+            );
+
+    /**
      * Specify the location of the patch file.
      */
     private String file;
@@ -75,6 +92,11 @@ public class SuppressionPatchXpathFilter extends AutomaticBean implements
      * to their parent abstract nodes to get their child nodes.
      */
     private Set<String> checkNamesForContextStrategyByTokenOrParentSet;
+
+    /**
+     * Set has user defined Checks that support context strategy.
+     */
+    private Set<String> supportContextStrategyChecks;
 
     /**
      * Set of individual suppresses.
@@ -112,6 +134,18 @@ public class SuppressionPatchXpathFilter extends AutomaticBean implements
         final String[] checksArray = checkNamesForContextStrategyByTokenOrParentSet.split(COMMA);
         this.checkNamesForContextStrategyByTokenOrParentSet =
                 new HashSet<>(Arrays.asList(checksArray));
+    }
+
+    /**
+     * Setter to set has user defined Checks that support context strategy.
+     *
+     * @param supportContextStrategyChecks string has user defined checks that support
+     *                                     context strategy
+     */
+    public void setSupportContextStrategyChecks(String supportContextStrategyChecks) {
+        final String[] checksArray = supportContextStrategyChecks.split(COMMA);
+        this.supportContextStrategyChecks = new HashSet<>(Arrays.asList(checksArray));
+        this.supportContextStrategyChecks.addAll(SUPPORT_CONTEXT_STRATEGY_CHECKS);
     }
 
     /**
@@ -157,7 +191,8 @@ public class SuppressionPatchXpathFilter extends AutomaticBean implements
                 final List<List<Integer>> lineRangeList = loadPatchFileUtils.getLineRangeList();
                 final PatchXpathFilterElement element =
                         new PatchXpathFilterElement(fileName, lineRangeList,
-                                strategy, checkNamesForContextStrategyByTokenOrParentSet);
+                                strategy, checkNamesForContextStrategyByTokenOrParentSet,
+                                supportContextStrategyChecks);
                 filters.add(element);
             }
         }

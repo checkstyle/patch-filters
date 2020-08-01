@@ -9,6 +9,7 @@
         <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchXpathFilter">
             <property name="file" value="${tp}/defaultContext.patch" />
             <property name="strategy" value="context" />
+            <property name="supportContextStrategyChecks" value="EmptyStatementCheck" />
         </module>
     </module>
 </module>

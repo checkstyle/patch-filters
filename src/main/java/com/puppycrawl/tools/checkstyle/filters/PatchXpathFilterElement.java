@@ -34,23 +34,6 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
  */
 public class PatchXpathFilterElement implements TreeWalkerFilter {
     /**
-     * List of checks that support context strategy.
-     */
-    private static final List<String> SUPPORT_CONTEXT_STRATEGY_CHECKS =
-            Arrays.asList("ReturnCountCheck",
-                    "MethodCountCheck",
-                    "AnonInnerLengthCheck",
-                    "ThrowsCountCheck",
-                    "ExecutableStatementCountCheck",
-                    "MethodLengthCheck",
-                    "EmptyCatchBlockCheck",
-                    "EmptyStatementCheck",
-                    "EmptyBlockCheck",
-                    "DefaultComesLast",
-                    "SimplifyBooleanReturnCheck"
-            );
-
-    /**
      * List of checks that always matching context strategy.
      */
     private static final List<String> ALWAYS_MATCHING_CONTEXT_STRATEGY_CHECKS =
@@ -61,6 +44,11 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
      * to their parent abstract nodes to get their child nodes.
      */
     private final Set<String> checkNamesForContextStrategyByTokenOrParentSet = new HashSet<>();
+
+    /**
+     * Set has user defined Checks that support context strategy.
+     */
+    private final Set<String> supportContextStrategyChecks = new HashSet<>();
 
     /** The String of file names. */
     private final String fileName;
@@ -84,17 +72,23 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
      * @param checkNameForContextStrategyByTokenOrParent user defined Checks that need modify
      *                                                   violation nodes to their parent abstract
      *                                                   nodes to get their child nodes
+     * @param supportContextStrategyChecks               user defined Checks that support context
+     *                                                   strategy
      */
     public PatchXpathFilterElement(String fileName,
                                    List<List<Integer>> lineRangeList,
                                    String strategy,
-                                   Set<String> checkNameForContextStrategyByTokenOrParent) {
+                                   Set<String> checkNameForContextStrategyByTokenOrParent,
+                                   Set<String> supportContextStrategyChecks) {
         this.fileName = fileName;
         this.lineRangeList = lineRangeList;
         this.strategy = strategy;
         if (checkNameForContextStrategyByTokenOrParent != null) {
             this.checkNamesForContextStrategyByTokenOrParentSet.addAll(
                     checkNameForContextStrategyByTokenOrParent);
+        }
+        if (supportContextStrategyChecks != null) {
+            this.supportContextStrategyChecks.addAll(supportContextStrategyChecks);
         }
     }
 
@@ -171,7 +165,7 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
         if (ALWAYS_MATCHING_CONTEXT_STRATEGY_CHECKS.contains(checkShortName)) {
             result = true;
         }
-        else if (SUPPORT_CONTEXT_STRATEGY_CHECKS.contains(checkShortName)
+        else if (supportContextStrategyChecks.contains(checkShortName)
                 || checkNamesForContextStrategyByTokenOrParentSet.contains(checkShortName)) {
             final DetailAST eventAst;
             if (checkNamesForContextStrategyByTokenOrParentSet.contains(checkShortName)) {
