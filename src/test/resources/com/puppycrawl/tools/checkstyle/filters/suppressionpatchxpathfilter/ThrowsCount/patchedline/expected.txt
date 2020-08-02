@@ -1,0 +1,2 @@
+Test.java:13:26: Throws count is 5 (max allowed is 4).
+Test.java:30:27: Throws count is 5 (max allowed is 4).
