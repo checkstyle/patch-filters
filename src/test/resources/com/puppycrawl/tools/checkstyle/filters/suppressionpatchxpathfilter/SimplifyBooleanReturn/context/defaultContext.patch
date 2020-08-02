@@ -8,7 +8,7 @@ index 78b86e6..5189eae 100644
  public class Test {
 -    public int test(boolean cond) {
 +    public boolean test(boolean cond) {
-         if (cond) {  // violation context
+         if (cond) {  // violation
 -            return 1;
 +            return true;
          }
