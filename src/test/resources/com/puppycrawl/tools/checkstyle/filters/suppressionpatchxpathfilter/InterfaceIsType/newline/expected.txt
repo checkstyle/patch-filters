@@ -1,0 +1,1 @@
+Test.java:19:1: interfaces should describe a type and hence have methods.

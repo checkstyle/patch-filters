@@ -3,15 +3,19 @@ package TreeWalker.InterfaceIsType;
 public class Test {
 }
 
-interface Test1 {  // violation context
+interface Test0 {  // violation
     int a = 32;
 }
 
-interface Test2 { // violation context
+interface Test2 { // violation without filter
 
     int a = 32;
 }
 
-interface Test3 { // violation context
+interface Test3 { // violation without filter
+    int a = 3;
+}
+
+interface Test4 { // violation
     int a = 3;
 }
