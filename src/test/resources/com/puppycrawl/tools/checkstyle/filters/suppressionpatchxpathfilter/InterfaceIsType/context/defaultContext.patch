@@ -5,17 +5,17 @@ index f45c59e..bc3ea95 100644
 @@ -4,14 +4,14 @@ public class Test {
  }
  
- interface Test1 {  // violation context
+ interface Test1 {  // violation
 -    int a = 3;
 +    int a = 32;
  }
  
- interface Test2 { // violation context
+ interface Test2 { // violation
  
 +    int a = 32;
  }
  
- interface Test3 { // violation context
+ interface Test3 { // violation
      int a = 3;
 -    void test();
  }

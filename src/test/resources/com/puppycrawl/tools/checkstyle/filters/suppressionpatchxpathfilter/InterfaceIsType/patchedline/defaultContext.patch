@@ -1,21 +1,21 @@
 diff --git a/Test.java b/Test.java
-index f45c59e..bc3ea95 100644
+index bc3ea95..fe30367 100644
 --- a/Test.java
 +++ b/Test.java
-@@ -4,14 +4,14 @@ public class Test {
+@@ -3,7 +3,7 @@ package TreeWalker.InterfaceIsType;
+ public class Test {
  }
  
- interface Test1 {  // violation context
--    int a = 3;
-+    int a = 32;
+-interface Test1 {
++interface Test0 {  // violation
+     int a = 32;
  }
  
- interface Test2 { // violation context
- 
-+    int a = 32;
- }
- 
- interface Test3 { // violation context
+@@ -15,3 +15,7 @@ interface Test2 { // violation without filter
+ interface Test3 { // violation without filter
      int a = 3;
--    void test();
  }
++
++interface Test4 { // violation
++    int a = 3;
++}
