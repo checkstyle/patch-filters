@@ -10,7 +10,7 @@ public class Test {
         // body
     }
 
-    public void myFunc() throws CloneNotSupportedException,  // violation without filter
+    public void myFunc() throws  CloneNotSupportedException,  // violation without filter
             StringIndexOutOfBoundsException,
             StringIndexOutOfBoundsException,
             IllegalStateException,
@@ -25,5 +25,13 @@ public class Test {
             ClassCastException {
         // body
         System.out.println();
+    }
+
+    public void myFunc2() throws CloneNotSupportedException,  // violation without filter
+            StringIndexOutOfBoundsException,
+            StringIndexOutOfBoundsException,
+            IllegalStateException,
+            NullPointerException {
+        // body
     }
 }

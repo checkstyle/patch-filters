@@ -1,27 +1,26 @@
 diff --git a/Test.java b/Test.java
-index 6e5e330..1e63b38 100644
+index 1e63b38..aebed33 100644
 --- a/Test.java
 +++ b/Test.java
-@@ -4,13 +4,14 @@ public class Test {
-     public void myFunction() throws CloneNotSupportedException,  // violation without filter
-             ArrayIndexOutOfBoundsException,
-             StringIndexOutOfBoundsException,
-+
-             IllegalStateException,
-             NullPointerException {
+@@ -10,7 +10,7 @@ public class Test {
          // body
      }
  
-     public void myFunc() throws CloneNotSupportedException,  // violation without filter
--            ArrayIndexOutOfBoundsException,
-+            StringIndexOutOfBoundsException,
+-    public void myFunc() throws CloneNotSupportedException,
++    public void myFunc() throws  CloneNotSupportedException,  // violation without filter
+             StringIndexOutOfBoundsException,
              StringIndexOutOfBoundsException,
              IllegalStateException,
-             NullPointerException {
-@@ -23,5 +24,6 @@ public class Test {
-             ArithmeticException,
-             ClassCastException {
+@@ -26,4 +26,12 @@ public class Test {
          // body
-+        System.out.println();
+         System.out.println();
      }
++
++    public void myFunc2() throws CloneNotSupportedException,  // violation without filter
++            StringIndexOutOfBoundsException,
++            StringIndexOutOfBoundsException,
++            IllegalStateException,
++            NullPointerException {
++        // body
++    }
  }
