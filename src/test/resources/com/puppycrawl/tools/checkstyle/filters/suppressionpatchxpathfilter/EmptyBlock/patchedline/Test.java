@@ -3,22 +3,27 @@ package TreeWalker.blocks.EmptyBlock;
 public class Test {
     public void test() {
         {
-            try {  // violation context
+            try {  // violation without filter
 
             }
-            finally {
+            finally {  // violation without filter
             }
-            try {  // violation context
-
+            try {  // violation without filter
+                // something
             }
-            finally {  // violation context
+            finally  {  // violation
+                // something
             }
             try {
                 ; // something
             }
             finally {
-                System.out.println();
                 ; // statement
+            }
+            try {  // violation
+
+            }
+            finally {  // violation
             }
         }
     }

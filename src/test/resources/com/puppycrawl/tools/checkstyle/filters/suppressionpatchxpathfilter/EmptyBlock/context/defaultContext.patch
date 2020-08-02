@@ -5,16 +5,16 @@ index 35c9af9..369bbd3 100644
 @@ -4,19 +4,20 @@ public class Test {
      public void test() {
          {
-             try {  // violation context
+             try {  // violation
 +
              }
-             finally {
+             finally {  // violation without filter
              }
-             try {  // violation context
+             try {  // violation
 -                // something
 +
              }
-             finally {  // violation context
+             finally {  // violation
 -                // something
              }
              try {
