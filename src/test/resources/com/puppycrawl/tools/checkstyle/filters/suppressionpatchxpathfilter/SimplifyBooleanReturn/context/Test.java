@@ -2,7 +2,7 @@ package TreeWalker.coding.SimplifyBooleanReturn;
 
 public class Test {
     public boolean test(boolean cond) {
-        if (cond) {  // violation context
+        if (cond) {  // violation
             return true;
         }
         else {

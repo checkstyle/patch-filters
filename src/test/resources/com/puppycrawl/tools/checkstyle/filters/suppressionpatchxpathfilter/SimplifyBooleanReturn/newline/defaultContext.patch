@@ -1,20 +1,28 @@
 diff --git a/Test.java b/Test.java
-index 78b86e6..5189eae 100644
+index 5189eae..36d9cb3 100644
 --- a/Test.java
 +++ b/Test.java
-@@ -1,12 +1,12 @@
- package TreeWalker.coding.SimplifyBooleanReturn;
+@@ -2,7 +2,7 @@ package TreeWalker.coding.SimplifyBooleanReturn;
  
  public class Test {
--    public int test(boolean cond) {
-+    public boolean test(boolean cond) {
-         if (cond) {  // violation context
--            return 1;
-+            return true;
+     public boolean test(boolean cond) {
+-        if (cond) {
++        if (cond)  {  // violation without filter
+             return true;
          }
          else {
--            return 2;
-+            return false;
+@@ -10,3 +10,14 @@ public class Test {
          }
      }
  }
++
++class Test1 {
++    public boolean test1(boolean cond1) {
++        if (cond1) {  // violation
++            return true;
++        }
++        else {
++            return false;
++        }
++    }
++}
