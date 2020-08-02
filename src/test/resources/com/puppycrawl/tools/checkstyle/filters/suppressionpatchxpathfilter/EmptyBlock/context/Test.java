@@ -3,15 +3,15 @@ package TreeWalker.blocks.EmptyBlock;
 public class Test {
     public void test() {
         {
-            try {  // violation context
+            try {  // violation
 
             }
-            finally {
+            finally {  // violation without filter
             }
-            try {  // violation context
+            try {  // violation
 
             }
-            finally {  // violation context
+            finally {  // violation
             }
             try {
                 ; // something

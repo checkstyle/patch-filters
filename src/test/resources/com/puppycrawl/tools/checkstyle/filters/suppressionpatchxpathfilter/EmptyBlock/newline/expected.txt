@@ -1,0 +1,2 @@
+Test.java:23:17: Must have at least one statement.
+Test.java:26:21: Must have at least one statement.
