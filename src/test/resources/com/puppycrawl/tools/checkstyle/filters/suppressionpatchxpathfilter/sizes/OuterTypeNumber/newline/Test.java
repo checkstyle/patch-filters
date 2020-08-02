@@ -1,4 +1,4 @@
-package TreeWalker.OuterTypeNumber;  // violation context
+package TreeWalker.OuterTypeNumber;  // violation
 
 public class Test {
 }
