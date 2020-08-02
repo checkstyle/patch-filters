@@ -19,7 +19,6 @@
 
 package com.puppycrawl.tools.checkstyle.filters;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -33,14 +32,6 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
  * This filter element is immutable and processes.
  */
 public class PatchXpathFilterElement implements TreeWalkerFilter {
-    /**
-     * List of checks that always matching context strategy.
-     */
-    private static final List<String> ALWAYS_MATCHING_CONTEXT_STRATEGY_CHECKS =
-            Arrays.asList("OuterTypeNumberCheck",
-                    "OuterTypeFilenameCheck"
-            );
-
     /**
      * Set of checks that support context strategy but need modify violation nodes
      * to their parent abstract nodes to get their child nodes.
@@ -193,10 +184,7 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
     private boolean isMatchingByContextStrategy(TreeWalkerAuditEvent event) {
         boolean result = false;
         final String checkShortName = getCheckShortName(event);
-        if (ALWAYS_MATCHING_CONTEXT_STRATEGY_CHECKS.contains(checkShortName)) {
-            result = true;
-        }
-        else if (supportContextStrategyChecks.contains(checkShortName)
+        if (supportContextStrategyChecks.contains(checkShortName)
                 || checkNamesForContextStrategyByTokenOrParentSet.contains(checkShortName)) {
             final DetailAST eventAst;
             if (checkNamesForContextStrategyByTokenOrParentSet.contains(checkShortName)) {

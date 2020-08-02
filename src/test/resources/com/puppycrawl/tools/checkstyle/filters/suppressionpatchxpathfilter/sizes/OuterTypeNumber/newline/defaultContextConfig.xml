@@ -11,6 +11,7 @@
         <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchXpathFilter">
             <property name="file" value="${tp}/defaultContext.patch" />
             <property name="strategy" value="newline" />
+            <property name="neverSuppressedChecks" value="OuterTypeNumberCheck" />
         </module>
     </module>
 </module>

@@ -188,12 +188,9 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
 
     @Test
     public void testOuterTypeNumber() throws Exception {
-        testByConfig(
-                "sizes/OuterTypeNumber/newline/defaultContextConfig.xml");
-        testByConfig(
-                "sizes/OuterTypeNumber/patchedline/defaultContextConfig.xml");
-        testByConfig(
-                "sizes/OuterTypeNumber/context/defaultContextConfig.xml");
+        testByConfig("sizes/OuterTypeNumber/newline/defaultContextConfig.xml");
+        testByConfig("sizes/OuterTypeNumber/patchedline/defaultContextConfig.xml");
+        testByConfig("sizes/OuterTypeNumber/context/defaultContextConfig.xml");
     }
 
     @Test
