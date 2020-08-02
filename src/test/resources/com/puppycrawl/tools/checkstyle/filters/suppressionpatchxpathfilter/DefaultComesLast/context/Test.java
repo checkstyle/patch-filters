@@ -7,7 +7,7 @@ public class Test {
                 break;
             case 2:
                 break;
-            default:  // violation context
+            default:  // violation
                 break;
             case 3:
                 break;

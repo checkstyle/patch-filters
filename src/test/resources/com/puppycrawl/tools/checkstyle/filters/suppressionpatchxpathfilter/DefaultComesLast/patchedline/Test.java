@@ -7,9 +7,22 @@ public class Test {
                 break;
             case 2:
                 break;
-            default:  // violation context
+            default :  // violation
                 break;
             case 3:
+                break;
+        }
+    }
+}
+
+class Test1 {
+    public void test1(int i) {
+        switch (i) {
+            case 1:
+                break;
+            default:  // violation
+                break;
+            case 2:
                 break;
         }
     }

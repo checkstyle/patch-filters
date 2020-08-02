@@ -1,13 +1,29 @@
 diff --git a/Test.java b/Test.java
-index be9c189..061cde2 100644
+index 061cde2..0b444ff 100644
 --- a/Test.java
 +++ b/Test.java
-@@ -9,6 +9,8 @@ public class Test {
+@@ -7,10 +7,23 @@ public class Test {
                  break;
-             default:  // violation context
+             case 2:
                  break;
-+            case 3:
-+                break;
+-            default:
++            default :  // violation without filter
+                 break;
+             case 3:
+                 break;
          }
      }
  }
++
++class Test1 {
++    public void test1(int i) {
++        switch (i) {
++            case 1:
++                break;
++            default:  // violation
++                break;
++            case 2:
++                break;
++        }
++    }
++}
