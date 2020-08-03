@@ -1,6 +1,6 @@
 package TreeWalker.MethodCount;
 
-public class Test {  // violation context
+public class Test {  // violation without filter
     public void test1() {
 
     }

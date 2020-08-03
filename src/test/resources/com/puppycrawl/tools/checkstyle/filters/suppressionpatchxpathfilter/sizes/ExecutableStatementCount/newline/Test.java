@@ -1,7 +1,7 @@
 package TreeWalker.ExecutableStatementCount;
 
 public class Test {
-    public void test() {  // violation context
+    public void test() {  // violation without filter
         while (true) {
             Runnable runnable = new Runnable() {
                 public void run() {

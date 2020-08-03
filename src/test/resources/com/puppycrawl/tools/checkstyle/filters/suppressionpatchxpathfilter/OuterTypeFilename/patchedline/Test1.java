@@ -1,4 +1,4 @@
 package TreeWalker.OuterTypeFilename;
 
-class Test {  // violation
+class Test {  // violation without filter
 }

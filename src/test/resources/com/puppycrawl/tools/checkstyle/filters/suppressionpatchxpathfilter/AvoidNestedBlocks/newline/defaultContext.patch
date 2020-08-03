@@ -9,9 +9,9 @@ index bc9451d..ad14cca 100644
 -        if (valid) {
 -            {
 -                System.out.println("ok");
-+        {  // violation patchedline
++        {  // violation without filter
 +            if (valid) {
-+                {  // violation patchedline
++                {  // violation without filter
 +                    System.out.println("ok");
 +                }
              }

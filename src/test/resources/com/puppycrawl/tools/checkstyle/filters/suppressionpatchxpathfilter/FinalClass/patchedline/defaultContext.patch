@@ -6,7 +6,7 @@ index 2fc8329..d3dd3f2 100644
  package TreeWalker.FinalClass;
  
 -public final class Test {
-+public class Test {  // violation
++public class Test {  // violation without filter
      private Test() {}
  }
  

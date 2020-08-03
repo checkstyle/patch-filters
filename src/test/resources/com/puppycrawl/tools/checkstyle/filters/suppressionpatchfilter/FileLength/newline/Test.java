@@ -1,4 +1,4 @@
-package Checker.FileLength; // violation
+package Checker.FileLength; // violation without filter
 
 public class Test {
     public static void main(String[] args) {

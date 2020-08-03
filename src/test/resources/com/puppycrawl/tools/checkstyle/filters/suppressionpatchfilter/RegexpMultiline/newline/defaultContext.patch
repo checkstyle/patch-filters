@@ -4,7 +4,7 @@ index d0937d7..ab5fa09 100644
 +++ b/Test.java
 @@ -16,7 +16,7 @@ public class Test {
  
-         // violation is on line above changed
+         // violation without filter is on line above changed
          System.out.
 -                printf("Example");
 +                print("Example");
@@ -14,7 +14,7 @@ index d0937d7..ab5fa09 100644
 @@ -25,6 +25,8 @@ public class Test {
  
  
-         // violation is on code below
+         // violation without filter is on code below
 +        System.out.
 +                print("Example");
  

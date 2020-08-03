@@ -7,6 +7,6 @@ index b445ca2..7160c72 100644
  public class Test {
      public void test() {
 -        int a = 123;
-+        int a =    256;  // violation patchedline
++        int a =    256;  // violation without filter
      }
  }

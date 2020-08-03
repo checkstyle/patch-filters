@@ -7,6 +7,6 @@ index d3dd3f2..259548b 100644
      private int a;
  }
 +
-+class Test4 {  // violation
++class Test4 {  // violation without filter
 +    private Test4() {}
 +}

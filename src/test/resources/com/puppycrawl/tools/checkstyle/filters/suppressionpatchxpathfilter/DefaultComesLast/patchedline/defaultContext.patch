@@ -7,7 +7,7 @@ index 061cde2..0b444ff 100644
              case 2:
                  break;
 -            default:
-+            default :  // violation
++            default :  // violation without filter
                  break;
              case 3:
                  break;
@@ -20,7 +20,7 @@ index 061cde2..0b444ff 100644
 +        switch (i) {
 +            case 1:
 +                break;
-+            default:  // violation
++            default:  // violation without filter
 +                break;
 +            case 2:
 +                break;

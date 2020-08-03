@@ -4,17 +4,17 @@ public class Test {
     void method() {
         System.out.
                 print("Example"); // line3
-        // violations are on code below and line 5
+        // violation without filter are on code below and line 5
         System.out.
                 print("Example"); // line3
-        // violation is on code below
+        // violation without filter is on code below
         System.out.
                 print("Example"); // line3
 
 
 
 
-        // violation is on code below
+        // violation without filter is on code below
         System.out.
                 print("Example");
 
@@ -24,7 +24,7 @@ public class Test {
 
 
 
-        // violation is on code below
+        // violation without filter is on code below
         System.out.
                 print("Example");
 

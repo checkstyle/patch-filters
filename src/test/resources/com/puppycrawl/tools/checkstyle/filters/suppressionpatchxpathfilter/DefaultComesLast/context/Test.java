@@ -7,7 +7,7 @@ public class Test {
                 break;
             case 2:
                 break;
-            default:  // violation
+            default:  // violation without filter
                 break;
             case 3:
                 break;

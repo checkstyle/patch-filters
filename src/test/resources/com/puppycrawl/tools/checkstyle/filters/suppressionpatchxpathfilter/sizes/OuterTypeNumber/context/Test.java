@@ -1,4 +1,4 @@
-package TreeWalker.OuterTypeNumber;  // violation
+package TreeWalker.OuterTypeNumber;  // violation without filter
 
 public class Test {
 }

@@ -7,7 +7,7 @@ public class Test {
 
 
 
-    // Contains a tab ->	<- //warns  // violation newline/patchedline
+    // Contains a tab ->	<- //warns  // violation without filter
     // Long line ----------------------------------------------------------------
     // Long line ----------------------------------------------------------------
     // Contains a tab ->	<- //warns

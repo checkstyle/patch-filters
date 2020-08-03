@@ -1,5 +1,5 @@
 package Checker.FileTabCharacter;
 
 public class Test2 {
-    // Contains a tab ->	<- //warns  // violation newline/patchedline
+    // Contains a tab ->	<- //warns  // violation without filter
 }

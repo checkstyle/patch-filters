@@ -3,4 +3,4 @@ index e046e89..e46c84e 100644
 --- a/test.properties
 +++ b/test.properties
 @@ -5,0 +6 @@ key.png =value - violation
-+key.pag =value - violation  // violation newline/patchedline
++key.pag =value - violation  // violation without filter

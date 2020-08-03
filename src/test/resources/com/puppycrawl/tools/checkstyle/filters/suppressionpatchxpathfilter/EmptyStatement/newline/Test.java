@@ -5,7 +5,7 @@ public class Test {
         switch (i)
         {
             case 1 :
-                ;  // violation context
+                ;  // violation without filter
             default :
                 ;
         }
