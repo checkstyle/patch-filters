@@ -14,7 +14,7 @@ index aa44011..63f6e7c 100644
      // Long line ----------------------------------------------------------------
      // Long line ----------------------------------------------------------------
      // Contains a tab ->	<- //warns
-+    // Contains a tab ->	<- //warns  // violation newline/patchedline
++    // Contains a tab ->	<- //warns  // violation without filter
  
  
  }

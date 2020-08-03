@@ -2,7 +2,7 @@ package Checker.FileTabCharacter;
 
 public class Test {
     // Long line ----------------------------------------------------------------
-    // Contains a tab ->	<- //warn  // violation patchedline
+    // Contains a tab ->	<- //warn  // violation without filter
     // Contains trailing whitespace ->
 
 
@@ -10,7 +10,7 @@ public class Test {
 
     // Long line ----------------------------------------------------------------
     // Long line ----------------------------------------------------------------
-    // Contains a tab ->	<- //warns  // violation newline/patchedline
+    // Contains a tab ->	<- //warns  // violation without filter
 
 
 }

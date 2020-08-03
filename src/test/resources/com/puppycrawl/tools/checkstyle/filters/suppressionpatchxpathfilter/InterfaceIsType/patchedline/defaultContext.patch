@@ -7,7 +7,7 @@ index bc3ea95..fe30367 100644
  }
  
 -interface Test1 {
-+interface Test0 {  // violation
++interface Test0 {  // violation without filter
      int a = 32;
  }
  
@@ -16,6 +16,6 @@ index bc3ea95..fe30367 100644
      int a = 3;
  }
 +
-+interface Test4 { // violation
++interface Test4 { // violation without filter
 +    int a = 3;
 +}

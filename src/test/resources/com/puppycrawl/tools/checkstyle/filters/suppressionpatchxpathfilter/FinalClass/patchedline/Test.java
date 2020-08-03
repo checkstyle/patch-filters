@@ -1,6 +1,6 @@
 package TreeWalker.FinalClass;
 
-public class Test {  // violation
+public class Test {  // violation without filter
     private Test() {}
 }
 

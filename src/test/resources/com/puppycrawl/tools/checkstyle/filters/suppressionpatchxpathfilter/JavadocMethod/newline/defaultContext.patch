@@ -3,7 +3,7 @@ index 72e912a..4f2a2cf 100644
 --- a/Test.java
 +++ b/Test.java
 @@ -7,7 +7,7 @@ public class Test {
-      * @param arg2 text  // violation
+      * @param arg2 text  // violation without filter
       * @return text
       */
 -    public int test1(Integer arg1, Integer arg2) {

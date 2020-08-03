@@ -4,7 +4,7 @@ index 7e1625a..6900690 100644
 +++ b/Test.java
 @@ -1 +1 @@
 -package Checker.RegexpOnFilename;
-+package Checker.RegexpOnFilenames;  // violation patchedline
++package Checker.RegexpOnFilenames;  // violation without filter
 diff --git a/Test2.java b/Test2.java
 index 1003830..82306c9 100644
 --- a/Test2.java
@@ -19,7 +19,7 @@ index 0000000..86748d4
 --- /dev/null
 +++ b/Test3.java
 @@ -0,0 +1,4 @@
-+package Checker.RegexpOnFilename;  // violation newline/patchedline
++package Checker.RegexpOnFilename;  // violation without filter
 +
 +public class Test3 {
 +}

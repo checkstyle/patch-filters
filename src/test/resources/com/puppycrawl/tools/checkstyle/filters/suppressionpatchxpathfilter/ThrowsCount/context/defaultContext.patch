@@ -3,7 +3,7 @@ index 6e5e330..1e63b38 100644
 --- a/Test.java
 +++ b/Test.java
 @@ -4,13 +4,14 @@ public class Test {
-     public void myFunction() throws CloneNotSupportedException,  // violation context
+     public void myFunction() throws CloneNotSupportedException,  // violation without filter
              ArrayIndexOutOfBoundsException,
              StringIndexOutOfBoundsException,
 +
@@ -12,7 +12,7 @@ index 6e5e330..1e63b38 100644
          // body
      }
  
-     public void myFunc() throws CloneNotSupportedException,  // violation context
+     public void myFunc() throws CloneNotSupportedException,  // violation without filter
 -            ArrayIndexOutOfBoundsException,
 +            StringIndexOutOfBoundsException,
              StringIndexOutOfBoundsException,

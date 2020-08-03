@@ -1,1 +1,1 @@
-Test.java:10: Line is longer than 80 characters (found 163).
+Test.java:10: Line is longer than 80 characters (found 158).

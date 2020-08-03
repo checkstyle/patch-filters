@@ -1,7 +1,7 @@
 package TreeWalker.ThrowsCount;
 
 public class Test {
-    public void myFunction() throws CloneNotSupportedException,  // violation context
+    public void myFunction() throws CloneNotSupportedException,  // violation without filter
             ArrayIndexOutOfBoundsException,
             StringIndexOutOfBoundsException,
 
@@ -10,7 +10,7 @@ public class Test {
         // body
     }
 
-    public void myFunc() throws CloneNotSupportedException,  // violation context
+    public void myFunc() throws CloneNotSupportedException,  // violation without filter
             StringIndexOutOfBoundsException,
             StringIndexOutOfBoundsException,
             IllegalStateException,
@@ -18,7 +18,7 @@ public class Test {
         // body
     }
 
-    public void myFunc1() throws CloneNotSupportedException,  // violation context
+    public void myFunc1() throws CloneNotSupportedException,  // violation without filter
             ClassNotFoundException,
             IllegalAccessException,
             ArithmeticException,

@@ -18,5 +18,5 @@ index 6055de3..b4ea012 100644
  package Checker.FileTabCharacter;
 
  public class Test2 {
-+    // Contains a tab ->	<- //warn  // violation newline/patchedline
++    // Contains a tab ->	<- //warn  // violation without filter
  }

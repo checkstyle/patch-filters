@@ -4,7 +4,7 @@ index be9c189..061cde2 100644
 +++ b/Test.java
 @@ -9,6 +9,8 @@ public class Test {
                  break;
-             default:  // violation
+             default:  // violation without filter
                  break;
 +            case 3:
 +                break;

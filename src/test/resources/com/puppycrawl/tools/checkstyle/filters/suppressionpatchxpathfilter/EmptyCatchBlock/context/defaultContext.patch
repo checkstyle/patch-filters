@@ -5,7 +5,7 @@ index 1407d82..9edb47a 100644
 @@ -3,8 +3,6 @@ public class Test {
          try {
              throw new RuntimeException();
-         } catch (RuntimeException e) { // violation context
+         } catch (RuntimeException e) { // violation without filter
 -            System.out.println(e);
 -            e.printStackTrace();
          }

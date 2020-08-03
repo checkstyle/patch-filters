@@ -1,4 +1,4 @@
-package Checker.FileLength;  // violation newline/patchedline
+package Checker.FileLength;  // violation without filter
 
 public class Test2 {
     public static void main(String[] args) {

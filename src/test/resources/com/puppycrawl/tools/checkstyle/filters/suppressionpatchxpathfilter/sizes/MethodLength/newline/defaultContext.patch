@@ -4,7 +4,7 @@ index 6ef08a3..8e76ad9 100644
 +++ b/Test.java
 @@ -3,5 +3,7 @@ package TreeWalker.MethodLength;
  public class Test {
-     public void test1() {  // violation context
+     public void test1() {  // violation without filter
          System.out.println();
 +        System.out.println();
 +        System.out.println();

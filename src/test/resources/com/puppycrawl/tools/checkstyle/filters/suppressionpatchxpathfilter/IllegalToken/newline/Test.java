@@ -12,7 +12,7 @@ public class Test {
 
 
     public void Test() {
-        outer:  // violation newline/patchedline
+        outer:  // violation without filter
         for (int i = 0; i < 5; i++) {
             if (i == 1) {
                 break outer;

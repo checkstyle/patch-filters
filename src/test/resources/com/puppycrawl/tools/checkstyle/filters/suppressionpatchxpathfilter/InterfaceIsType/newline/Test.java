@@ -16,6 +16,6 @@ interface Test3 { // violation without filter
     int a = 3;
 }
 
-interface Test4 { // violation
+interface Test4 { // violation without filter
     int a = 3;
 }

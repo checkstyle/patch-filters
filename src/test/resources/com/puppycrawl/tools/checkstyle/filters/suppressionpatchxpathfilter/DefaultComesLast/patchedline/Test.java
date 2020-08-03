@@ -7,7 +7,7 @@ public class Test {
                 break;
             case 2:
                 break;
-            default :  // violation
+            default :  // violation without filter
                 break;
             case 3:
                 break;
@@ -20,7 +20,7 @@ class Test1 {
         switch (i) {
             case 1:
                 break;
-            default:  // violation
+            default:  // violation without filter
                 break;
             case 2:
                 break;

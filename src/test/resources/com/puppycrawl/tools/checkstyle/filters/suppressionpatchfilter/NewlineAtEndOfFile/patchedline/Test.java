@@ -1,4 +1,4 @@
-package Checker.NewlineAtEndOfFiles;  // violation patchedline
+package Checker.NewlineAtEndOfFiles;  // violation without filter
 
 public class Test {
 }

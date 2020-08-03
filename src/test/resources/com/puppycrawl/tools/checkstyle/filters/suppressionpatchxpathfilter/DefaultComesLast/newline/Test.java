@@ -20,7 +20,7 @@ class Test1 {
         switch (i) {
             case 1:
                 break;
-            default:  // violation
+            default:  // violation without filter
                 break;
             case 2:
                 break;

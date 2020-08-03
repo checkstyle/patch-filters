@@ -19,6 +19,6 @@ class Test3 {  // violation without filter
     private int a;
 }
 
-class Test4 {  // violation
+class Test4 {  // violation without filter
     private Test4() {}
 }

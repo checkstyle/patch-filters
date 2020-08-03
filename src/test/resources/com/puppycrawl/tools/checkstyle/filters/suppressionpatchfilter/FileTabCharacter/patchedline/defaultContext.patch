@@ -7,7 +7,7 @@ index 560effa..16c8f76 100644
  public class Test {
      // Long line ----------------------------------------------------------------
 -    // Contains a tab ->	<- //warns
-+    // Contains a tab ->	<- //warn  // violation patchedline
++    // Contains a tab ->	<- //warn  // violation without filter
      // Contains trailing whitespace ->
  
  
@@ -15,7 +15,7 @@ index 560effa..16c8f76 100644
  
      // Long line ----------------------------------------------------------------
      // Long line ----------------------------------------------------------------
-+    // Contains a tab ->	<- //warns  // violation newline/patchedline
++    // Contains a tab ->	<- //warns  // violation without filter
  
  
  }

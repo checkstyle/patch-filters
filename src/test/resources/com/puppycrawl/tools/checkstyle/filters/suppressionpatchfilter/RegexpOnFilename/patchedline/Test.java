@@ -1,4 +1,4 @@
-package Checker.RegexpOnFilenames;  // violation patchedline
+package Checker.RegexpOnFilenames;  // violation without filter
 
 public class Test {
 }

@@ -8,11 +8,11 @@
      }
  
      public boolean b() {
-+        System.out.print("b"); // violation
++        System.out.print("b"); // violation without filter
          return false;
      }
 +
 +    public void c() {
-+        System.out.print("c"); // violation
++        System.out.print("c"); // violation without filter
 +    }
  }
