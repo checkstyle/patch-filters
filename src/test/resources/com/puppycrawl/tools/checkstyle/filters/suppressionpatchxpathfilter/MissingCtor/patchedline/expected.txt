@@ -1,2 +1,2 @@
-Test.java:18:1: Class should define a constructor.
 Test.java:7:1: Class should define a constructor.
+Test.java:18:1: Class should define a constructor.

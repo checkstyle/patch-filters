@@ -31,6 +31,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -91,7 +92,10 @@ abstract class AbstractPatchFilterEvaluationTest extends AbstractModuleTestSuppo
             final String expectedFile = configPath.replaceFirst(
                     "(default|zero)ContextConfig.xml", "expected.txt");
             final List<String> expected = Files.readAllLines(Paths.get(getPath(expectedFile)));
-            final List<String> actuals = lnr.lines().limit(expected.size()).sorted()
+            expected.sort(Comparator.naturalOrder());
+
+            final List<String> actuals = lnr.lines()
+                    .sorted()
                     .collect(Collectors.toList());
 
             for (int i = 0; i < expected.size(); i++) {

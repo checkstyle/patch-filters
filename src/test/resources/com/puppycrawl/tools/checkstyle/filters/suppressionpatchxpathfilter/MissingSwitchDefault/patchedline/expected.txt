@@ -1,2 +1,2 @@
-Test.java:16:9: switch without "default" clause.
 Test.java:5:9: switch without "default" clause.
+Test.java:16:9: switch without "default" clause.

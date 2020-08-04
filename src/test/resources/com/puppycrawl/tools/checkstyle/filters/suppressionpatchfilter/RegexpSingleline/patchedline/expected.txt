@@ -1,3 +1,3 @@
-Input.java:12: Line matches the illegal pattern 'System.out.print'.
 Input.java:3: Line matches the illegal pattern 'System.out.print'.
 Input.java:7: Line matches the illegal pattern 'System.out.print'.
+Input.java:12: Line matches the illegal pattern 'System.out.print'.

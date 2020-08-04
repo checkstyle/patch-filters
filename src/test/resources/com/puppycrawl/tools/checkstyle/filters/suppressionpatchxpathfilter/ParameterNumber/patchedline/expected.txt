@@ -1,2 +1,2 @@
-Test.java:11:17: More than 7 parameters (found 10).
 Test.java:4:17: More than 7 parameters (found 10).
+Test.java:11:17: More than 7 parameters (found 10).

@@ -1,2 +1,2 @@
-test.properties:18: Duplicated property 'key.pag' (2 occurrence(s)).
 test.properties:4: Duplicated property 'key.sub' (2 occurrence(s)).
+test.properties:18: Duplicated property 'key.pag' (2 occurrence(s)).
