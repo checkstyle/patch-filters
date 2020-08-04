@@ -222,6 +222,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testSuperFinalize() throws Exception {
+        testByConfig("SuperFinalize/newline/defaultContextConfig.xml");
+        testByConfig("SuperFinalize/patchedline/defaultContextConfig.xml");
+        testByConfig("SuperFinalize/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testEmptyCatchBlock() throws Exception {
         testByConfig("EmptyCatchBlock/newline/defaultContextConfig.xml");
         testByConfig("EmptyCatchBlock/patchedline/defaultContextConfig.xml");
