@@ -1,3 +1,3 @@
-Test.java:1: File does not end with a newline.
-Test2.java:1: File does not end with a newline.
 Test3.java:1: File does not end with a newline.
+Test2.java:1: File does not end with a newline.
+Test.java:1: File does not end with a newline.

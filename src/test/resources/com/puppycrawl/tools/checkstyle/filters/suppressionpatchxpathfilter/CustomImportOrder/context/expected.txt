@@ -1,3 +1,5 @@
+Test.java:8:1: Import statement for 'java.awt.Button' is in the wrong order. Should be in the 'STANDARD_JAVA_PACKAGE' group, expecting group 'THIRD_PARTY_PACKAGE' on this line.
+Test.java:9:1: Import statement for 'java.awt.Frame' is in the wrong order. Should be in the 'STANDARD_JAVA_PACKAGE' group, expecting group 'THIRD_PARTY_PACKAGE' on this line.
 Test.java:10:1: Import statement for 'java.awt.Dialog' is in the wrong order. Should be in the 'STANDARD_JAVA_PACKAGE' group, expecting group 'THIRD_PARTY_PACKAGE' on this line.
 Test.java:11:1: Import statement for 'java.awt.color.ColorSpace' is in the wrong order. Should be in the 'STANDARD_JAVA_PACKAGE' group, expecting group 'THIRD_PARTY_PACKAGE' on this line.
 Test.java:12:1: Import statement for 'java.awt.event.ActionEvent' is in the wrong order. Should be in the 'STANDARD_JAVA_PACKAGE' group, expecting group 'THIRD_PARTY_PACKAGE' on this line.
@@ -7,5 +9,3 @@ Test.java:15:1: Import statement for 'java.io.File' is in the wrong order. Shoul
 Test.java:16:1: Import statement for 'java.io.IOException' is in the wrong order. Should be in the 'STANDARD_JAVA_PACKAGE' group, expecting group 'THIRD_PARTY_PACKAGE' on this line.
 Test.java:17:1: Import statement for 'java.io.InputStream' is in the wrong order. Should be in the 'STANDARD_JAVA_PACKAGE' group, expecting group 'THIRD_PARTY_PACKAGE' on this line.
 Test.java:18:1: Import statement for 'java.io.Reader' is in the wrong order. Should be in the 'STANDARD_JAVA_PACKAGE' group, expecting group 'THIRD_PARTY_PACKAGE' on this line.
-Test.java:8:1: Import statement for 'java.awt.Button' is in the wrong order. Should be in the 'STANDARD_JAVA_PACKAGE' group, expecting group 'THIRD_PARTY_PACKAGE' on this line.
-Test.java:9:1: Import statement for 'java.awt.Frame' is in the wrong order. Should be in the 'STANDARD_JAVA_PACKAGE' group, expecting group 'THIRD_PARTY_PACKAGE' on this line.
