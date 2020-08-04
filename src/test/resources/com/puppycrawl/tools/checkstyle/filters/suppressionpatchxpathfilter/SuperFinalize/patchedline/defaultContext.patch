@@ -1,0 +1,20 @@
+diff --git a/Test.java b/Test.java
+index 6aa792e..6e93fc2 100644
+--- a/Test.java
++++ b/Test.java
+@@ -2,10 +2,14 @@ package TreeWalker.coding.SuperFinalize;
+ 
+ public class Test {
+     public void finalize() throws Throwable {  // violation without filter
+-        super.finalize();
+     }
+ }
+ 
+ 
+ 
+ 
++
++class Test1 {
++    public void finalize() throws Throwable {  // violation without filter
++    }
++}

@@ -1,0 +1,2 @@
+Test.java:13:17: Method 'finalize' should call 'super.finalize'.
+Test.java:4:17: Method 'finalize' should call 'super.finalize'.
