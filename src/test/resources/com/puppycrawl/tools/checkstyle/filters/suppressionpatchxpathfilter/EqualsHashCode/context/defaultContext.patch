@@ -1,0 +1,27 @@
+diff --git a/Test.java b/Test.java
+index 78862fb..7f59bdb 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,7 +1,7 @@
+ package TreeWalker.coding.EqualsHashCode;
+ 
+ public class Test {
+-    public boolean equals(Object o) {
++    public boolean equals(String o) {
+         return false;
+     }
+ 
+@@ -9,3 +9,13 @@ public class Test {
+         return 1;
+     }
+ }
++
++class Test1 {
++    public int hashCode() {  // violation without filter
++        return 1;
++    }
++
++    public boolean equals(Integer o) {
++        return false;
++    }
++}

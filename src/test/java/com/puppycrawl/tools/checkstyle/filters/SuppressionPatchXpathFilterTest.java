@@ -304,6 +304,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testEqualsHashCode() throws Exception {
+        testByConfig("EqualsHashCode/newline/defaultContextConfig.xml");
+        testByConfig("EqualsHashCode/patchedline/defaultContextConfig.xml");
+        testByConfig("EqualsHashCode/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testExecutableStatementCount() throws Exception {
         testByConfig(
                 "sizes/ExecutableStatementCount/newline/defaultContextConfig.xml");
