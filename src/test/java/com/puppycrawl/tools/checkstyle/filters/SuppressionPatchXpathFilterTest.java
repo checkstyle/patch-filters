@@ -129,6 +129,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testAtclauseOrder() throws Exception {
+        testByConfig("AtclauseOrder/newline/defaultContextConfig.xml");
+        testByConfig("AtclauseOrder/patchedline/defaultContextConfig.xml");
+        testByConfig("AtclauseOrder/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testMagicNumber() throws Exception {
         testByConfig(
                 "MagicNumber/newline/defaultContextConfig.xml");

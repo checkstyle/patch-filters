@@ -1,0 +1,1 @@
+Test.java:7: At-clauses have to appear in the order '[@version, @since]'.
