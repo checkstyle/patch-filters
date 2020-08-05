@@ -271,6 +271,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testClassFanOutComplexity() throws Exception {
+        testByConfig("ClassFanOutComplexity/newline/defaultContextConfig.xml");
+        testByConfig("ClassFanOutComplexity/patchedline/defaultContextConfig.xml");
+        testByConfig("ClassFanOutComplexity/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testOuterTypeNumber() throws Exception {
         testByConfig("sizes/OuterTypeNumber/newline/defaultContextConfig.xml");
         testByConfig("sizes/OuterTypeNumber/patchedline/defaultContextConfig.xml");
