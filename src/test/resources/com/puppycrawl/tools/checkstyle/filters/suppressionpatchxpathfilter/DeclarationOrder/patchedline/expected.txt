@@ -1,0 +1,1 @@
+Test.java:8:5: Instance variable definition in wrong order.

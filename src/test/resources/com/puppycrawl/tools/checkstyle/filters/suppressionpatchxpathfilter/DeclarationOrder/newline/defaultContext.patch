@@ -1,0 +1,13 @@
+diff --git a/Test.java b/Test.java
+index 8044b9f..bea1307 100644
+--- a/Test.java
++++ b/Test.java
+@@ -2,6 +2,8 @@ package TreeWalker.coding.DeclarationOrder;
+ 
+ public class Test {
+     int a;
++    void foo(){}
+     Test(){}  // violation without filter
+     int b;  // violation without filter
++    int c;  // violation without filter
+ }
