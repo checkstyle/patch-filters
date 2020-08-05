@@ -21,7 +21,6 @@ package com.puppycrawl.tools.checkstyle.filters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
@@ -233,13 +232,10 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
-    @Ignore("JavadocMethod should have a violation, but not. It should be solved by"
-            + "context strategy.")
     public void testJavadocMethod() throws Exception {
-        testByConfig(
-                "JavadocMethod/newline/defaultContextConfig.xml");
-        testByConfig(
-                "JavadocMethod/patchedline/defaultContextConfig.xml");
+        testByConfig("JavadocMethod/newline/defaultContextConfig.xml");
+        testByConfig("JavadocMethod/patchedline/defaultContextConfig.xml");
+        testByConfig("JavadocMethod/context/defaultContextConfig.xml");
     }
 
     @Test

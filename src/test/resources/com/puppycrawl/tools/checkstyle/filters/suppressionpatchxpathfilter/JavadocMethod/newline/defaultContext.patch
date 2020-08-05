@@ -1,21 +1,19 @@
 diff --git a/Test.java b/Test.java
-index 72e912a..4f2a2cf 100644
+index 4f2a2cf..d5e69ba 100644
 --- a/Test.java
 +++ b/Test.java
-@@ -7,7 +7,7 @@ public class Test {
-      * @param arg2 text  // violation without filter
-      * @return text
-      */
--    public int test1(Integer arg1, Integer arg2) {
-+    public int test1(Integer arg1) {
-         return 1;
+@@ -12,6 +12,14 @@ public class Test {
      }
  
-@@ -20,7 +20,6 @@ public class Test {
-     /**
-      * test
-      * @param arg1 text
--     * @param arg2 text
-      * @return text
-      */
-     public int test2(Integer arg1, Integer arg2) {  // violation
+ 
++    /**
++     * test
++     * @param arg1 text
++     * @return text
++     */
++    public int test(Integer arg1, Integer arg2) {  // violation without filter
++        return 1;
++    }
+ 
+ 
+ 
