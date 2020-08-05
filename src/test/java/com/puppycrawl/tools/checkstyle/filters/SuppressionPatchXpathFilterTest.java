@@ -229,6 +229,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testDesignForExtension() throws Exception {
+        testByConfig("DesignForExtension/newline/defaultContextConfig.xml");
+        testByConfig("DesignForExtension/patchedline/defaultContextConfig.xml");
+        testByConfig("DesignForExtension/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testOuterTypeNumber() throws Exception {
         testByConfig("sizes/OuterTypeNumber/newline/defaultContextConfig.xml");
         testByConfig("sizes/OuterTypeNumber/patchedline/defaultContextConfig.xml");
