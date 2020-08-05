@@ -1,0 +1,1 @@
+Test.java:18:1: Class Fan-Out Complexity is 2 (max allowed is 1).
