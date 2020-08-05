@@ -264,6 +264,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testCyclomaticComplexity() throws Exception {
+        testByConfig("CyclomaticComplexity/newline/defaultContextConfig.xml");
+        testByConfig("CyclomaticComplexity/patchedline/defaultContextConfig.xml");
+        testByConfig("CyclomaticComplexity/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testOuterTypeNumber() throws Exception {
         testByConfig("sizes/OuterTypeNumber/newline/defaultContextConfig.xml");
         testByConfig("sizes/OuterTypeNumber/patchedline/defaultContextConfig.xml");
