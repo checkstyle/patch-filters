@@ -1,0 +1,20 @@
+diff --git a/Test.java b/Test.java
+index d2bd6fe..37fc472 100644
+--- a/Test.java
++++ b/Test.java
+@@ -3,10 +3,14 @@ package TreeWalker.design.OneTopLevelClass;
+ public class Test {
+ }
+ 
+-class Test22 {  // violation without filter
++class Test2 {  // violation without filter
+     public void test() {}
+ }
+ 
+ 
+ 
+ 
++
++class Test3 {  // violation without filter
++    public void test() {}
++}

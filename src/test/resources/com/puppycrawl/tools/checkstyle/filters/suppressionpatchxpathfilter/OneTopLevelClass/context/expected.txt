@@ -1,0 +1,1 @@
+Test.java:6:1: Top-level class Test2 has to reside in its own source file.
