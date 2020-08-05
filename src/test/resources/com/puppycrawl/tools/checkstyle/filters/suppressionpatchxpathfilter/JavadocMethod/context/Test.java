@@ -12,14 +12,6 @@ public class Test {
     }
 
 
-    /**
-     * test
-     * @param arg1 text
-     * @return text
-     */
-    public int test(Integer arg1, Integer arg2) {  // violation without filter
-        return 1;
-    }
 
 
 
