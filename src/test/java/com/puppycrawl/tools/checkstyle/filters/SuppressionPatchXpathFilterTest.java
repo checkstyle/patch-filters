@@ -101,6 +101,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testOneTopLevelClass() throws Exception {
+        testByConfig("OneTopLevelClass/newline/defaultContextConfig.xml");
+        testByConfig("OneTopLevelClass/patchedline/defaultContextConfig.xml");
+        testByConfig("OneTopLevelClass/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testFinalClass() throws Exception {
         testByConfig("FinalClass/newline/defaultContextConfig.xml");
         testByConfig("FinalClass/patchedline/defaultContextConfig.xml");
