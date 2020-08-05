@@ -1,0 +1,1 @@
+Test.java:1:1: Package name is not same as directory.
