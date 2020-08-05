@@ -229,6 +229,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testClassDataAbstractionCoupling() throws Exception {
+        testByConfig("ClassDataAbstractionCoupling/newline/defaultContextConfig.xml");
+        testByConfig("ClassDataAbstractionCoupling/patchedline/defaultContextConfig.xml");
+        testByConfig("ClassDataAbstractionCoupling/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testOuterTypeFilename() throws Exception {
         testByConfig("OuterTypeFilename/newline/defaultContextConfig.xml");
         testByConfig("OuterTypeFilename/patchedline/defaultContextConfig.xml");
