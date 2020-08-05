@@ -1,0 +1,15 @@
+diff --git a/Test.java b/Test.java
+index 87e15d0..255b5dc 100644
+--- a/Test.java
++++ b/Test.java
+@@ -4,6 +4,10 @@ public class Test extends B {
+     public int foo() {  // violation without filter
+         return 2;
+     }
++
++    public int foo1() {  // violation without filter
++        return 1;
++    }
+ }
+ 
+ class B {

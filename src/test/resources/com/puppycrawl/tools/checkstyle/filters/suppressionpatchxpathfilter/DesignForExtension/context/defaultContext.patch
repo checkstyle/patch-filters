@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index 93765a2..87e15d0 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,7 +1,6 @@
+ package TreeWalker.design.DesignForExtension;
+ 
+ public class Test extends B {
+-    @Override
+     public int foo() {  // violation without filter
+         return 2;
+     }

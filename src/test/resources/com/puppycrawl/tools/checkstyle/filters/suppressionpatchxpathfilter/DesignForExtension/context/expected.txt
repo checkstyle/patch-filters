@@ -1,0 +1,1 @@
+Test.java:4:5: Class 'Test' looks like designed for extension (can be subclassed), but the method 'foo' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'Test' final or making the method 'foo' static/final/abstract/empty, or adding allowed annotation for the method.
