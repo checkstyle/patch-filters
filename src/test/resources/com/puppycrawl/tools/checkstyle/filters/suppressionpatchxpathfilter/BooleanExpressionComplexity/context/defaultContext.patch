@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index 98f9127..49a9574 100644
+--- a/Test.java
++++ b/Test.java
+@@ -7,6 +7,6 @@ public class Test {
+         boolean d = (a & b) ^ (a || b) | a;
+ 
+         boolean e =
+-                (a & b) ^ (a || b) | b;
++                (a & b) ^ (a || b) | a;
+     }
+ }

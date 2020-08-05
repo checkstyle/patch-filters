@@ -1,0 +1,2 @@
+Test.java:12:19: Boolean expression complexity is 4 (max allowed is 3).
+Test.java:14:19: Boolean expression complexity is 4 (max allowed is 3).

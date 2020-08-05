@@ -271,6 +271,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testBooleanExpressionComplexity() throws Exception {
+        testByConfig("BooleanExpressionComplexity/newline/defaultContextConfig.xml");
+        testByConfig("BooleanExpressionComplexity/patchedline/defaultContextConfig.xml");
+        testByConfig("BooleanExpressionComplexity/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testEmptyCatchBlock() throws Exception {
         testByConfig("EmptyCatchBlock/case1/newline/defaultContextConfig.xml");
         testByConfig("EmptyCatchBlock/case1/patchedline/defaultContextConfig.xml");

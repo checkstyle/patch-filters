@@ -1,0 +1,15 @@
+diff --git a/Test.java b/Test.java
+index 98f9127..3afcd9a 100644
+--- a/Test.java
++++ b/Test.java
+@@ -8,5 +8,10 @@ public class Test {
+ 
+         boolean e =    // violation without filter
+                 (a & b) ^ (a || b) | b;
++
++        boolean f = (a & b) ^ (a || b) | a;    // violation without filter
++
++        boolean g =    // violation without filter
++                (a & b) ^ (a || b) | b;
+     }
+ }
