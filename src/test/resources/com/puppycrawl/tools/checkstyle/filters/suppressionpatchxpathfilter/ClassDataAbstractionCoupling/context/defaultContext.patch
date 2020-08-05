@@ -1,0 +1,11 @@
+diff --git a/Test.java b/Test.java
+index be38b64..19b59e8 100644
+--- a/Test.java
++++ b/Test.java
+@@ -8,5 +8,6 @@ public class Test {  // violation without filter
+         HashSet set = new HashSet();
+         Map map = new HashMap();
+         Date date = new Date();
++        Time time = new Time(2323);
+     }
+ }

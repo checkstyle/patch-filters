@@ -1,0 +1,1 @@
+Test.java:6:1: Class Data Abstraction Coupling is 2 (max allowed is 1) classes [Date, Time].
