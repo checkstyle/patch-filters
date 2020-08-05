@@ -403,4 +403,11 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
         testByConfig("SuperClone/patchedline/defaultContextConfig.xml");
         testByConfig("SuperClone/context/defaultContextConfig.xml");
     }
+
+    @Test
+    public void testPackageDeclaration() throws Exception {
+        testByConfig("PackageDeclaration/newline/defaultContextConfig.xml");
+        testByConfig("PackageDeclaration/patchedline/defaultContextConfig.xml");
+        testByConfig("PackageDeclaration/context/defaultContextConfig.xml");
+    }
 }

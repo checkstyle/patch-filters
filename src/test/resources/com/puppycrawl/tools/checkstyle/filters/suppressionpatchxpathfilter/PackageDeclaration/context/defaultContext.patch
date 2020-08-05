@@ -1,0 +1,4 @@
+diff --git a/PackageDeclaratio/context/Test.java b/PackageDeclaration/context/Test.java
+similarity index 100%
+rename from PackageDeclaratio/context/Test.java
+rename to PackageDeclaration/context/Test.java
