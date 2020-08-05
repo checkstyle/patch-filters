@@ -1,0 +1,19 @@
+diff --git a/Test.java b/Test.java
+index 4dedd8f..8c29703 100644
+--- a/Test.java
++++ b/Test.java
+@@ -10,4 +10,14 @@ public class Test {
+             }
+         }
+     }
++
++    public void test1(int a, int b) {
++        if (a > 10) {
++            if (a > b) {
++                System.out.println(a);
++            } else {
++                System.out.println(b);
++            }
++        }
++    }
+ }

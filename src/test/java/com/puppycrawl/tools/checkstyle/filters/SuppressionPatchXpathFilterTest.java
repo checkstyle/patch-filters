@@ -271,6 +271,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testNpathComplexity() throws Exception {
+        testByConfig("NPathComplexity/newline/defaultContextConfig.xml");
+        testByConfig("NPathComplexity/patchedline/defaultContextConfig.xml");
+        testByConfig("NPathComplexity/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testFallThrough() throws Exception {
         testByConfig("FallThrough/case1/newline/defaultContextConfig.xml");
         testByConfig("FallThrough/case1/patchedline/defaultContextConfig.xml");
