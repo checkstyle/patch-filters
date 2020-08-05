@@ -1,0 +1,11 @@
+diff --git a/Test.java b/Test.java
+index bdf98f7..cdb57c6 100644
+--- a/Test.java
++++ b/Test.java
+@@ -3,5 +3,6 @@ package TreeWalker.metrics.JavaNCSS;
+ public class Test {
+     public void test() {  // violation without filter
+         System.out.println();
++        System.out.println();
+     }
+ }

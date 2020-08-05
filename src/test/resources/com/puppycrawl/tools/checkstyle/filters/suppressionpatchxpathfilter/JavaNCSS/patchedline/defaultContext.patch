@@ -1,0 +1,14 @@
+diff --git a/Test.java b/Test.java
+index cdb57c6..73ab600 100644
+--- a/Test.java
++++ b/Test.java
+@@ -5,4 +5,9 @@ public class Test {
+         System.out.println();
+         System.out.println();
+     }
++
++    public void test1() {  // violation without filter
++        System.out.println();
++        System.out.println();
++    }
+ }

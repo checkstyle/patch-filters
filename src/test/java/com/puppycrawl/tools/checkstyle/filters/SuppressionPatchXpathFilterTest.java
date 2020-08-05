@@ -296,6 +296,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testJavaNcss() throws Exception {
+        testByConfig("JavaNCSS/newline/defaultContextConfig.xml");
+        testByConfig("JavaNCSS/patchedline/defaultContextConfig.xml");
+        testByConfig("JavaNCSS/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testMissingSwitchDefault() throws Exception {
         testByConfig("MissingSwitchDefault/newline/defaultContextConfig.xml");
         testByConfig("MissingSwitchDefault/patchedline/defaultContextConfig.xml");
