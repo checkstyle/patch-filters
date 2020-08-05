@@ -137,6 +137,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testHideUtilityClassConstructor() throws Exception {
+        testByConfig("HideUtilityClassConstructor/newline/defaultContextConfig.xml");
+        testByConfig("HideUtilityClassConstructor/patchedline/defaultContextConfig.xml");
+        testByConfig("HideUtilityClassConstructor/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testReturnCount() throws Exception {
         testByConfig(
                 "ReturnCount/newline/defaultContextConfig.xml");
