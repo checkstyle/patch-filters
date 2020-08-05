@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index d21d7e2..162e7f9 100644
+--- a/Test.java
++++ b/Test.java
+@@ -3,6 +3,7 @@ package TreeWalker.javadoc.AtclauseOrder;
+ /**
+  * Some javadoc.
+  *
++ * @since Some javadoc.
+  * @version 1.0  // violation without filter
+  */
+ public class Test {

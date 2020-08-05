@@ -193,13 +193,15 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
             else {
                 eventAst = getEventAst(event);
             }
-            final Set<Integer> childAstLineNoList = getChildAstLineNo(eventAst);
-            final int min = Collections.min(childAstLineNoList);
-            final int max = Collections.max(childAstLineNoList);
-            for (int currentLine = min; currentLine <= max; currentLine++) {
-                result = lineMatching(currentLine);
-                if (result) {
-                    break;
+            if (eventAst != null) {
+                final Set<Integer> childAstLineNoList = getChildAstLineNo(eventAst);
+                final int min = Collections.min(childAstLineNoList);
+                final int max = Collections.max(childAstLineNoList);
+                for (int currentLine = min; currentLine <= max; currentLine++) {
+                    result = lineMatching(currentLine);
+                    if (result) {
+                        break;
+                    }
                 }
             }
         }
