@@ -1,0 +1,1 @@
+Test.java:13:5: Cyclomatic Complexity is 2 (max allowed is 1).
