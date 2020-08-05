@@ -345,6 +345,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testOverloadMethodsDeclarationOrder() throws Exception {
+        testByConfig("OverloadMethodsDeclarationOrder/newline/defaultContextConfig.xml");
+        testByConfig("OverloadMethodsDeclarationOrder/patchedline/defaultContextConfig.xml");
+        testByConfig("OverloadMethodsDeclarationOrder/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testEmptyStatement() throws Exception {
         testByConfig("EmptyStatement/newline/defaultContextConfig.xml");
         testByConfig("EmptyStatement/patchedline/defaultContextConfig.xml");
