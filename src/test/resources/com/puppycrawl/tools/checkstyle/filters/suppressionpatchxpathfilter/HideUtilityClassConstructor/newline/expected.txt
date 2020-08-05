@@ -1,0 +1,1 @@
+Test.java:17:1: Utility classes should not have a public or default constructor.

@@ -1,0 +1,15 @@
+diff --git a/Test.java b/Test.java
+index a1aaed2..ce332bd 100644
+--- a/Test.java
++++ b/Test.java
+@@ -14,3 +14,10 @@ class Foo {
+     static int n;
+ }
+ 
++class Test1 {  // violation without filter
++
++    public Test1() {}
++
++    public static void fun() {}
++}
++

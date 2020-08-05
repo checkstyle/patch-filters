@@ -1,0 +1,13 @@
+diff --git a/Test.java b/Test.java
+index 28b11d8..a1aaed2 100644
+--- a/Test.java
++++ b/Test.java
+@@ -2,7 +2,7 @@ package TreeWalker.design.HideUtilityClassConstructor;
+ 
+ class Test {  // violation without filter
+ 
+-    private Test() {}
++    public Test() {}
+ 
+     public static void fun() {}
+ }
