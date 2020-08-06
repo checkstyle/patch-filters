@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index b487ae8..ecc14bd 100644
+--- a/Test.java
++++ b/Test.java
+@@ -4,7 +4,6 @@ package TreeWalker.javadoc.JavadocParagraph;
+  * No tag (ok).
+  *
+  * <p>Tag immediately before the text.
+- *
+  * <p>No blank line before the tag.  // violation without filter
+  */
+ public class Test {

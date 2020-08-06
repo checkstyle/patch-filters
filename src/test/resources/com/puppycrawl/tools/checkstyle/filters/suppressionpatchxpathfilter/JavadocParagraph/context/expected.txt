@@ -1,0 +1,1 @@
+Test.java:7: <p> tag should be preceded with an empty line.
