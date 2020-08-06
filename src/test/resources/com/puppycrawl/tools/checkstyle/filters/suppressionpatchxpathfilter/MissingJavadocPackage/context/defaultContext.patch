@@ -1,0 +1,9 @@
+diff --git a/package-info.java b/package-info.java
+index 10eca92..ceb4eaf 100644
+--- a/package-info.java
++++ b/package-info.java
+@@ -1,4 +1 @@
+-/**
+- * Test classes
+- */
+ package TreeWalker.javadoc.MissingJavadocPackage;  // violation without filter
