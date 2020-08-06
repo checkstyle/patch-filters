@@ -210,6 +210,13 @@ public class SuppressionJavaPatchFilterTest extends AbstractPatchFilterEvaluatio
     }
 
     @Test
+    public void testSummaryJavadocCheck() throws Exception {
+        testByConfig("SummaryJavadocCheck/newline/defaultContextConfig.xml");
+        testByConfig("SummaryJavadocCheck/patchedline/defaultContextConfig.xml");
+        testByConfig("SummaryJavadocCheck/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testMagicNumber() throws Exception {
         testByConfig("MagicNumber/newline/defaultContextConfig.xml");
         testByConfig("MagicNumber/patchedline/defaultContextConfig.xml");

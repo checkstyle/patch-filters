@@ -1,0 +1,14 @@
+diff --git a/Test.java b/Test.java
+index 2c02dc3..4617d18 100644
+--- a/Test.java
++++ b/Test.java
+@@ -5,4 +5,9 @@ public class Test {
+     public String ValidFunction(){
+         return "";
+     }
++
++    /** */ // violation without filter
++    public String ValidFunction1(){
++        return "";
++    }
+ }
