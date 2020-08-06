@@ -1,0 +1,11 @@
+diff --git a/Test.java b/Test.java
+index e42ee3e..fe2f553 100644
+--- a/Test.java
++++ b/Test.java
+@@ -2,4 +2,6 @@ package TreeWalker.javadoc.JavadocVariable;
+ 
+ public class Test {
+     private int test;  // violation without filter
++
++    private int test2;  // violation without filter
+ }

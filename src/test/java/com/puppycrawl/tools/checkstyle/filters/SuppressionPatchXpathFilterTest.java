@@ -178,6 +178,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testJavadocVariable() throws Exception {
+        testByConfig("JavadocVariable/newline/defaultContextConfig.xml");
+        testByConfig("JavadocVariable/patchedline/defaultContextConfig.xml");
+        testByConfig("JavadocVariable/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testInnerTypeLast() throws Exception {
         testByConfig("InnerTypeLast/newline/defaultContextConfig.xml");
         testByConfig("InnerTypeLast/patchedline/defaultContextConfig.xml");
