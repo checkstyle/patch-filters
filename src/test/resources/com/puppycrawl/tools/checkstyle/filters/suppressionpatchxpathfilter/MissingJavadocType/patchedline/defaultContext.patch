@@ -1,0 +1,11 @@
+diff --git a/Test.java b/Test.java
+index 8702d4a..ffc2a54 100644
+--- a/Test.java
++++ b/Test.java
+@@ -2,3 +2,6 @@ package TreeWalker.javadoc.MissingJavadocType;
+ 
+ public class Test {  // violation without filter
+ }
++
++class Test1 {  // violation without filter
++}
