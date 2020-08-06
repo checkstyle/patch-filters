@@ -1,0 +1,1 @@
+Test.java:6:5: Javadoc comment is placed in the wrong location.

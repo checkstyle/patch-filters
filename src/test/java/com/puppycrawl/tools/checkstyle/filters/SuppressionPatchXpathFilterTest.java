@@ -250,6 +250,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testInvalidJavadocPosition() throws Exception {
+        testByConfig("InvalidJavadocPosition/newline/defaultContextConfig.xml");
+        testByConfig("InvalidJavadocPosition/patchedline/defaultContextConfig.xml");
+        testByConfig("InvalidJavadocPosition/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testAvoidNestedBlocks() throws Exception {
         testByConfig(
                 "AvoidNestedBlocks/newline/defaultContextConfig.xml");

@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index 3bfd4d8..500d690 100644
+--- a/Test.java
++++ b/Test.java
+@@ -3,6 +3,7 @@ package TreeWalker.javadoc.InvalidJavadocPosition;
+ /** violation */  // violation without filter
+ /** valid */
+ public class Test {
++    /** violation */  // violation without filter
+ }
+ 
+ 
