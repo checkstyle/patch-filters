@@ -218,6 +218,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testMissingJavadocPackage() throws Exception {
+        testByConfig("MissingJavadocPackage/newline/defaultContextConfig.xml");
+        testByConfig("MissingJavadocPackage/patchedline/defaultContextConfig.xml");
+        testByConfig("MissingJavadocPackage/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testEmptyLineSeparator() throws Exception {
         testByConfig("EmptyLineSeparator/newline/defaultContextConfig.xml");
         testByConfig("EmptyLineSeparator/patchedline/defaultContextConfig.xml");
