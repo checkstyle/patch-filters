@@ -1,0 +1,13 @@
+diff --git a/Test.java b/Test.java
+new file mode 100644
+index 0000000..82674fa
+--- /dev/null
++++ b/Test.java
+@@ -0,0 +1,7 @@
++package TreeWalker.javadoc.JavadocType;
++
++/**
++ *
++ */
++public class Test {  // violation without filter
++}
