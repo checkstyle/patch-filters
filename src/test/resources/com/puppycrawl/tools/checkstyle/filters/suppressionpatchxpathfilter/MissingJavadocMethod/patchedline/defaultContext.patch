@@ -1,0 +1,11 @@
+diff --git a/Test.java b/Test.java
+index d02b780..32f131d 100644
+--- a/Test.java
++++ b/Test.java
+@@ -4,4 +4,6 @@ public class Test {
+ 
+     public Test() {}  // violation without filter
+ 
++    public void test() {}  // violation without filter
++
+ }

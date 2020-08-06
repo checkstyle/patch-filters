@@ -207,6 +207,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testMissingJavadocMethod() throws Exception {
+        testByConfig("MissingJavadocMethod/newline/defaultContextConfig.xml");
+        testByConfig("MissingJavadocMethod/patchedline/defaultContextConfig.xml");
+        testByConfig("MissingJavadocMethod/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testReturnCount() throws Exception {
         testByConfig(
                 "ReturnCount/newline/defaultContextConfig.xml");
