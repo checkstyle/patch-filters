@@ -1,12 +1,18 @@
 diff --git a/Test.java b/Test.java
-index 7fe1740..8c68b53 100644
+index 8c68b53..acd378e 100644
 --- a/Test.java
 +++ b/Test.java
-@@ -5,7 +5,6 @@ public class Test {
-         switch (i)
-         {
-             case 1 :
--                break
-                 ;
+@@ -9,5 +9,13 @@ public class Test {
              default :
                  ;
+         }
++
++        switch (i)
++        {
++            case 1 :
++                ;  // violation without filter
++            default :
++                ;  // violation without filter
++        }
+     }
+ }

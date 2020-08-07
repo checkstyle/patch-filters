@@ -1,1 +1,2 @@
 Test.java:8:17: Empty statement.
+Test.java:10:17: Empty statement.
