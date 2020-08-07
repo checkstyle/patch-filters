@@ -24,6 +24,7 @@ import java.util.Set;
 
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.Filter;
+import com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtil;
 
 /**
  * This filter element is immutable and processes.
@@ -64,8 +65,10 @@ public class SuppressionPatchFilterElement implements Filter {
     @Override
     public boolean accept(AuditEvent event) {
         return isFileNameMatching(event)
-                && (isNeverSuppressCheck(event)
-                || isContextStrategyCheck(event) || isLineMatching(event));
+                && (isTreeWalkerChecksMatching(event)
+                || isNeverSuppressCheck(event)
+                || isContextStrategyCheck(event)
+                || isLineMatching(event));
     }
 
     /**
@@ -78,6 +81,27 @@ public class SuppressionPatchFilterElement implements Filter {
         return event.getFileName() != null
                 && ((event.getFileName()).equals(fileName)
                 || event.getFileName().contains(fileName));
+    }
+
+    /**
+     * Is matching by treeWalker checks.
+     *
+     * @param event event
+     * @return true if it is matching
+     */
+    private boolean isTreeWalkerChecksMatching(AuditEvent event) {
+        boolean result = false;
+        final String sourceName = event.getLocalizedMessage().getSourceName();
+        try {
+            final Class clazz = Class.forName(sourceName);
+            if (ModuleReflectionUtil.isCheckstyleTreeWalkerCheck(clazz)) {
+                result = true;
+            }
+            return result;
+        }
+        catch (ClassNotFoundException ex) {
+            throw new IllegalStateException("Class " + sourceName + " not found", ex);
+        }
     }
 
     /**

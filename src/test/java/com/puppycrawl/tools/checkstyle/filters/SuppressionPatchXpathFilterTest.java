@@ -52,6 +52,11 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testWithSuppressionPatchFilter() throws Exception {
+        testByConfig("WithSuppressionPatchFilter/contextSituation/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testVariableDeclarationUsageDistance() throws Exception {
         testByConfig("VariableDeclarationUsageDistance/newline/defaultContextConfig.xml");
         testByConfig("VariableDeclarationUsageDistance/patchedline/defaultContextConfig.xml");
