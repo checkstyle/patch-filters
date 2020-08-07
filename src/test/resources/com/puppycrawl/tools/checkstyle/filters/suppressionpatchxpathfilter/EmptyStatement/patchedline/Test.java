@@ -9,5 +9,13 @@ public class Test {
             default :
                 ;
         }
+
+        switch (i)
+        {
+            case 1 :
+                ;  // violation without filter
+            default :
+                ;  // violation without filter
+        }
     }
 }

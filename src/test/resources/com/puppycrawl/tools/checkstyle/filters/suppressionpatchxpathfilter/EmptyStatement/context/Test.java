@@ -7,7 +7,7 @@ public class Test {
             case 1 :
                 ;  // violation without filter
             default :
-                ;
+                ;  // violation without filter
         }
     }
 }

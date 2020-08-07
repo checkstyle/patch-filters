@@ -7,6 +7,6 @@ index 7fe1740..8c68b53 100644
          {
              case 1 :
 -                break
-                 ;
+                 ;  // violation without filter
              default :
-                 ;
+                 ;  // violation without filter
