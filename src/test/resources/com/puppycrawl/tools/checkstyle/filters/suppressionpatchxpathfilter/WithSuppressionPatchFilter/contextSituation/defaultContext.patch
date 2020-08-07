@@ -1,0 +1,28 @@
+diff --git a/Test.java b/Test.java
+index 2fc8329..d3dd3f2 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,18 +1,20 @@
+ package TreeWalker.FinalClass;
+ 
+-public final class Test {
++public class Test {  // violation without filter
+     private Test() {}
+ }
+ 
+ class Test1 {  // violation without filter
+     private Test1() {}
+-
+ }
+ 
+ class Test2 {  // violation without filter
+-    private Test2() {}
++    private Test2() {
++        System.out.println();
++    }
+ }
+ 
+ class Test3 {  // violation without filter
+     private Test3() {}
++    private int a;
+ }
