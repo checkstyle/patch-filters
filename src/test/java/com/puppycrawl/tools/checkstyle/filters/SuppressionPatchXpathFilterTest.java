@@ -36,6 +36,14 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testShortName() throws Exception {
+        testByConfig("ShortName/supportContextStrategyChecks/defaultContextConfig.xml");
+        testByConfig("ShortName/checkNamesForContextStrategyByTokenOrParentSet/"
+                + "defaultContextConfig.xml");
+        testByConfig("ShortName/neverSuppressedChecks/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testNeverSuppressedChecks() throws Exception {
         testByConfig("neversuppressedchecks/CovariantEquals/"
                 + "checkID/context/defaultContextConfig.xml");

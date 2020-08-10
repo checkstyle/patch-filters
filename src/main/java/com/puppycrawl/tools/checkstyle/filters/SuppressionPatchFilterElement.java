@@ -127,14 +127,22 @@ public class SuppressionPatchFilterElement implements Filter {
      */
     private boolean isNeverSuppressCheck(AuditEvent event) {
         boolean result = false;
-        final String checkShortName = getCheckShortName(event);
         if (neverSuppressedChecks != null) {
-            if (neverSuppressedChecks.contains(checkShortName)
+            if (containsShortName(neverSuppressedChecks, event)
                     || neverSuppressedChecks.contains(event.getModuleId())) {
                 result = true;
             }
         }
         return result;
+    }
+
+    private boolean containsShortName(Set<String> checkNameSet,
+                                      AuditEvent event) {
+        final String checkShortName = getCheckShortName(event);
+        final String shortName = checkShortName.replaceAll("Check", "");
+        return checkNameSet.contains(checkShortName)
+                || checkNameSet.contains(shortName);
+
     }
 
     private String getCheckShortName(AuditEvent event) {

@@ -133,9 +133,8 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
      */
     private boolean isNeverSuppressCheck(TreeWalkerAuditEvent event) {
         boolean result = false;
-        final String checkShortName = getCheckShortName(event);
         if (neverSuppressedChecks != null) {
-            if (neverSuppressedChecks.contains(checkShortName)
+            if (containsShortName(neverSuppressedChecks, event)
                     || neverSuppressedChecks.contains(event.getModuleId())) {
                 result = true;
             }
@@ -183,11 +182,10 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
      */
     private boolean isMatchingByContextStrategy(TreeWalkerAuditEvent event) {
         boolean result = false;
-        final String checkShortName = getCheckShortName(event);
-        if (supportContextStrategyChecks.contains(checkShortName)
-                || checkNamesForContextStrategyByTokenOrParentSet.contains(checkShortName)) {
+        if (containsShortName(supportContextStrategyChecks, event)
+                || containsShortName(checkNamesForContextStrategyByTokenOrParentSet, event)) {
             final DetailAST eventAst;
-            if (checkNamesForContextStrategyByTokenOrParentSet.contains(checkShortName)) {
+            if (containsShortName(checkNamesForContextStrategyByTokenOrParentSet, event)) {
                 eventAst = getEventAst(event).getParent();
             }
             else {
@@ -206,6 +204,15 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
             }
         }
         return result;
+    }
+
+    private boolean containsShortName(Set<String> checkNameSet,
+                                      TreeWalkerAuditEvent event) {
+        final String checkShortName = getCheckShortName(event);
+        final String shortName = checkShortName.replaceAll("Check", "");
+        return checkNameSet.contains(checkShortName)
+                || checkNameSet.contains(shortName);
+
     }
 
     private String getCheckShortName(TreeWalkerAuditEvent event) {
