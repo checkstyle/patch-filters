@@ -36,14 +36,14 @@ public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTes
 
     @Test
     public void testNeverSuppressedChecks() throws Exception {
-        testByConfig(
-                "neversuppressedchecks/UniqueProperties/checkID/defaultContextConfig.xml");
-        testByConfig(
-                "neversuppressedchecks/UniqueProperties/checkShortName/defaultContextConfig.xml");
-        testByConfig(
-                "neversuppressedchecks/RegexpMultiline/checkID/defaultContextConfig.xml");
-        testByConfig(
-                "neversuppressedchecks/RegexpMultiline/checkShortName/defaultContextConfig.xml");
+        testByConfig("neversuppressedchecks/UniqueProperties/checkID/defaultContextConfig.xml");
+        testByConfig("neversuppressedchecks/UniqueProperties/checkShortName/"
+                + "defaultContextConfig.xml");
+        testByConfig("neversuppressedchecks/UniqueProperties/shortName/"
+                + "defaultContextConfig.xml");
+        testByConfig("neversuppressedchecks/RegexpMultiline/checkID/defaultContextConfig.xml");
+        testByConfig("neversuppressedchecks/RegexpMultiline/checkShortName/"
+                + "defaultContextConfig.xml");
     }
 
     @Test

@@ -1,0 +1,1 @@
+Test.java:4:1: Wrong order for 'java.awt.Dialog' import.
