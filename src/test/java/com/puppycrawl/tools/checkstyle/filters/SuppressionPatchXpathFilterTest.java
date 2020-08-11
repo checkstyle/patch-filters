@@ -235,7 +235,6 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
-    @Ignore("until https://github.com/checkstyle/patch-filters/issues/152")
     public void testDefaultComesLast() throws Exception {
         testByConfig("DefaultComesLast/newline/defaultContextConfig.xml");
         testByConfig("DefaultComesLast/patchedline/defaultContextConfig.xml");
