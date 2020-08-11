@@ -36,6 +36,7 @@ import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.ExternalResourceHolder;
 import com.puppycrawl.tools.checkstyle.api.Filter;
+import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
 
 /**
  * <p>
@@ -136,7 +137,17 @@ public class SuppressionPatchFilter extends AutomaticBean
      */
     public void finishLocalSetup() throws CheckstyleException {
         if (file != null) {
-            loadPatchFile();
+            if (optional) {
+                if (FilterUtil.isFileExists(file)) {
+                    loadPatchFile();
+                }
+                else {
+                    filters = new PatchFilterSet();
+                }
+            }
+            else {
+                loadPatchFile();
+            }
         }
     }
 

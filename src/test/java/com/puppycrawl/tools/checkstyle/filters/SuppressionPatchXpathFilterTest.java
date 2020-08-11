@@ -19,8 +19,12 @@
 
 package com.puppycrawl.tools.checkstyle.filters;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.Ignore;
 import org.junit.Test;
+
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 
 public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluationTest {
 
@@ -41,6 +45,25 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
         testByConfig("ShortName/checkNamesForContextStrategyByTokenOrParentSet/"
                 + "defaultContextConfig.xml");
         testByConfig("ShortName/neverSuppressedChecks/defaultContextConfig.xml");
+    }
+
+    @Test
+    public void testNonExistentPatchFileWithFalseOptional() throws Exception {
+        try {
+            testByConfig("Optional/false/defaultContextConfig.xml");
+        }
+        catch (CheckstyleException ex) {
+            assertEquals("cannot initialize module TreeWalker - "
+                            + "cannot initialize module "
+                            + "com.puppycrawl.tools.checkstyle.filters.SuppressionPatchXpathFilter "
+                            + "- an error occurred when load patch file", ex.getMessage(),
+                    "Invalid error message");
+        }
+    }
+
+    @Test
+    public void testNonExistentPatchFileWithTrueOptional() throws Exception {
+        testByConfig("Optional/true/defaultContextConfig.xml");
     }
 
     @Test
