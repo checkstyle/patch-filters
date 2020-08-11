@@ -207,6 +207,12 @@ public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTes
     }
 
     @Test
+    public void testRegexpHeader() throws Exception {
+        testByConfig("RegexpHeader/newline/defaultContextConfig.xml");
+        testByConfig("RegexpHeader/patchedline/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testTranslation() throws Exception {
         testByConfig("Translation/caseOne/newline/defaultContextConfig.xml");
         testByConfig("Translation/caseOne/patchedline/defaultContextConfig.xml");

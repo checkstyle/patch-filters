@@ -1,0 +1,11 @@
+diff --git a/Test.java b/Test.java
+index f0c9bc1..45e0be1 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,3 +1,6 @@
++// Copyright (C) 2000 - 2004 MyCompany
++// All rights reserved
++
+ package Checker.HeaderRegexp;
+ 
+ public class Test {
