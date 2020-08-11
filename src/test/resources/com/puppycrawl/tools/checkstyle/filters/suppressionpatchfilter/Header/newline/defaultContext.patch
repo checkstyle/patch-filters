@@ -1,0 +1,10 @@
+diff --git a/Test.java b/Test.java
+index c9863eb..d08f678 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,3 +1,5 @@
++// Copyright (C) 2004 MyCompany
++// All rights reserved
+ package Checker.Header;  // violation without filter
+ 
+ public class Test {

@@ -113,7 +113,8 @@ public class SuppressionPatchFilterElement implements Filter {
         final String checkShortName = getCheckShortName(event);
         if ("RegexpOnFilenameCheck".equals(checkShortName)
                 || "FileLengthCheck".equals(checkShortName)
-                || "NewlineAtEndOfFileCheck".equals(checkShortName)) {
+                || "NewlineAtEndOfFileCheck".equals(checkShortName)
+                || "HeaderCheck".equals(checkShortName)) {
             result = true;
         }
         return result;
