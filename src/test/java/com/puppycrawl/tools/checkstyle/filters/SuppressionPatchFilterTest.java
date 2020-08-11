@@ -124,16 +124,11 @@ public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTes
 
     @Test
     public void testFileTabCharacterSingleChangedLine() throws Exception {
-        testByConfig(
-                "FileTabCharacter/SingleChangedLine/newline/defaultContextConfig.xml");
-        testByConfig(
-                "FileTabCharacter/SingleChangedLine/newline/zeroContextConfig.xml");
+        testByConfig("FileTabCharacter/SingleChangedLine/newline/defaultContextConfig.xml");
+        testByConfig("FileTabCharacter/SingleChangedLine/newline/zeroContextConfig.xml");
 
-        testByConfig(
-                "FileTabCharacter/SingleChangedLine/"
-                        + "patchedline/defaultContextConfig.xml");
-        testByConfig(
-                "FileTabCharacter/SingleChangedLine/patchedline/zeroContextConfig.xml");
+        testByConfig("FileTabCharacter/SingleChangedLine/patchedline/defaultContextConfig.xml");
+        testByConfig("FileTabCharacter/SingleChangedLine/patchedline/zeroContextConfig.xml");
     }
 
     @Test
@@ -141,17 +136,14 @@ public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTes
         testByConfig("FileTabCharacter/SingleNewLine/newline/defaultContextConfig.xml");
         testByConfig("FileTabCharacter/SingleNewLine/newline/zeroContextConfig.xml");
 
-        testByConfig("FileTabCharacter/SingleNewLine/"
-                + "patchedline/defaultContextConfig.xml");
+        testByConfig("FileTabCharacter/SingleNewLine/patchedline/defaultContextConfig.xml");
         testByConfig("FileTabCharacter/SingleNewLine/patchedline/zeroContextConfig.xml");
     }
 
     @Test
     public void testFileTabCharacterSingleDeleteLine() throws Exception {
         testByConfig("FileTabCharacter/SingleDeleteLine/newline/defaultContextConfig.xml");
-
-        testByConfig("FileTabCharacter/SingleDeleteLine/"
-                + "patchedline/defaultContextConfig.xml");
+        testByConfig("FileTabCharacter/SingleDeleteLine/patchedline/defaultContextConfig.xml");
     }
 
     @Test
