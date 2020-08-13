@@ -19,6 +19,7 @@
 
 package com.puppycrawl.tools.checkstyle.filters;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.Set;
 import com.puppycrawl.tools.checkstyle.TreeWalkerAuditEvent;
 import com.puppycrawl.tools.checkstyle.TreeWalkerFilter;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 /**
  * This filter element is immutable and processes.
@@ -44,10 +46,31 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
     private static final String MAX = "max";
 
     /**
+     * Mapping between a check and its ancestor token types.
+     */
+    private static final Map<String, List<Integer>> CHECK_TO_ANCESTOR_NODES_MAP = new HashMap<>();
+
+    static {
+        CHECK_TO_ANCESTOR_NODES_MAP.put("AvoidNestedBlocks",
+                Arrays.asList(TokenTypes.SLIST));
+        CHECK_TO_ANCESTOR_NODES_MAP.put("FinalLocalVariable",
+                Arrays.asList(TokenTypes.METHOD_DEF,
+                TokenTypes.VARIABLE_DEF, TokenTypes.CTOR_DEF));
+        CHECK_TO_ANCESTOR_NODES_MAP.put("RightCurly",
+                Arrays.asList(TokenTypes.LITERAL_TRY, TokenTypes.LITERAL_IF));
+    }
+
+    /**
      * Set of checks that support context strategy but need modify violation nodes
      * to their parent abstract nodes to get their child nodes.
      */
     private final Set<String> checkNamesForContextStrategyByTokenOrParentSet = new HashSet<>();
+
+    /**
+     * Set of checks that support context strategy but need modify violation nodes
+     * to their ancestor abstract nodes to get their child nodes.
+     */
+    private final Set<String> checkNamesForContextStrategyByTokenOrAncestorSet = new HashSet<>();
 
     /**
      * Set has user defined Checks that support context strategy.
@@ -74,30 +97,40 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
      * Constructs a {@code SuppressPatchFilterElement} for a
      * file name pattern.
      *
-     * @param fileName                                   names of filtered files
-     * @param lineRangeList                              list of line range for line number
-     *                                                   filtering
-     * @param strategy                                   strategy that used
-     * @param checkNameForContextStrategyByTokenOrParent user defined Checks that need modify
-     *                                                   violation nodes to their parent abstract
-     *                                                   nodes to get their child nodes
-     * @param supportContextStrategyChecks               user defined Checks that support context
-     *                                                   strategy
-     * @param neverSuppressedChecks                      set has user defined Checks to never
-     *                                                   suppress if files are touched
+     * @param fileName                                         names of filtered files
+     * @param lineRangeList                                    list of line range for line number
+     *                                                         filtering
+     * @param strategy                                         strategy that used
+     * @param checkNamesForContextStrategyByTokenOrParentSet   user defined Checks that need modify
+     *                                                         violation nodes to their parent
+     *                                                         abstract nodes to get their child
+     *                                                         nodes
+     * @param checkNamesForContextStrategyByTokenOrAncestorSet user defined Checks that need modify
+     *                                                         violation nodes to their ancestor
+     *                                                         abstract nodes to get their child
+     *                                                         nodes
+     * @param supportContextStrategyChecks                     user defined Checks that support
+     *                                                         context strategy
+     * @param neverSuppressedChecks                            set has user defined Checks to never
+     *                                                         suppress if files are touched
      */
     public JavaPatchFilterElement(String fileName,
-                                  List<List<Integer>> lineRangeList,
-                                  Strategy strategy,
-                                  Set<String> checkNameForContextStrategyByTokenOrParent,
-                                  Set<String> supportContextStrategyChecks,
-                                  Set<String> neverSuppressedChecks) {
+                                   List<List<Integer>> lineRangeList,
+                                   Strategy strategy,
+                                   Set<String> checkNamesForContextStrategyByTokenOrParentSet,
+                                   Set<String> checkNamesForContextStrategyByTokenOrAncestorSet,
+                                   Set<String> supportContextStrategyChecks,
+                                   Set<String> neverSuppressedChecks) {
         this.fileName = fileName;
         this.lineRangeList = lineRangeList;
         this.strategy = strategy;
-        if (checkNameForContextStrategyByTokenOrParent != null) {
+        if (checkNamesForContextStrategyByTokenOrParentSet != null) {
             this.checkNamesForContextStrategyByTokenOrParentSet.addAll(
-                    checkNameForContextStrategyByTokenOrParent);
+                    checkNamesForContextStrategyByTokenOrParentSet);
+        }
+        if (checkNamesForContextStrategyByTokenOrAncestorSet != null) {
+            this.checkNamesForContextStrategyByTokenOrAncestorSet.addAll(
+                    checkNamesForContextStrategyByTokenOrAncestorSet);
         }
         if (supportContextStrategyChecks != null) {
             this.supportContextStrategyChecks.addAll(supportContextStrategyChecks);
@@ -221,14 +254,10 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
     private boolean isMatchingByContextStrategy(TreeWalkerAuditEvent event) {
         boolean result = false;
         if (containsShortName(supportContextStrategyChecks, event)
-                || containsShortName(checkNamesForContextStrategyByTokenOrParentSet, event)) {
-            final DetailAST eventAst;
-            if (containsShortName(checkNamesForContextStrategyByTokenOrParentSet, event)) {
-                eventAst = getEventAst(event).getParent();
-            }
-            else {
-                eventAst = getEventAst(event);
-            }
+                || containsShortName(checkNamesForContextStrategyByTokenOrParentSet, event)
+                || containsShortName(checkNamesForContextStrategyByTokenOrAncestorSet, event)) {
+            final DetailAST eventAst = getAncestorAst(event);
+
             if (eventAst != null) {
                 final Map<String, Integer> childAstLineNoMap = getChildAstLineNo(eventAst);
                 final int childAstStartLine = childAstLineNoMap.get(MIN);
@@ -237,6 +266,27 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
             }
         }
         return result;
+    }
+
+    private DetailAST getAncestorAst(TreeWalkerAuditEvent event) {
+        DetailAST eventAst = getEventAst(event);
+        if (containsShortName(checkNamesForContextStrategyByTokenOrAncestorSet, event)) {
+            if (eventAst != null) {
+                eventAst = eventAst.getParent();
+                final List<Integer> checkAncestorNodesList =
+                        CHECK_TO_ANCESTOR_NODES_MAP.get(getCheckShortName(event));
+                while (eventAst != null && checkAncestorNodesList != null
+                        && !checkAncestorNodesList.contains(eventAst.getType())) {
+                    eventAst = eventAst.getParent();
+                }
+            }
+        }
+        else if (containsShortName(checkNamesForContextStrategyByTokenOrParentSet, event)) {
+            if (eventAst != null) {
+                eventAst = eventAst.getParent();
+            }
+        }
+        return eventAst;
     }
 
     /**
@@ -248,16 +298,20 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
      */
     private boolean containsShortName(Set<String> checkNameSet,
                                       TreeWalkerAuditEvent event) {
+        final String checkName = getCheckName(event);
         final String checkShortName = getCheckShortName(event);
-        final String shortName = checkShortName.replaceAll("Check", "");
-        return checkNameSet.contains(checkShortName)
-                || checkNameSet.contains(shortName);
+        return checkNameSet.contains(checkName)
+                || checkNameSet.contains(checkShortName);
 
     }
 
-    private String getCheckShortName(TreeWalkerAuditEvent event) {
+    private String getCheckName(TreeWalkerAuditEvent event) {
         final String[] checkNames = event.getLocalizedMessage().getSourceName().split("\\.");
         return checkNames[checkNames.length - 1];
+    }
+
+    private String getCheckShortName(TreeWalkerAuditEvent event) {
+        return getCheckName(event).replaceAll("Check", "");
     }
 
     /**

@@ -1,4 +1,3 @@
 Test.java:4:24: Variable 'x' should be declared final.
 Test.java:4:31: Variable 'y' should be declared final.
 Test.java:7:39: Variable 'args' should be declared final.
-Test.java:12:13: Variable 'result' should be declared final.

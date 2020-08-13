@@ -83,6 +83,12 @@ public class SuppressionJavaPatchFilter extends AutomaticBean implements
     private Set<String> checkNamesForContextStrategyByTokenOrParentSet;
 
     /**
+     * Set has user defined Checks that need modify violation nodes
+     * to their ancestor abstract nodes to get their child nodes.
+     */
+    private Set<String> checkNamesForContextStrategyByTokenOrAncestorSet;
+
+    /**
      * Set has user defined Checks that support context strategy.
      */
     private Set<String> supportContextStrategyChecks;
@@ -121,14 +127,33 @@ public class SuppressionJavaPatchFilter extends AutomaticBean implements
      * Setter to set has user defined list of Checks need modify violation nodes
      * to their parent abstract nodes to get their child nodes.
      *
-     * @param checkNamesForContextStrategyByTokenOrParentSet string has user defined Checks to never
-     *                                                   suppress if files are touched, split
-     *                                                   by comma
+     * @param checkNamesForContextStrategyByTokenOrParentSet string which is  user defined Checks
+     *                                                         that need modify violation nodes
+     *                                                         to their parent abstract nodes
+     *                                                         to get their child nodes,
+     *                                                         split by comma
      */
     public void setCheckNamesForContextStrategyByTokenOrParentSet(
             String checkNamesForContextStrategyByTokenOrParentSet) {
         final String[] checksArray = checkNamesForContextStrategyByTokenOrParentSet.split(COMMA);
         this.checkNamesForContextStrategyByTokenOrParentSet =
+                new HashSet<>(Arrays.asList(checksArray));
+    }
+
+    /**
+     * Setter to set has user defined list of Checks need modify violation nodes
+     * to their ancestor abstract nodes to get their child nodes.
+     *
+     * @param checkNamesForContextStrategyByTokenOrAncestorSet string which is  user defined Checks
+     *                                                         that need modify violation nodes
+     *                                                         to their ancestor abstract nodes
+     *                                                         to get their child nodes,
+     *                                                         split by comma
+     */
+    public void setCheckNamesForContextStrategyByTokenOrAncestorSet(
+            String checkNamesForContextStrategyByTokenOrAncestorSet) {
+        final String[] checksArray = checkNamesForContextStrategyByTokenOrAncestorSet.split(COMMA);
+        this.checkNamesForContextStrategyByTokenOrAncestorSet =
                 new HashSet<>(Arrays.asList(checksArray));
     }
 
@@ -210,6 +235,7 @@ public class SuppressionJavaPatchFilter extends AutomaticBean implements
                         new JavaPatchFilterElement(fileName, lineRangeList,
                                 strategy,
                                 checkNamesForContextStrategyByTokenOrParentSet,
+                                checkNamesForContextStrategyByTokenOrAncestorSet,
                                 supportContextStrategyChecks,
                                 neverSuppressedChecks);
                 filters.add(element);
