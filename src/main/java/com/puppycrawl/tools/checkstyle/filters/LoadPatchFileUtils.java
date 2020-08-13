@@ -33,22 +33,6 @@ import org.eclipse.jgit.patch.HunkHeader;
  */
 public class LoadPatchFileUtils {
     /**
-     * New line strategy that suppress all violations except from new lines.
-     */
-    public static final String NEW_LINE = "newline";
-
-    /**
-     * Patched line strategy that suppress all violations except from new/changed lines.
-     */
-    public static final String PATCHED_LINE = "patchedline";
-
-    /**
-     * Context line strategy that suppress all violations except from new/changed lines
-     * or matching context strategy.
-     */
-    public static final String CONTEXT = "context";
-
-    /**
      * FileHeader to load.
      */
     private final FileHeader fileHeader;
@@ -56,14 +40,14 @@ public class LoadPatchFileUtils {
     /**
      * Strategy that used.
      */
-    private final String strategy;
+    private final Strategy strategy;
 
     /**
      * Init LoadPatchFileUtils.
      * @param fileHeader FileHeader
      * @param strategy String
      */
-    public LoadPatchFileUtils(FileHeader fileHeader, String strategy) {
+    public LoadPatchFileUtils(FileHeader fileHeader, Strategy strategy) {
         this.fileHeader = fileHeader;
         this.strategy = strategy;
     }
@@ -94,14 +78,14 @@ public class LoadPatchFileUtils {
     }
 
     private void addSingleLineRange(List<List<Integer>> lineRangeList, Edit edit) {
-        if (NEW_LINE.equals(strategy)) {
+        if (Strategy.NEWLINE == strategy) {
             final List<Integer> lineRange = getLineRange(edit,
                     Arrays.asList(Edit.Type.INSERT));
             if (lineRange != null) {
                 lineRangeList.add(lineRange);
             }
         }
-        else if (PATCHED_LINE.equals(strategy)) {
+        else if (Strategy.PATCHEDLINE == strategy) {
             final List<Integer> lineRange = getLineRange(edit,
                     Arrays.asList(Edit.Type.INSERT, Edit.Type.REPLACE));
             if (lineRange != null) {
