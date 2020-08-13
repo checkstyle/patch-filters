@@ -47,6 +47,11 @@ public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTes
     }
 
     @Test
+    public void testDefaultStrategy() throws Exception {
+        testByConfig("DefaultStrategy/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testFileLength() throws Exception {
         testByConfig("FileLength/newline/defaultContextConfig.xml");
         testByConfig("FileLength/newline/zeroContextConfig.xml");

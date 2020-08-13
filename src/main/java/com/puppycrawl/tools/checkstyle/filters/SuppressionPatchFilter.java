@@ -69,7 +69,7 @@ public class SuppressionPatchFilter extends AutomaticBean
     /**
      * Control if only consider added lines in file.
      */
-    private String strategy;
+    private Strategy strategy = Strategy.NEWLINE;
 
     /**
      * Set has user defined Checks to never suppress if files are referenced in patch.
@@ -99,7 +99,7 @@ public class SuppressionPatchFilter extends AutomaticBean
      * @param strategy tells if only consider added lines is add, should be added or changed.
      */
     public void setStrategy(String strategy) {
-        this.strategy = strategy;
+        this.strategy = Strategy.valueOf(strategy.toUpperCase());
     }
 
     /**

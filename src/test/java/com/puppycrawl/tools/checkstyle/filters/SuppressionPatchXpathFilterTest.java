@@ -39,6 +39,11 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testDefaultStrategy() throws Exception {
+        testByConfig("DefaultStrategy/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testShortName() throws Exception {
         testByConfig("ShortName/supportContextStrategyChecks/defaultContextConfig.xml");
         testByConfig("ShortName/checkNamesForContextStrategyByTokenOrParentSet/"

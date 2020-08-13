@@ -102,6 +102,6 @@ public class GitDiffOnOpenSourceTest extends AbstractModuleTestSupport {
 
     private static SuppressionPatchFilter
         createSuppressionPatchFilter(String fileName) throws Exception {
-        return createSuppressionPatchFilter(fileName, "changed");
+        return createSuppressionPatchFilter(fileName, "patchedline");
     }
 }

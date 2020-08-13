@@ -68,7 +68,7 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
     /**
      * Strategy that used.
      */
-    private final String strategy;
+    private final Strategy strategy;
 
     /**
      * Constructs a {@code SuppressPatchFilterElement} for a
@@ -88,7 +88,7 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
      */
     public PatchXpathFilterElement(String fileName,
                                    List<List<Integer>> lineRangeList,
-                                   String strategy,
+                                   Strategy strategy,
                                    Set<String> checkNameForContextStrategyByTokenOrParent,
                                    Set<String> supportContextStrategyChecks,
                                    Set<String> neverSuppressedChecks) {
@@ -109,7 +109,7 @@ public class PatchXpathFilterElement implements TreeWalkerFilter {
     public boolean accept(TreeWalkerAuditEvent event) {
         final boolean result;
 
-        if (strategy.equals(LoadPatchFileUtils.CONTEXT)) {
+        if (Strategy.CONTEXT == strategy) {
             result = isFileNameMatching(event)
                     && (isNeverSuppressCheck(event)
                     || isMatchingByContextStrategy(event)
