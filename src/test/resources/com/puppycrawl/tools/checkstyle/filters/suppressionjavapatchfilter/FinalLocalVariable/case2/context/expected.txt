@@ -1,4 +1,2 @@
 Test.java:8:39: Variable 'args' should be declared final.
 Test.java:14:13: Variable 'myconst' should be declared final.
-Test.java:12:13: Variable 'result' should be declared final.
-Test.java:4:31: Variable 'y' should be declared final.
