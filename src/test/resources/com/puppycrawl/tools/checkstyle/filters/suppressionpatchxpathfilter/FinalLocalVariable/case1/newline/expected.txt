@@ -1,0 +1,2 @@
+Test.java:15:25: Variable 'x' should be declared final.
+Test.java:15:32: Variable 'y' should be declared final.

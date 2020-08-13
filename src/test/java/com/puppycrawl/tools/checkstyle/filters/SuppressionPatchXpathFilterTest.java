@@ -377,6 +377,17 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testFinalLocalVariable() throws Exception {
+        testByConfig("FinalLocalVariable/case1/newline/defaultContextConfig.xml");
+        testByConfig("FinalLocalVariable/case1/patchedline/defaultContextConfig.xml");
+        testByConfig("FinalLocalVariable/case1/context/defaultContextConfig.xml");
+
+        testByConfig("FinalLocalVariable/case2/newline/defaultContextConfig.xml");
+        testByConfig("FinalLocalVariable/case2/patchedline/defaultContextConfig.xml");
+        testByConfig("FinalLocalVariable/case2/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testBooleanExpressionComplexity() throws Exception {
         testByConfig("BooleanExpressionComplexity/newline/defaultContextConfig.xml");
         testByConfig("BooleanExpressionComplexity/patchedline/defaultContextConfig.xml");

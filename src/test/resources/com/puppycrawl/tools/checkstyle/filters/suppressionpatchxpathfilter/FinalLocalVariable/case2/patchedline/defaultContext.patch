@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index 618536b..7d45dea 100644
+--- a/Test.java
++++ b/Test.java
+@@ -12,6 +12,6 @@ public class Test {
+         int result=foo(1,2);  // violation without filter
+ 
+         int myconst  // violation without filter
+-                = foo(9, 2);
++                = foo(1, 2);
+     }
+ }
