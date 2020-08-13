@@ -210,6 +210,12 @@ public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTes
     }
 
     @Test
+    public void testHeader() throws Exception {
+        testByConfig("Header/newline/defaultContextConfig.xml");
+        testByConfig("Header/patchedline/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testTranslation() throws Exception {
         testByConfig("Translation/caseOne/newline/defaultContextConfig.xml");
         testByConfig("Translation/caseOne/patchedline/defaultContextConfig.xml");
@@ -219,11 +225,5 @@ public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTes
 
         testByConfig("Translation/caseThree/newline/defaultContextConfig.xml");
         testByConfig("Translation/caseThree/patchedline/defaultContextConfig.xml");
-    }
-
-    @Test
-    public void testHeader() throws Exception {
-        testByConfig("Header/newline/defaultContextConfig.xml");
-        testByConfig("Header/patchedline/defaultContextConfig.xml");
     }
 }

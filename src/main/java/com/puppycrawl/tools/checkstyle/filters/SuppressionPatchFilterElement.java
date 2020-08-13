@@ -67,7 +67,6 @@ public class SuppressionPatchFilterElement implements Filter {
         return isFileNameMatching(event)
                 && (isTreeWalkerChecksMatching(event)
                 || isNeverSuppressCheck(event)
-                || isContextStrategyCheck(event)
                 || isLineMatching(event));
     }
 
@@ -122,25 +121,6 @@ public class SuppressionPatchFilterElement implements Filter {
                     break;
                 }
             }
-        }
-        return result;
-    }
-
-    /**
-     * Is matching by context strategy check.
-     *
-     * @param event event
-     * @return true if it is matching
-     */
-    private boolean isContextStrategyCheck(AuditEvent event) {
-        boolean result = false;
-        final String checkShortName = getCheckShortName(event);
-        if ("RegexpOnFilenameCheck".equals(checkShortName)
-                || "RegexpHeaderCheck".equals(checkShortName)
-                || "FileLengthCheck".equals(checkShortName)
-                || "NewlineAtEndOfFileCheck".equals(checkShortName)
-                || "HeaderCheck".equals(checkShortName)) {
-            result = true;
         }
         return result;
     }

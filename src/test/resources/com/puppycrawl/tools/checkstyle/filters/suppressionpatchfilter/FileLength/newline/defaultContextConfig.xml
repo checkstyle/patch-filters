@@ -9,5 +9,6 @@
   <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
     <property name="file" value="${tp}/defaultContext.patch" />
     <property name="strategy" value="newline" />
+    <property name="neverSuppressedChecks" value="FileLength" />
   </module>
 </module>
