@@ -3,6 +3,43 @@ special project to host GSOC project Patch Suppressions
 
 ## PatchFilter Description
 
+### SuppressionPatchFilter
+
+Filter SuppressionPatchFilter(Checker level) only accepts audit events for Check violations whose line number
+belong to added/changed lines in patch file and will suppress all Checks’ violation messages 
+which are not from added/changed lines. If there is no configured patch file 
+or the optional is set to true and patch file was not found the Filter suppresses all audit events.
+
+#### Properties
+ 
+ | name                  | description                                                  | type                                                         | default value |
+ | --------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------- |
+ | file                  | Specify the location of the patch file.                      | [String](https://checkstyle.sourceforge.io/property_types.html#String) | Null          |
+ | optional              | Control what to do when the file is not existing. If `optional` is set to `false` the file must exist, or else it ends with error. On the other hand if optional is `true` and file is not found, the filter suppresses all audit events. | [boolean](https://checkstyle.sourceforge.io/property_types.html#boolean) | false         |
+ | strategy              | Control suppression scope that you need. If `startegy` is set to `newline`, it only accepts audit events for Check violations whose line number belong to added lines in patch file. `patchedline` will accept added/changed lines. | [String](https://checkstyle.sourceforge.io/property_types.html#String) | newline       |
+ | neverSuppressedChecks | String has user defined Checks to never suppress if files are touched, split by comma. This property is useful for Checks that place violation on whole file or on not all (first/last) occurrence of cause/violated code. | [String](https://checkstyle.sourceforge.io/property_types.html#String) | null          |
+
+#### Examples
+
+For example, the following configuration fragment directs the Checker to use a SuppressionPatchFilter with patch file config/file.patch:
+```xml
+<module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
+    <property name="file" value="config/file.patch" />
+    <property name="strategy" value="newline" />
+</module>
+```
+
+the following configuration fragment direts the Checker to use a SuppressionPatchFilter 
+with patch file config/file.patch, whose strategy is `patchedline`,and never suppress 
+checks `Translation` and `UniqueProperties`:
+```xml
+<module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
+    <property name="file" value="config/file.patch" />
+    <property name="strategy" value="patchedline" />
+    <property name="neverSuppressedChecks" value="Translation,UniqueProperties" />
+</module>
+```
+
 ### SuppressionPatchXpathFilter
 
 Filter SuppressionPatchXpathFilter(TreeWalker level) has three different strategies that control suppression
@@ -69,7 +106,7 @@ support context strategy check `MethodLength` and never suppress checks `EmptyBl
 
 ### Requirements
 
-- Checkstyle repository which including patch-filter need to be cloned.
+- [Checkstyle repository](https://github.com/checkstyle) need to be cloned.
 - [Contribution repository](https://github.com/checkstyle/contribution) need to be cloned.
 
 ### Clone
@@ -103,7 +140,8 @@ is considered a comment and is ignored.) and remove the specific version to chan
 `guava|git|https://github.com/google/guava|v28.2||` to `guava|git|https://github.com/google/guava||`
 , which aims to avoid auto checkout to the specific version in `diff.groovy`.
 
-Secondly, you need to set baseConfig.xml and patchConfig.xml by yourself, 
+Secondly, you need to set baseConfig.xml and patchConfig.xml by yourself.
+ 
 **Attention:**
  
 baseConfig does not need any checks in it and set `severity` to `ignore`, 
@@ -154,7 +192,7 @@ then, add Environment variables:
 ```bash
 checkstyle.patchfilter.patch=/path/to/patch-filters/DiffReport/patch.txt
 ```
-after above, if everything is ok, reports will be created in `/path/to/patch-filters/DiffReport/`.
+after above, if everything is ok, run it and then reports will be created in `/path/to/patch-filters/DiffReport/`.
 for example, when `repoPath` is guava and `runPatchNum` is 4, then result will look like:
 
 - DiffReport
