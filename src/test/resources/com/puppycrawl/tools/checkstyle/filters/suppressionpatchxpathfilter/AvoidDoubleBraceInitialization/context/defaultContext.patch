@@ -1,0 +1,13 @@
+diff --git a/Test.java b/Test.java
+index f0ab8a2..c2cacfb 100644
+--- a/Test.java
++++ b/Test.java
+@@ -6,5 +6,8 @@ import java.util.List;
+ public class Test {
+     List<Integer> list1 = new ArrayList<Integer>() {  // violation without filter
+ 
++        {
++            add(1);
++        }
+     };
+ }
