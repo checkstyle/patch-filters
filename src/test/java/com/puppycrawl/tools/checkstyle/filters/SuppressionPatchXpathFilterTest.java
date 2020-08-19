@@ -490,6 +490,13 @@ public class SuppressionPatchXpathFilterTest extends AbstractPatchFilterEvaluati
     }
 
     @Test
+    public void testAvoidDoubleBraceInitialization() throws Exception {
+        testByConfig("AvoidDoubleBraceInitialization/newline/defaultContextConfig.xml");
+        testByConfig("AvoidDoubleBraceInitialization/patchedline/defaultContextConfig.xml");
+        testByConfig("AvoidDoubleBraceInitialization/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testMissingSwitchDefault() throws Exception {
         testByConfig("MissingSwitchDefault/newline/defaultContextConfig.xml");
         testByConfig("MissingSwitchDefault/patchedline/defaultContextConfig.xml");

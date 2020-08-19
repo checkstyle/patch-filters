@@ -1,0 +1,1 @@
+Test.java:14:52: Avoid double brace initialization.
