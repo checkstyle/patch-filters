@@ -127,7 +127,7 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
     /**
      * Is matching by file name.
      *
-     * @param event event
+     * @param event {@code TreeWalkerAuditEvent} object
      * @return true if it is matching
      */
     private boolean isFileNameMatching(TreeWalkerAuditEvent event) {
@@ -139,7 +139,7 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
     /**
      * Is matching by never suppress check.
      *
-     * @param event event
+     * @param event {@code TreeWalkerAuditEvent} object
      * @return true if it is matching
      */
     private boolean isNeverSuppressCheck(TreeWalkerAuditEvent event) {
@@ -154,10 +154,10 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     /**
-     * Whether line match.
+     * Is matching by line number.
      *
-     * @param event event to process.
-     * @return true if line and column are matching or not set.
+     * @param event {@code TreeWalkerAuditEvent} object
+     * @return true if line are matching.
      */
     private boolean isLineMatching(TreeWalkerAuditEvent event) {
         boolean result = false;
@@ -185,6 +185,14 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
         return result;
     }
 
+    /**
+     * Check whether at least one line from lineRangeList is between
+     * event ast node's child nodes' min and max line number.
+     *
+     * @param childAstStartLine event ast node's child nodes' min line number
+     * @param childAstEndLine   event ast node's child nodes' max line number
+     * @return true if one line is between childAstStartLine and childAstEndLine line number.
+     */
     private boolean lineMatching(int childAstStartLine, int childAstEndLine) {
         boolean result = false;
         for (List<Integer> singleLineRangeList : lineRangeList) {
@@ -207,7 +215,7 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
     /**
      * Is matching by context strategy.
      *
-     * @param event event
+     * @param event {@code TreeWalkerAuditEvent} object
      * @return true if it is matching or not set.
      */
     private boolean isMatchingByContextStrategy(TreeWalkerAuditEvent event) {
@@ -231,6 +239,13 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
         return result;
     }
 
+    /**
+     * Check whether checkNameSet contains event's check.
+     *
+     * @param checkNameSet Set of check names
+     * @param event {@code TreeWalkerAuditEvent} object
+     * @return true if set contains event's check.
+     */
     private boolean containsShortName(Set<String> checkNameSet,
                                       TreeWalkerAuditEvent event) {
         final String checkShortName = getCheckShortName(event);
@@ -245,6 +260,12 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
         return checkNames[checkNames.length - 1];
     }
 
+    /**
+     * Return event's corresponding ast node using iterative algorithm.
+     *
+     * @param event {@code TreeWalkerAuditEvent} object
+     * @return DetailAST event's corresponding ast node
+     */
     private DetailAST getEventAst(TreeWalkerAuditEvent event) {
         DetailAST curNode = event.getRootAst();
         DetailAST eventAst = null;
@@ -263,7 +284,13 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
         return eventAst;
     }
 
-    private Map<String, Integer> getChildAstLineNo(DetailAST ast) {
+    /**
+     * Find min and max line numbers from AST node and its children.
+     *
+     * @param ast DetailAST event's corresponding ast node
+     * @return Map contains ast node's all child nodes' max and min line number
+     */
+    private static Map<String, Integer> getChildAstLineNo(DetailAST ast) {
         final Map<String, Integer> childAstLineNoMap = new HashMap<>();
         DetailAST curNode = ast;
         childAstLineNoMap.put(MIN, curNode.getLineNo());
@@ -284,7 +311,14 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
         return childAstLineNoMap;
     }
 
-    private void setChildAstLineNo(Map<String, Integer> childAstLineNoMap, DetailAST ast) {
+    /**
+     * Update childAstLineNoMap if line number of ast is smaller
+     * or larger than current min and max value.
+     *
+     * @param childAstLineNoMap Map contains ast node's all child nodes' max and min line number
+     * @param ast DetailAST event's ast node's child node
+     */
+    private static void setChildAstLineNo(Map<String, Integer> childAstLineNoMap, DetailAST ast) {
         if (ast != null) {
             final int lineNo = ast.getLineNo();
             if (lineNo < childAstLineNoMap.get(MIN)) {
@@ -296,9 +330,16 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
         }
     }
 
-    private boolean isMatchingAst(DetailAST root, TreeWalkerAuditEvent event) {
-        return root.getType() == event.getTokenType()
-                && root.getLineNo() == event.getLine()
-                && root.getColumnNo() == event.getColumnCharIndex();
+    /**
+     * Check whether AST node matches event's node.
+     *
+     * @param ast DetailAST
+     * @param event {@code TreeWalkerAuditEvent} object
+     * @return true if it is matching.
+     */
+    private static boolean isMatchingAst(DetailAST ast, TreeWalkerAuditEvent event) {
+        return ast.getType() == event.getTokenType()
+                && ast.getLineNo() == event.getLine()
+                && ast.getColumnNo() == event.getColumnCharIndex();
     }
 }
