@@ -74,6 +74,55 @@ Attention: `supportContextStrategyChecks` and `checkNameForContextStrategyByToke
  | neverSuppressedChecks                            | String has user defined TreeWalker Checks to never suppress if files are touched, split by comma. This property is useful for Checks that place violation on whole file or on not all (first/last) occurrence of cause/violated code. | [String](https://checkstyle.sourceforge.io/property_types.html#String) | null          |
  | checkNamesForContextStrategyByTokenOrParentSet | String has user defined TreeWalker Checks that need modify violation nodes to their parent node to expand the context scope, split by comma | [String](https://checkstyle.sourceforge.io/property_types.html#String) | null          |
 
+#### Notes
+
+Currently, the following checks will suppress some violations that should not be suppressed when using `supportContextStrategyChecks`. 
+And you can use `checkNamesForContextStrategyByTokenOrParentSet`, `checkNamesForContextStrategyByTokenOrAncestorSet` 
+or `neverSuppressedChecks` to get the larger context scope to solve this problem:
+
+* ParameterNumberCheck
+* SuperClone
+* SuperFinalize
+* BooleanExpressionComplexity
+* OverloadMethodsDeclarationOrder
+* UnnecessarySemicolonInEnumeration
+
+Also, the following checks will suppress some violations that should not be suppressed when using `supportContextStrategyChecks` or `checkNamesForContextStrategyByTokenOrParentSet`. 
+So you need use `checkNamesForContextStrategyByTokenOrAncestorSet` or `neverSuppressedChecks` to solve this problem:
+
+* ArrayTrailingComma
+* AvoidNestedBlocks
+* CommentsIndentation
+* DefaultComesLast
+* DeclarationOrder
+* EqualsHashCode
+* FinalLocalVariable
+* FallThrough
+* RightCurly
+
+Then the following checks will suppress some violations that should not be suppressed unless you use 
+`neverSuppressedChecks`:
+
+
+* VariableDeclarationUsageDistance
+* CovariantEquals
+* EmptyLineSeparator
+* CustomImportOrder
+* ImportOrder
+* RedundantImport
+* UnusedImports
+* PackageDeclaration
+* MissingJavadocPackage
+* MissingJavadocType
+* OuterTypeNumberCheck
+* OuterTypeFilename
+* NoCodeInFileCheck
+* Regexp
+* AtclauseOrder
+* JavadocMethod
+* JavadocParagraph
+* SummaryJavadoc
+
 #### Examples
 
 For example, the following configuration fragment directs the Checker to use a SuppressionJavaPatchFilter
