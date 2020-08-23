@@ -75,7 +75,7 @@ Attention: `supportContextStrategyChecks` and `checkNameForContextStrategyByToke
 For example, the following configuration fragment directs the Checker to use a SuppressionPatchXpathFilter 
 with patch file config/file.patch and strategy is `newline`:
 ```xml
-<module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchXpathFilter">
+<module name="com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter">
     <property name="file" value="config/file.patch" />
     <property name="strategy" value="newline" />
 </module>
@@ -84,7 +84,7 @@ with patch file config/file.patch and strategy is `newline`:
 the following configuration fragment directs the Checker to use a SuppressionPatchXpathFilter 
 with patch file config/file.patch and strategy is `patchedline`:
 ```xml
-<module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchXpathFilter">
+<module name="com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter">
     <property name="file" value="config/file.patch" />
     <property name="strategy" value="patchedline" />
 </module>
@@ -94,7 +94,7 @@ the following configuration fragment direts the Checker to use a SuppressionPatc
 with patch file config/file.patch, whose strategy is `context`,
 support context strategy check `MethodLength` and never suppress checks `EmptyBlock` and `HiddenField`:
 ```xml
-<module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchXpathFilter">
+<module name="com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter">
     <property name="file" value="config/file.patch" />
     <property name="strategy" value="context" />
     <property name="supportContextStrategyChecks" value="MethodLength," />
