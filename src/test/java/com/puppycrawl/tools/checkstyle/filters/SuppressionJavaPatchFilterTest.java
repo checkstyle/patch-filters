@@ -229,6 +229,13 @@ public class SuppressionJavaPatchFilterTest extends AbstractPatchFilterEvaluatio
     }
 
     @Test
+    public void testMissingDeprecated() throws Exception {
+        testByConfig("MissingDeprecated/newline/defaultContextConfig.xml");
+        testByConfig("MissingDeprecated/patchedline/defaultContextConfig.xml");
+        testByConfig("MissingDeprecated/context/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testReturnCount() throws Exception {
         testByConfig("ReturnCount/newline/defaultContextConfig.xml");
         testByConfig("ReturnCount/patchedline/defaultContextConfig.xml");

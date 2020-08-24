@@ -1,0 +1,12 @@
+diff --git a/Test.java b/Test.java
+index 1db8efd..bc0daf9 100644
+--- a/Test.java
++++ b/Test.java
+@@ -4,6 +4,7 @@ public class Test {
+     @Deprecated
+     public static final int MY_CONST = 123456;
+ 
++    /** This javadoc is missing deprecated tag. */
+     @Deprecated  // violation without filter
+     public static final int COUNTER = 10;
+ }

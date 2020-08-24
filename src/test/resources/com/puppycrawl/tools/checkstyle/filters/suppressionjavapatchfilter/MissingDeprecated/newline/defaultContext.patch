@@ -1,0 +1,13 @@
+diff --git a/Test.java b/Test.java
+index bc0daf9..12d7b51 100644
+--- a/Test.java
++++ b/Test.java
+@@ -7,4 +7,8 @@ public class Test {
+     /** This javadoc is missing deprecated tag. */
+     @Deprecated  // violation without filter
+     public static final int COUNTER = 10;
++
++    /** This javadoc is missing deprecated tag. */
++    @Deprecated  // violation without filter
++    public static final int COUNTER2 = 10;
+ }
