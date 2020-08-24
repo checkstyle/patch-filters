@@ -1,0 +1,1 @@
+Test.java:8: Must include both @java.lang.Deprecated annotation and @deprecated Javadoc tag with description.
