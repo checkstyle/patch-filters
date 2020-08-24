@@ -40,9 +40,9 @@ checks `Translation` and `UniqueProperties`:
 </module>
 ```
 
-### SuppressionPatchXpathFilter
+### SuppressionJavaPatchFilter
 
-Filter SuppressionPatchXpathFilter(TreeWalker level) has three different strategies that control suppression
+Filter SuppressionJavaPatchFilter(TreeWalker level) has three different strategies that control suppression
 scope. if property `strategy` is set to `newline`, then it only accepts TreeWalker audit events for TreeWalker 
 Check violations whose line number belong to added lines in patch file and will suppress all TreeWalker Checks’ 
 violation messages which are not from added lines. if property `strategy` is set to `patchedline`, it will accept 
@@ -72,7 +72,7 @@ Attention: `supportContextStrategyChecks` and `checkNameForContextStrategyByToke
 
 #### Examples
 
-For example, the following configuration fragment directs the Checker to use a SuppressionPatchXpathFilter 
+For example, the following configuration fragment directs the Checker to use a SuppressionJavaPatchFilter 
 with patch file config/file.patch and strategy is `newline`:
 ```xml
 <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter">
@@ -81,7 +81,7 @@ with patch file config/file.patch and strategy is `newline`:
 </module>
 ```
 
-the following configuration fragment directs the Checker to use a SuppressionPatchXpathFilter 
+the following configuration fragment directs the Checker to use a SuppressionJavaPatchFilter 
 with patch file config/file.patch and strategy is `patchedline`:
 ```xml
 <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter">
@@ -90,7 +90,7 @@ with patch file config/file.patch and strategy is `patchedline`:
 </module>
 ```
 
-the following configuration fragment direts the Checker to use a SuppressionPatchXpathFilter 
+the following configuration fragment direts the Checker to use a SuppressionJavaPatchFilter 
 with patch file config/file.patch, whose strategy is `context`,
 support context strategy check `MethodLength` and never suppress checks `EmptyBlock` and `HiddenField`:
 ```xml
