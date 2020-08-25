@@ -1,1 +1,1 @@
-Test.java:5: Distance between variable 'count' declaration and its first usage is 5, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value).
+Test.java:5:9: Distance between variable 'count' declaration and its first usage is 5, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value).
