@@ -1,2 +1,2 @@
-Test.java:9:5: Fields and methods should be before inner classes.
-Test.java:15:5: Fields and methods should be before inner classes.
+Test.java:9:5: Init blocks, constructors, fields and methods should be before inner types.
+Test.java:15:5: Init blocks, constructors, fields and methods should be before inner types.

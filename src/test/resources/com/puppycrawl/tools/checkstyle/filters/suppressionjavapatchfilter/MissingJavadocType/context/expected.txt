@@ -1,1 +1,1 @@
-Test.java:3: Missing a Javadoc comment.
+Test.java:3:1: Missing a Javadoc comment.
