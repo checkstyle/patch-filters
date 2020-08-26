@@ -1,0 +1,1 @@
+Test.java:2:1: Package annotations must be in the package-info.java info.

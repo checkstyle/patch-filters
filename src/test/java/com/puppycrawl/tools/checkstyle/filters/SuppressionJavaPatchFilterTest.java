@@ -597,4 +597,11 @@ public class SuppressionJavaPatchFilterTest extends AbstractPatchFilterEvaluatio
         testByConfig("UnnecessarySemicolonInEnumeration/patchedline/defaultContextConfig.xml");
         testByConfig("UnnecessarySemicolonInEnumeration/context/defaultContextConfig.xml");
     }
+
+    @Test
+    public void testPackageAnnotation() throws Exception {
+        testByConfig("PackageAnnotation/newline/defaultContextConfig.xml");
+        testByConfig("PackageAnnotation/patchedline/defaultContextConfig.xml");
+        testByConfig("PackageAnnotation/context/defaultContextConfig.xml");
+    }
 }
