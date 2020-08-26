@@ -1,0 +1,9 @@
+diff --git a/Test.java b/Test.java
+index fb2c485..0b7a71f 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,3 +1,4 @@
++@Deprecated
+ package TreeWalker.Annotation.PackageAnnotation;  // violation without filter
+ 
+ public class Test {

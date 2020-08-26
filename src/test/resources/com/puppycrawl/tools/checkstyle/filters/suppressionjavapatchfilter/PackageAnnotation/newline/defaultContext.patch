@@ -1,0 +1,11 @@
+diff --git a/src/main/java/TreeWalker/Annotation/PackageAnnotation/Test.java b/src/main/java/TreeWalker/Annotation/PackageAnnotation/Test.java
+new file mode 100644
+index 0000000..a1232b2
+--- /dev/null
++++ b/Test.java
+@@ -0,0 +1,5 @@
++@Deprecated
++package TreeWalker.Annotation.PackageAnnotation;  // violation without filter
++
++public class Test {
++}
