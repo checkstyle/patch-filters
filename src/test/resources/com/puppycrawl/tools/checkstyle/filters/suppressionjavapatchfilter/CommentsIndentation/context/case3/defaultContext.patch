@@ -1,0 +1,36 @@
+diff --git a/Test.java b/Test.java
+index 27da67b..7573410 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,8 +1,10 @@
+ package TreeWalker.CommentsIndentation;
++
++    // violation without filter
+ public class Test {
+     public void test() {
+         try {
+-            int a;
++        int a;
+             // violation without filter
+         } catch (Exception ex) {}
+ 
+@@ -12,9 +14,10 @@ public class Test2 {
+         } catch (Exception ex) {}
+     }
+ 
++        // violation without filter
+     public void test2() {
+         if (true) {
+-            int a;
++        int a;
+             // violation without filter
+         }
+     }
+@@ -26,6 +29,6 @@ public class Test2 {
+ }
+ 
+ class Test2 {
+-    int a;
++int a;
+     // violation without filter
+ }

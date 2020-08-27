@@ -55,6 +55,10 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
                 Arrays.asList(TokenTypes.ARRAY_INIT));
         CHECK_TO_ANCESTOR_NODES_MAP.put("AvoidNestedBlocks",
                 Arrays.asList(TokenTypes.SLIST));
+        CHECK_TO_ANCESTOR_NODES_MAP.put("CommentsIndentation",
+                Arrays.asList(TokenTypes.METHOD_DEF, TokenTypes.SLIST,
+                        TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF,
+                        TokenTypes.RECORD_DEF, TokenTypes.ENUM_DEF));
         CHECK_TO_ANCESTOR_NODES_MAP.put("DefaultComesLast",
                 Arrays.asList(TokenTypes.LITERAL_SWITCH));
         CHECK_TO_ANCESTOR_NODES_MAP.put("DeclarationOrder",

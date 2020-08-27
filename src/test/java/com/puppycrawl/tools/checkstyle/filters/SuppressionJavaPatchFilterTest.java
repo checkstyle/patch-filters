@@ -354,6 +354,9 @@ public class SuppressionJavaPatchFilterTest extends AbstractPatchFilterEvaluatio
         testByConfig("CommentsIndentation/patchedline/defaultContextConfig.xml");
         testByConfig("CommentsIndentation/context/defaultContextConfig.xml");
         testByConfig("CommentsIndentation/context/case2/defaultContextConfig.xml");
+        testByConfig("CommentsIndentation/context/case3/defaultContextConfig.xml");
+        testByConfig("CommentsIndentation/context/case4/defaultContextConfig.xml");
+        testByConfig("CommentsIndentation/context/case5/defaultContextConfig.xml");
     }
 
     @Test

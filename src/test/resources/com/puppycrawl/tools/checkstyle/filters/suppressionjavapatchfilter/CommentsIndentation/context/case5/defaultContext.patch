@@ -1,0 +1,13 @@
+diff --git a/Test.java b/Test.java
+index 9808ffe..3dc737d 100644
+--- a/Test.java
++++ b/Test.java
+@@ -3,7 +3,7 @@ package TreeWalker.CommentsIndentation;
+ public class Test {
+     public void m(boolean asd) {
+         if (asd) {
+-        // comment 1
++    // comment 1
+         }
+ 
+         if (asd) {
