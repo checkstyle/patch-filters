@@ -43,4 +43,10 @@ public class Test {
                 }
         }
     }
+
+    public void test2() {
+        {  // violation without filter
+            System.out.println("Hello");
+        }
+    }
 }

@@ -28,5 +28,13 @@ public class Test {
                 break;
             }
         }
+
+        try {
+
+        }  // violation without filter
+        catch (Exception e)
+        {
+
+        }
     }
 }
