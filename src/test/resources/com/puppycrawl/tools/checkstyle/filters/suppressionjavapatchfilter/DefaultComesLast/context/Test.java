@@ -14,3 +14,16 @@ public class Test {
         }
     }
 }
+
+class Test2 {
+    public void test(int i) {
+        switch (i) {
+            case 1:
+                break;
+            default:  // violation without filter
+                break;
+            case 2:
+                break;
+        }
+    }
+}

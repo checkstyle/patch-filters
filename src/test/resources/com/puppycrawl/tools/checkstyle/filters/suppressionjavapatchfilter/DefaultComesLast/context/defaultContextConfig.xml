@@ -9,7 +9,7 @@
         <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter">
             <property name="file" value="${tp}/defaultContext.patch" />
             <property name="strategy" value="context" />
-            <property name="neverSuppressedChecks" value="DefaultComesLastCheck" />
+            <property name="checkNamesForContextStrategyByTokenOrAncestorSet" value="DefaultComesLastCheck" />
         </module>
     </module>
 </module>
