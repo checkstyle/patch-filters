@@ -19,3 +19,13 @@ class Test1 {
         return false;
     }
 }
+
+class Test2 {
+    public int hashCode() {  // violation without filter
+        return 1;
+    }
+
+    public boolean equals(Integer o) {
+        return false;
+    }
+}
