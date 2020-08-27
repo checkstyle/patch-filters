@@ -60,6 +60,8 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
         CHECK_TO_ANCESTOR_NODES_MAP.put("DeclarationOrder",
                 Arrays.asList(TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF,
                         TokenTypes.ENUM_DEF));
+        CHECK_TO_ANCESTOR_NODES_MAP.put("EqualsHashCode",
+                Arrays.asList(TokenTypes.CLASS_DEF));
         CHECK_TO_ANCESTOR_NODES_MAP.put("FinalLocalVariable",
                 Arrays.asList(TokenTypes.METHOD_DEF,
                 TokenTypes.VARIABLE_DEF, TokenTypes.CTOR_DEF));
