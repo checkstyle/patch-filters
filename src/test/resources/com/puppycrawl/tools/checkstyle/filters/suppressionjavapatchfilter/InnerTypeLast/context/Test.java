@@ -14,3 +14,9 @@ class Test2 {
     class InnerTest1 {}
     public void test() {} // violation without filter
 }
+
+class Test3 {
+    private String s; // OK
+    class InnerTest1 {}
+    public void test() {} // violation without filter
+}
