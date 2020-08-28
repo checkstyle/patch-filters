@@ -12,3 +12,9 @@ public class Test {
     private void test3() {}  // violation without filter
 
 }
+
+class Test {
+
+    /** {@inheritDoc} */
+    public void test1() {}  // violation without filter
+}

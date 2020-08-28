@@ -70,6 +70,8 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
         CHECK_TO_ANCESTOR_NODES_MAP.put("InnerTypeLast",
                 Arrays.asList(TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF,
                         TokenTypes.RECORD_DEF, TokenTypes.ENUM_DEF));
+        CHECK_TO_ANCESTOR_NODES_MAP.put("MissingOverride",
+                Arrays.asList(TokenTypes.CLASS_DEF));
         CHECK_TO_ANCESTOR_NODES_MAP.put("RightCurly",
                 Arrays.asList(TokenTypes.LITERAL_TRY, TokenTypes.LITERAL_IF));
     }
