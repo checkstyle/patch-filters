@@ -24,5 +24,14 @@ public class Test {
                 i++;
                 System.out.println();
         }
+
+        switch (i) {
+            case 0:
+                i++;
+                break;
+            case 1:
+                i++;
+            case 2:  // violation without filter
+        }
     }
 }
