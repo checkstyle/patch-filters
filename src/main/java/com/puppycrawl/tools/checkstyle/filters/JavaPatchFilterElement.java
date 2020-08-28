@@ -51,6 +51,8 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
     private static final Map<String, List<Integer>> CHECK_TO_ANCESTOR_NODES_MAP = new HashMap<>();
 
     static {
+        CHECK_TO_ANCESTOR_NODES_MAP.put("ArrayTrailingComma",
+                Arrays.asList(TokenTypes.ARRAY_INIT));
         CHECK_TO_ANCESTOR_NODES_MAP.put("AvoidNestedBlocks",
                 Arrays.asList(TokenTypes.SLIST));
         CHECK_TO_ANCESTOR_NODES_MAP.put("FinalLocalVariable",
