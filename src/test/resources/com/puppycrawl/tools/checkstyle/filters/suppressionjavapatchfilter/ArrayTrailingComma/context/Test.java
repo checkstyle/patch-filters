@@ -13,3 +13,10 @@ public class Test {
         };
     }
 }
+
+class Test2 {
+    int[] a3 = new int[]{
+            1,
+            2  // violation without filter
+    };
+}
