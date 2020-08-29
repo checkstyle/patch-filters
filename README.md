@@ -10,12 +10,12 @@ or at [repo](https://repo1.maven.org/maven2/com/puppycrawl/tools/patch-filters/)
 ### SuppressionPatchFilter
 
 Filter SuppressionPatchFilter(Checker level) only accepts audit events for Check violations whose line number
-belong to added/changed lines in patch file and will suppress all Checks’ violation messages 
-which are not from added/changed lines. If there is no configured patch file 
+belong to added/changed lines in patch file and will suppress all Checks’ violation messages
+which are not from added/changed lines. If there is no configured patch file
 or the optional is set to true and patch file was not found the Filter suppresses all audit events.
 
 #### Properties
- 
+
  | name                  | description                                                  | type                                                         | default value |
  | --------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------- |
  | file                  | Specify the location of the patch file.                      | [String](https://checkstyle.sourceforge.io/property_types.html#String) | Null          |
@@ -33,8 +33,8 @@ For example, the following configuration fragment directs the Checker to use a S
 </module>
 ```
 
-the following configuration fragment direts the Checker to use a SuppressionPatchFilter 
-with patch file config/file.patch, whose strategy is `patchedline`,and never suppress 
+the following configuration fragment direts the Checker to use a SuppressionPatchFilter
+with patch file config/file.patch, whose strategy is `patchedline`,and never suppress
 checks `Translation` and `UniqueProperties`:
 ```xml
 <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
@@ -47,10 +47,10 @@ checks `Translation` and `UniqueProperties`:
 ### SuppressionJavaPatchFilter
 
 Filter SuppressionJavaPatchFilter(TreeWalker level) has three different strategies that control suppression
-scope. if property `strategy` is set to `newline`, then it only accepts TreeWalker audit events for TreeWalker 
-Check violations whose line number belong to added lines in patch file and will suppress all TreeWalker Checks’ 
-violation messages which are not from added lines. if property `strategy` is set to `patchedline`, it will accept 
-all violations whose line number belong to added/changed lines in patch file. if property `strategy` is set to `context`, 
+scope. if property `strategy` is set to `newline`, then it only accepts TreeWalker audit events for TreeWalker
+Check violations whose line number belong to added lines in patch file and will suppress all TreeWalker Checks’
+violation messages which are not from added lines. if property `strategy` is set to `patchedline`, it will accept
+all violations whose line number belong to added/changed lines in patch file. if property `strategy` is set to `context`,
 for checks listed in `supportContextStrategyChecks`, it will not only accept violations whose line number belong to added/changed/deleted lines,
 but also consider a wider context that new code introduces violations outside of added/changed lines, but its child nodes in added/changed lines,
 for checks not listed in `supportContextStrategyChecks`, it will accept violations whose line number belong to added/changed/deleted lines in patch file.
@@ -58,13 +58,13 @@ If there is no configured patch file or the optional is set to true and patch fi
 
 Note that it's ok to use all three properties (`supportContextStrategyChecks`, `checkNameForContextStrategyByTokenOrParentSet`, `neverSuppressedChecks`),
 and the context scope of the three is also growing, for TreeWalker checks only in one of the property, its context scope is the same as that property,
-if in two or all properties, then the The context scope is the maximum scope. 
+if in two or all properties, then the The context scope is the maximum scope.
 
 Attention: `supportContextStrategyChecks` and `checkNameForContextStrategyByTokenOrParentSet` only have effect when the `strategy` property is set to `context`,
 `neverSuppressedChecks` is no such requirement.
 
 #### Properties
- 
+
  | name                                             | description                                                  | type                                                         | default value |
  | ------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------- |
  | file                                             | Specify the location of the patch file.                      | [String](https://checkstyle.sourceforge.io/property_types.html#String) | Null          |
@@ -76,7 +76,7 @@ Attention: `supportContextStrategyChecks` and `checkNameForContextStrategyByToke
 
 #### Examples
 
-For example, the following configuration fragment directs the Checker to use a SuppressionJavaPatchFilter 
+For example, the following configuration fragment directs the Checker to use a SuppressionJavaPatchFilter
 with patch file config/file.patch and strategy is `newline`:
 ```xml
 <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter">
@@ -85,7 +85,7 @@ with patch file config/file.patch and strategy is `newline`:
 </module>
 ```
 
-the following configuration fragment directs the Checker to use a SuppressionJavaPatchFilter 
+the following configuration fragment directs the Checker to use a SuppressionJavaPatchFilter
 with patch file config/file.patch and strategy is `patchedline`:
 ```xml
 <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter">
@@ -94,7 +94,7 @@ with patch file config/file.patch and strategy is `patchedline`:
 </module>
 ```
 
-the following configuration fragment direts the Checker to use a SuppressionJavaPatchFilter 
+the following configuration fragment direts the Checker to use a SuppressionJavaPatchFilter
 with patch file config/file.patch, whose strategy is `context`,
 support context strategy check `MethodLength` and never suppress checks `EmptyBlock` and `HiddenField`:
 ```xml
@@ -139,20 +139,20 @@ $ git checkout patch-filter-jar
 ### set checkstyle-tester
 
 Firstly, you need to do is to modify projects-to-test-on.properties and test project that you want.
-For example, if I want to test `guava`, then I will only remove # before `guava` (anything that starts with # 
-is considered a comment and is ignored.) and remove the specific version to change  
+For example, if I want to test `guava`, then I will only remove # before `guava` (anything that starts with #
+is considered a comment and is ignored.) and remove the specific version to change
 `guava|git|https://github.com/google/guava|v28.2||` to `guava|git|https://github.com/google/guava||`
 , which aims to avoid auto checkout to the specific version in `diff.groovy`.
 
 Secondly, you need to set baseConfig.xml and patchConfig.xml by yourself.
- 
+
 **Attention:**
- 
-baseConfig does not need any checks in it and set `severity` to `ignore`, 
-like `<property name="severity" value="ignore"/>`; 
+
+baseConfig does not need any checks in it and set `severity` to `ignore`,
+like `<property name="severity" value="ignore"/>`;
 
 patchConfig need Checks and patch-filter, added checks can
-refer to [here](https://github.com/checkstyle/checkstyle/blob/ec4d06712ab203d31d73c5c6d5c46067f3a6d5b3/config/checkstyle_checks.xml#L60-L190), 
+refer to [here](https://github.com/checkstyle/checkstyle/blob/ec4d06712ab203d31d73c5c6d5c46067f3a6d5b3/config/checkstyle_checks.xml#L60-L190),
 you can skip Translation Check and checks that reuqires extra config file (Header and RegExpHeader), patchfilter setting is like:
 ```xml
 <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
@@ -174,7 +174,7 @@ path/to/checkstyle/
 patch/to/checkstyle-contribution/checkstyle-tester/
 # Patch-branch name of checkstyle, which can be any branch except master, because checkstyle-tester's diff mode
 # not allow the baseBranch and patchBranch have the same name, you can create a new branch based on master which
-# does not need any changes, here is branch name for example patch-filter 
+# does not need any changes, here is branch name for example patch-filter
 patch-filter
 # path to the base checkstyle configuration file. It will be applied to base branch
 path/to/baseConfig.xml
@@ -182,7 +182,7 @@ path/to/baseConfig.xml
 path/to/patchConfig.xml
 # commit parameter will be used to create patch-filter report
 # if commit parameter is number then the Generator will work in sequence mode,
-# for example if commit parameter is 4, then 3 reports that represent 
+# for example if commit parameter is 4, then 3 reports that represent
 # the first three commits in HEAD branch will be created.
 4 # sequence mode
 # Attention: num should be greater than 1, because if num is 1, no report will be created.
@@ -205,7 +205,7 @@ for example, when `repoPath` is guava and `runPatchNum` is 4, then result will l
   - guava-fb6ef19
   - index.html
 
-by default, `guava` in `guava-a1b3c06` means `repo`'s name, `a1b3c06` in `guava-a1b3c06` means 
+by default, `guava` in `guava-a1b3c06` means `repo`'s name, `a1b3c06` in `guava-a1b3c06` means
 the patch-filter diff report which use patch file between the commit `a1b3c06` and the commit before `a1b3c06`,
 so it represents the commit `a1b3c06`.
 
