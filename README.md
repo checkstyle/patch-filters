@@ -1,5 +1,9 @@
 # patch-filters
-special project to host GSOC project Patch Suppressions 
+special project to host GSOC project Patch Suppressions
+
+[![][mavenbadge img]][mavenbadge]
+or at [repo](https://repo1.maven.org/maven2/com/puppycrawl/tools/patch-filters/).
+
 
 ## PatchFilter Description
 
@@ -204,3 +208,6 @@ for example, when `repoPath` is guava and `runPatchNum` is 4, then result will l
 by default, `guava` in `guava-a1b3c06` means `repo`'s name, `a1b3c06` in `guava-a1b3c06` means 
 the patch-filter diff report which use patch file between the commit `a1b3c06` and the commit before `a1b3c06`,
 so it represents the commit `a1b3c06`.
+
+[mavenbadge]:https://search.maven.org/search?q=g:%22com.puppycrawl.tools%22%20AND%20a:%patch-filters%22
+[mavenbadge img]:https://img.shields.io/maven-central/v/com.puppycrawl.tools/patch-filters.svg?label=Maven%20Central
