@@ -27,6 +27,11 @@
       <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</url>
     </license>
   </licenses>
+  <scm>
+    <connection>scm:git:git@github.com:checkstyle/patch-filter.git</connection>
+    <developerConnection>scm:git:git@github.com:checkstyle/patch-filter.git</developerConnection>
+    <url>https://github.com/checkstyle/patch-filter</url>
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
