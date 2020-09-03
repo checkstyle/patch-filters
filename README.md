@@ -99,12 +99,11 @@ So you need use `checkNamesForContextStrategyByTokenOrAncestorSet` or `neverSupp
 * FinalLocalVariable
 * FallThrough
 * RightCurly
+* VariableDeclarationUsageDistance
 
 Then the following checks will suppress some violations that should not be suppressed unless you use 
 `neverSuppressedChecks`:
 
-
-* VariableDeclarationUsageDistance
 * CovariantEquals
 * EmptyLineSeparator
 * CustomImportOrder

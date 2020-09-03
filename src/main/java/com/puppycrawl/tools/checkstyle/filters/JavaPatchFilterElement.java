@@ -76,6 +76,8 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
                         TokenTypes.RECORD_DEF, TokenTypes.ENUM_DEF));
         CHECK_TO_ANCESTOR_NODES_MAP.put("RightCurly",
                 Arrays.asList(TokenTypes.LITERAL_TRY, TokenTypes.LITERAL_IF));
+        CHECK_TO_ANCESTOR_NODES_MAP.put("VariableDeclarationUsageDistance",
+                Arrays.asList(TokenTypes.SLIST));
     }
 
     /**
