@@ -95,7 +95,8 @@ public class SuppressionJavaPatchFilterTest extends AbstractPatchFilterEvaluatio
     public void testVariableDeclarationUsageDistance() throws Exception {
         testByConfig("VariableDeclarationUsageDistance/newline/defaultContextConfig.xml");
         testByConfig("VariableDeclarationUsageDistance/patchedline/defaultContextConfig.xml");
-        testByConfig("VariableDeclarationUsageDistance/context/defaultContextConfig.xml");
+        testByConfig("VariableDeclarationUsageDistance/context/case1/defaultContextConfig.xml");
+        testByConfig("VariableDeclarationUsageDistance/context/case2/defaultContextConfig.xml");
     }
 
     @Test
