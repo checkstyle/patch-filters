@@ -1,5 +1,5 @@
 # patch-filters
-special project to host GSOC project Patch Suppressions
+special project to host Patch Suppressions
 
 [![][mavenbadge img]][mavenbadge]
 or at [repo](https://repo1.maven.org/maven2/com/puppycrawl/tools/patch-filters/).
