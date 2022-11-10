@@ -1,6 +1,6 @@
-////////////////////////////////////////////////////////////////////////////////
-// checkstyle: Checks Java source code for adherence to a set of rules.
-// Copyright (C) 2001-2020 the original author or authors.
+///////////////////////////////////////////////////////////////////////////////////////////////
+// checkstyle: Checks Java source code and other text files for adherence to a set of rules.
+// Copyright (C) 2001-2022 the original author or authors.
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 package com.puppycrawl.tools.checkstyle.filters;
 
@@ -255,8 +255,8 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
                 endLine++;
             }
 
-            result = (childAstStartLine <= startLine && startLine <= childAstEndLine)
-                    || (childAstStartLine <= endLine - 1 && endLine - 1 <= childAstEndLine);
+            result = childAstStartLine <= startLine && startLine <= childAstEndLine
+                    || childAstStartLine <= endLine - 1 && endLine - 1 <= childAstEndLine;
 
             if (result) {
                 break;
@@ -316,7 +316,7 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
      * @param event {@code TreeWalkerAuditEvent} object
      * @return true if set contains event's check.
      */
-    private boolean containsShortName(Set<String> checkNameSet,
+    private static boolean containsShortName(Set<String> checkNameSet,
                                       TreeWalkerAuditEvent event) {
         final String checkName = getCheckName(event);
         final String checkShortName = getCheckShortName(event);
@@ -325,12 +325,12 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
 
     }
 
-    private String getCheckName(TreeWalkerAuditEvent event) {
+    private static String getCheckName(TreeWalkerAuditEvent event) {
         final String[] checkNames = event.getViolation().getSourceName().split("\\.");
         return checkNames[checkNames.length - 1];
     }
 
-    private String getCheckShortName(TreeWalkerAuditEvent event) {
+    private static String getCheckShortName(TreeWalkerAuditEvent event) {
         return getCheckName(event).replaceAll("Check", "");
     }
 
@@ -340,7 +340,7 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
      * @param event {@code TreeWalkerAuditEvent} object
      * @return DetailAST event's corresponding ast node
      */
-    private DetailAST getEventAst(TreeWalkerAuditEvent event) {
+    private static DetailAST getEventAst(TreeWalkerAuditEvent event) {
         DetailAST curNode = event.getRootAst();
         DetailAST eventAst = null;
         while (curNode != null) {

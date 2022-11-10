@@ -5,6 +5,12 @@
     "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
+    <!-- START of legacy code, all violations will be resolved during transition to main project -->
+    <suppress checks="MissingJavadocMethod" files="(GeneratePatchFile|GeneratePatchFileLauncher|
+                     |GeneratePatchFileWithGitCommandLauncher|JavaPatchFilterElement|LoadPatchFileUtils|
+                     |SuppressionJavaPatchFilter|SuppressionPatchFilter|SuppressionPatchFilterElement|
+                     |AbstractModuleTestSupport|AbstractPathTestSupport)\.java"/>
+    <!-- END of legacy code -->
     <suppress checks="ClassDataAbstractionCoupling"
               files="(CheckerTest|AbstractModuleTestSupport|AbstractItModuleTestSupport|
                      |CheckstyleAntTaskTest|
