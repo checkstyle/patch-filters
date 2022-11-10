@@ -1,6 +1,6 @@
-////////////////////////////////////////////////////////////////////////////////
-// checkstyle: Checks Java source code for adherence to a set of rules.
-// Copyright (C) 2001-2020 the original author or authors.
+///////////////////////////////////////////////////////////////////////////////////////////////
+// checkstyle: Checks Java source code and other text files for adherence to a set of rules.
+// Copyright (C) 2001-2022 the original author or authors.
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 package com.puppycrawl.tools.checkstyle.filters;
 
@@ -87,8 +87,9 @@ public class SuppressionPatchFilterElement implements Filter {
      *
      * @param event event
      * @return true if it is matching
+     * @throws IllegalStateException if source class can not be found.
      */
-    private boolean isTreeWalkerChecksMatching(AuditEvent event) {
+    private static boolean isTreeWalkerChecksMatching(AuditEvent event) {
         boolean result = false;
         final String sourceName = event.getViolation().getSourceName();
         try {
@@ -142,7 +143,7 @@ public class SuppressionPatchFilterElement implements Filter {
         return result;
     }
 
-    private boolean containsShortName(Set<String> checkNameSet,
+    private static boolean containsShortName(Set<String> checkNameSet,
                                       AuditEvent event) {
         final String checkShortName = getCheckShortName(event);
         final String shortName = checkShortName.replaceAll("Check", "");
@@ -151,7 +152,7 @@ public class SuppressionPatchFilterElement implements Filter {
 
     }
 
-    private String getCheckShortName(AuditEvent event) {
+    private static String getCheckShortName(AuditEvent event) {
         final String[] checkNames = event.getViolation().getSourceName().split("\\.");
         return checkNames[checkNames.length - 1];
     }
