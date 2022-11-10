@@ -214,7 +214,7 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
      */
     private boolean isLineMatching(TreeWalkerAuditEvent event) {
         boolean result = false;
-        if (event.getLocalizedMessage() != null) {
+        if (event.getViolation() != null) {
             result = lineMatching(event.getLine());
         }
         return result;
@@ -326,7 +326,7 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     private String getCheckName(TreeWalkerAuditEvent event) {
-        final String[] checkNames = event.getLocalizedMessage().getSourceName().split("\\.");
+        final String[] checkNames = event.getViolation().getSourceName().split("\\.");
         return checkNames[checkNames.length - 1];
     }
 

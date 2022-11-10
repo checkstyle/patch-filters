@@ -29,8 +29,8 @@ import org.junit.Test;
 
 import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
-import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 import com.puppycrawl.tools.checkstyle.api.SeverityLevel;
+import com.puppycrawl.tools.checkstyle.api.Violation;
 import com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter;
 
 public class GitDiffOnOpenSourceTest extends AbstractModuleTestSupport {
@@ -76,7 +76,7 @@ public class GitDiffOnOpenSourceTest extends AbstractModuleTestSupport {
     }
 
     private void shouldAcceptLine(SuppressionPatchFilter filter, int lineNo, String fileName) {
-        final LocalizedMessage message = new LocalizedMessage(lineNo, 1, null, "msg", null,
+        final Violation message = new Violation(lineNo, 1, null, "msg", null,
                 SeverityLevel.ERROR, null, getClass(), null);
         final AuditEvent ev = new AuditEvent(this, fileName, message);
         assertTrue(filter.accept(ev),
@@ -84,7 +84,7 @@ public class GitDiffOnOpenSourceTest extends AbstractModuleTestSupport {
     }
 
     private void shouldRejectLine(SuppressionPatchFilter filter, int lineNo, String fileName) {
-        final LocalizedMessage message = new LocalizedMessage(lineNo, 1, null, "msg", null,
+        final Violation message = new Violation(lineNo, 1, null, "msg", null,
                 SeverityLevel.ERROR, null, getClass(), null);
         final AuditEvent ev = new AuditEvent(this, fileName, message);
         assertFalse(filter.accept(ev),
