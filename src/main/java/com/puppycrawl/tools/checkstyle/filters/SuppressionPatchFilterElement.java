@@ -90,7 +90,7 @@ public class SuppressionPatchFilterElement implements Filter {
      */
     private boolean isTreeWalkerChecksMatching(AuditEvent event) {
         boolean result = false;
-        final String sourceName = event.getLocalizedMessage().getSourceName();
+        final String sourceName = event.getViolation().getSourceName();
         try {
             final Class clazz = Class.forName(sourceName);
             if (ModuleReflectionUtil.isCheckstyleTreeWalkerCheck(clazz)) {
@@ -111,7 +111,7 @@ public class SuppressionPatchFilterElement implements Filter {
      */
     private boolean isLineMatching(AuditEvent event) {
         boolean result = false;
-        if (event.getLocalizedMessage() != null) {
+        if (event.getViolation() != null) {
             for (List<Integer> aLineRangeList : lineRangeList) {
                 final int startLine = aLineRangeList.get(0) + 1;
                 final int endLine = aLineRangeList.get(1) + 1;
@@ -152,7 +152,7 @@ public class SuppressionPatchFilterElement implements Filter {
     }
 
     private String getCheckShortName(AuditEvent event) {
-        final String[] checkNames = event.getLocalizedMessage().getSourceName().split("\\.");
+        final String[] checkNames = event.getViolation().getSourceName().split("\\.");
         return checkNames[checkNames.length - 1];
     }
 }
