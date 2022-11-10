@@ -1,1 +1,1 @@
-Test.java:9:5: 'METHOD_DEF' should be separated from previous statement.
+Test.java:9:5: 'METHOD_DEF' should be separated from previous line.

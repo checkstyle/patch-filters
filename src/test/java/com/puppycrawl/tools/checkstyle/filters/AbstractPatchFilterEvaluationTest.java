@@ -29,6 +29,7 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -91,7 +92,8 @@ abstract class AbstractPatchFilterEvaluationTest extends AbstractModuleTestSuppo
                      new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             final String expectedFile = configPath.replaceFirst(
                     "(default|zero)ContextConfig.xml", "expected.txt");
-            final List<String> expected = Files.readAllLines(Paths.get(getPath(expectedFile)));
+            final Path expectedFilePath = Paths.get(getPath(expectedFile));
+            final List<String> expected = Files.readAllLines(expectedFilePath);
             expected.sort(Comparator.naturalOrder());
 
             final List<String> actuals = lnr.lines()
@@ -101,7 +103,8 @@ abstract class AbstractPatchFilterEvaluationTest extends AbstractModuleTestSuppo
             for (int i = 0; i < expected.size(); i++) {
                 final String seperate = "/";
                 final String expectedResult = path + seperate + expected.get(i);
-                assertEquals("error message " + i, expectedResult, actuals.get(i));
+                assertEquals("error message " + i + ". Expected file: "
+                        + expectedFilePath, expectedResult, actuals.get(i));
             }
             assertEquals("unexpected output: " + lnr.readLine(),
                     expected.size(), errorCounter);
