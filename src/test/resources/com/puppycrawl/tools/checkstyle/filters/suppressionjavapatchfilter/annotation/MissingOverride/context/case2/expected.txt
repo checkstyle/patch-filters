@@ -1,3 +1,1 @@
 Test.java:6:5: Must include @java.lang.Override annotation when '@inheritDoc' Javadoc tag exists.
-Test.java:9:5: Must include @java.lang.Override annotation when '@inheritDoc' Javadoc tag exists.
-Test.java:12:5: The Javadoc {@inheritDoc} tag is not valid at this location.

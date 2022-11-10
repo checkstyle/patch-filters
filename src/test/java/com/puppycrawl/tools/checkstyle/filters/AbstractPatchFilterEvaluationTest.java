@@ -100,11 +100,11 @@ abstract class AbstractPatchFilterEvaluationTest extends AbstractModuleTestSuppo
                     .sorted()
                     .collect(Collectors.toList());
 
-            for (int index = 0; index < expected.size(); index++) {
+            for (int i = 0; i < expected.size(); i++) {
                 final String seperate = "/";
-                final String expectedResult = path + seperate + expected.get(index);
-                assertEquals("error message " + index + ". Expected file: "
-                        + expectedFilePath, expectedResult, actuals.get(index));
+                final String expectedResult = path + seperate + expected.get(i);
+                assertEquals("error message " + i + ". Expected file: "
+                        + expectedFilePath, expectedResult, actuals.get(i));
             }
             assertEquals("unexpected output: " + lnr.readLine(),
                     expected.size(), errorCounter);

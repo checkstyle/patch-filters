@@ -299,9 +299,9 @@ public abstract class AbstractModuleTestSupport extends AbstractPathTestSupport 
                     .sorted().collect(Collectors.toList());
             Arrays.sort(expected);
 
-            for (int index = 0; index < expected.length; index++) {
-                final String expectedResult = messageFileName + ":" + expected[index];
-                assertEquals("error message " + index, expectedResult, actuals.get(index));
+            for (int i = 0; i < expected.length; i++) {
+                final String expectedResult = messageFileName + ":" + expected[i];
+                assertEquals("error message " + i, expectedResult, actuals.get(i));
             }
 
             assertEquals("unexpected output: " + lnr.readLine(),

@@ -160,8 +160,8 @@ public class GeneratePatchFile {
             throw new IllegalArgumentException("runPatchNum should be greater than 1");
         }
         final List<RevCommit> commitList = getAllCommits();
-        for (int index = 0; index < runPatchNum - 1; index++) {
-            generateTwoCommitDiffPatch(commitList.get(index + 1), commitList.get(index));
+        for (int i = 0; i < runPatchNum - 1; i++) {
+            generateTwoCommitDiffPatch(commitList.get(i + 1), commitList.get(i));
         }
         generateSummaryIndexHtml();
         checkout(commitList.get(0).getId().getName());
@@ -175,11 +175,11 @@ public class GeneratePatchFile {
      */
     public void generatePatch(Set<String> commits) throws Exception {
         final List<RevCommit> revisions = getAllCommits();
-        for (int index = 0; index < revisions.size() - 1; ++index) {
-            final RevCommit rev = revisions.get(index);
+        for (int i = 0; i < revisions.size() - 1; ++i) {
+            final RevCommit rev = revisions.get(i);
             final String name = rev.getId().getName();
             if (commits.contains(name)) {
-                final RevCommit prevRev = revisions.get(index + 1);
+                final RevCommit prevRev = revisions.get(i + 1);
                 generateTwoCommitDiffPatch(prevRev, rev);
             }
         }
@@ -196,8 +196,8 @@ public class GeneratePatchFile {
      */
     public void generatePatchWithGitCommand(int runPatchNum, String patchFormat) throws Exception {
         final String headSha = getHeadSha();
-        for (int index = 1; index < runPatchNum; index++) {
-            generateDiffPatchWithGitCommand(index, patchFormat);
+        for (int i = 1; i < runPatchNum; i++) {
+            generateDiffPatchWithGitCommand(i, patchFormat);
             checkoutWithGitCommand();
         }
         generateSummaryIndexHtml();
