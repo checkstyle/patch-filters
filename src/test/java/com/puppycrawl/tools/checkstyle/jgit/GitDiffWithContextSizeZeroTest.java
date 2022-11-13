@@ -19,8 +19,8 @@
 
 package com.puppycrawl.tools.checkstyle.jgit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,7 +29,7 @@ import org.eclipse.jgit.diff.Edit;
 import org.eclipse.jgit.diff.EditList;
 import org.eclipse.jgit.patch.FileHeader;
 import org.eclipse.jgit.patch.Patch;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class GitDiffWithContextSizeZeroTest extends AbstractJgitPatchParserEvaluationTest {
 

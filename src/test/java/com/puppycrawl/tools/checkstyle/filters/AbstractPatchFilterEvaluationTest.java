@@ -19,7 +19,7 @@
 
 package com.puppycrawl.tools.checkstyle.filters;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -103,11 +103,10 @@ abstract class AbstractPatchFilterEvaluationTest extends AbstractModuleTestSuppo
             for (int index = 0; index < expected.size(); index++) {
                 final String seperate = "/";
                 final String expectedResult = path + seperate + expected.get(index);
-                assertEquals("error message " + index + ". Expected file: "
-                        + expectedFilePath, expectedResult, actuals.get(index));
+                assertEquals(expectedResult, actuals.get(index),
+                        "error message " + index + ". Expected file: " + expectedFilePath);
             }
-            assertEquals("unexpected output: " + lnr.readLine(),
-                    expected.size(), errorCounter);
+            assertEquals(expected.size(), errorCounter, "unexpected output: " + lnr.readLine());
         }
     }
 }
