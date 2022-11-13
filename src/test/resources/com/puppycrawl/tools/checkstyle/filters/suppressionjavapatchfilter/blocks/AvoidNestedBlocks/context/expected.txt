@@ -1,6 +1,6 @@
+Test.java:7:9: Avoid nested blocks.
 Test.java:14:9: Avoid nested blocks.
 Test.java:19:9: Avoid nested blocks.
 Test.java:29:17: Avoid nested blocks.
 Test.java:34:17: Avoid nested blocks.
 Test.java:41:17: Avoid nested blocks.
-Test.java:7:9: Avoid nested blocks.

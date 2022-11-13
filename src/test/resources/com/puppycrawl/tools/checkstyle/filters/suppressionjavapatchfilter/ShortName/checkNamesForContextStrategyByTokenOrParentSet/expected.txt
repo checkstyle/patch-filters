@@ -1,2 +1,2 @@
-Test.java:10:19: Method 'clone' should call 'super.clone'.
 Test.java:4:19: Method 'clone' should call 'super.clone'.
+Test.java:10:19: Method 'clone' should call 'super.clone'.

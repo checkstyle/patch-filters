@@ -1,2 +1,2 @@
-Test.java:13:19: 'test' hides a field.
 Test.java:6:30: 'test' hides a field.
+Test.java:13:19: 'test' hides a field.

@@ -1,2 +1,2 @@
-Test.java:12:17: Array should contain trailing comma.
 Test.java:7:17: Array should contain trailing comma.
+Test.java:12:17: Array should contain trailing comma.

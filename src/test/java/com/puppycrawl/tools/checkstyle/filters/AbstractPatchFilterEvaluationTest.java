@@ -32,7 +32,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,6 +79,8 @@ abstract class AbstractPatchFilterEvaluationTest extends AbstractModuleTestSuppo
         });
         if (files != null) {
             theFiles = Arrays.asList(files);
+            Collections.sort(theFiles);
+
             errorCounter = rootModule.process(theFiles);
         }
         else {
@@ -94,15 +96,12 @@ abstract class AbstractPatchFilterEvaluationTest extends AbstractModuleTestSuppo
                     "(default|zero)ContextConfig.xml", "expected.txt");
             final Path expectedFilePath = Paths.get(getPath(expectedFile));
             final List<String> expected = Files.readAllLines(expectedFilePath);
-            expected.sort(Comparator.naturalOrder());
 
             final List<String> actuals = lnr.lines()
-                    .sorted()
                     .collect(Collectors.toList());
 
             for (int index = 0; index < expected.size(); index++) {
-                final String seperate = "/";
-                final String expectedResult = path + seperate + expected.get(index);
+                final String expectedResult = path + File.separator + expected.get(index);
                 assertEquals(expectedResult, actuals.get(index),
                         "error message " + index + ". Expected file: " + expectedFilePath);
             }
