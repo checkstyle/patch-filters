@@ -20,7 +20,6 @@
 package com.puppycrawl.tools.checkstyle.filters;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
@@ -168,8 +167,11 @@ public class SuppressionPatchFilter extends AutomaticBean
                 filters.addFilter(element);
             }
         }
-        catch (IOException ex) {
-            throw new CheckstyleException("an error occurred when load patch file", ex);
+        // -@cs[IllegalCatch] There is no other way to deliver filename that was under
+        // processing when a jgit exception occurs.
+        catch (Exception exception) {
+            throw new CheckstyleException("an error occurred when loading patch file "
+                    + file, exception);
         }
     }
 

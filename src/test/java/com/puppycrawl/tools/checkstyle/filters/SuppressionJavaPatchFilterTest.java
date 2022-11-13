@@ -60,7 +60,9 @@ public class SuppressionJavaPatchFilterTest extends AbstractPatchFilterEvaluatio
             assertEquals("cannot initialize module TreeWalker - "
                             + "cannot initialize module "
                             + "com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter "
-                            + "- an error occurred when load patch file", ex.getMessage(),
+                            + "- an error occurred when loading patch file "
+                            + getPatchFileLocation() + "Optional/false//defaultContext.patch",
+                            ex.getMessage(),
                     "Invalid error message");
         }
     }
