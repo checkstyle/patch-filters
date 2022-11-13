@@ -5,7 +5,7 @@
 <module name="Checker">
   <module name="RegexpMultiline">
     <property name="matchAcrossLines" value="true"/>
-    <property name="format" value="System\.out\.\n                print\("/>
+    <property name="format" value="System\.out\.\r?\n                print\("/>
   </module>
   <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
     <property name="file" value=

@@ -1,2 +1,2 @@
-Test.java:14:5: Definition of 'hashCode()' without corresponding definition of 'equals()'.
 Test.java:8:5: Definition of 'hashCode()' without corresponding definition of 'equals()'.
+Test.java:14:5: Definition of 'hashCode()' without corresponding definition of 'equals()'.

@@ -1,3 +1,3 @@
-Test.java:25:9: Unnecessary semicolon.
 Test.java:5:13: Unnecessary semicolon.
 Test.java:8:11: Unnecessary semicolon.
+Test.java:25:9: Unnecessary semicolon.

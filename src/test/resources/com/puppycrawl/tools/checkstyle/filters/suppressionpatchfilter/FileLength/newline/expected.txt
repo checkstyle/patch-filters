@@ -1,2 +1,2 @@
-Test2.java:1: File length is 14 lines (max allowed is 5).
 Test.java:1: File length is 12 lines (max allowed is 5).
+Test2.java:1: File length is 14 lines (max allowed is 5).

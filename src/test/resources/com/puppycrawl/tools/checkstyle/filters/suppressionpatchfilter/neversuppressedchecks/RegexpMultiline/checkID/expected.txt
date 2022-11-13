@@ -1,5 +1,5 @@
-Test.java:5: Line matches the illegal pattern 'System\.out\.\n                print\('.
-Test.java:8: Line matches the illegal pattern 'System\.out\.\n                print\('.
-Test.java:11: Line matches the illegal pattern 'System\.out\.\n                print\('.
-Test.java:18: Line matches the illegal pattern 'System\.out\.\n                print\('.
-Test.java:28: Line matches the illegal pattern 'System\.out\.\n                print\('.
+Test.java:5: Line matches the illegal pattern 'System\.out\.\r?\n                print\('.
+Test.java:8: Line matches the illegal pattern 'System\.out\.\r?\n                print\('.
+Test.java:11: Line matches the illegal pattern 'System\.out\.\r?\n                print\('.
+Test.java:18: Line matches the illegal pattern 'System\.out\.\r?\n                print\('.
+Test.java:28: Line matches the illegal pattern 'System\.out\.\r?\n                print\('.
