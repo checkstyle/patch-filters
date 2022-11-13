@@ -25,13 +25,15 @@ import java.io.InputStream;
 
 import org.eclipse.jgit.patch.Patch;
 
+import com.puppycrawl.tools.checkstyle.filters.CrFilterInputStream;
+
 public abstract class AbstractJgitPatchParserEvaluationTest {
 
     protected abstract String getPatchPath(String patchName);
 
     protected static Patch loadPatch(String patchPath) throws IOException {
         final Patch patch = new Patch();
-        try (InputStream is = new FileInputStream(patchPath)) {
+        try (InputStream is = new CrFilterInputStream(new FileInputStream(patchPath))) {
             patch.parse(is);
         }
         return patch;
