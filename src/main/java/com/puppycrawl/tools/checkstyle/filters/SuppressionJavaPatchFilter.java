@@ -222,7 +222,7 @@ public class SuppressionJavaPatchFilter extends AutomaticBean implements
     }
 
     private void loadPatchFile() throws CheckstyleException {
-        try (InputStream is = new FileInputStream(file)) {
+        try (InputStream is = new CrFilterInputStream(new FileInputStream(file))) {
             final Patch patch = new Patch();
             patch.parse(is);
             final List<? extends FileHeader> fileHeaders = patch.getFiles();
