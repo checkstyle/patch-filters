@@ -1,11 +1,11 @@
-name: Java CI with Maven
+name: CI
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
 jobs:
-  build:
+  install:
     strategy:
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
