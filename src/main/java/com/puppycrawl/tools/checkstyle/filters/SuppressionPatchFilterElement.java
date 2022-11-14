@@ -19,6 +19,7 @@
 
 package com.puppycrawl.tools.checkstyle.filters;
 
+import java.io.File;
 import java.util.List;
 import java.util.Set;
 
@@ -77,9 +78,19 @@ public class SuppressionPatchFilterElement implements Filter {
      * @return true if it is matching
      */
     private boolean isFileNameMatching(AuditEvent event) {
-        return event.getFileName() != null
-                && ((event.getFileName()).equals(fileName)
-                || event.getFileName().contains(fileName));
+        String eventFileName = event.getFileName();
+        boolean result = eventFileName != null;
+
+        if (result) {
+            // git always displays paths with '/', even on windows
+            if (File.separatorChar != '/') {
+                eventFileName = eventFileName.replace(File.separatorChar, '/');
+            }
+
+            result = eventFileName.endsWith(fileName);
+        }
+
+        return result;
     }
 
     /**
