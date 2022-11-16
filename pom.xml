@@ -11,7 +11,7 @@
 
   <groupId>com.puppycrawl.tools</groupId>
   <artifactId>patch-filters</artifactId>
-  <version>1.4.0</version>
+  <version>1.4.1-SNAPSHOT</version>
 
   <name>patch-filters</name>
   <description>
