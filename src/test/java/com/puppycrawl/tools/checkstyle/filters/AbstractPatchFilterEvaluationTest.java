@@ -34,6 +34,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
@@ -51,6 +52,8 @@ abstract class AbstractPatchFilterEvaluationTest extends AbstractModuleTestSuppo
 
     protected void testByConfig(String configPath)
             throws Exception {
+        Locale.setDefault(Locale.ENGLISH);
+        
         final String inputFile = configPath.replaceFirst(
                 "(default|zero)ContextConfig.xml", "");
         // we can add here any variable to provide path to patch name by PropertiesExpander
