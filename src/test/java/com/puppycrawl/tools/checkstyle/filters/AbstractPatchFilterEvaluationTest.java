@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // checkstyle: Checks Java source code and other text files for adherence to a set of rules.
-// Copyright (C) 2001-2024 the original author or authors.
+// Copyright (C) 2001-2025 the original author or authors.
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -53,7 +53,6 @@ abstract class AbstractPatchFilterEvaluationTest extends AbstractModuleTestSuppo
     protected void testByConfig(String configPath)
             throws Exception {
         Locale.setDefault(Locale.ENGLISH);
-        
         final String inputFile = configPath.replaceFirst(
                 "(default|zero)ContextConfig.xml", "");
         // we can add here any variable to provide path to patch name by PropertiesExpander
