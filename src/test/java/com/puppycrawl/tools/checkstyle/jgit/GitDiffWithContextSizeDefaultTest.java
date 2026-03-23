@@ -225,6 +225,26 @@ public class GitDiffWithContextSizeDefaultTest extends AbstractJgitPatchParserEv
         assertEquals(Edit.Type.DELETE, edits.get(2).getType());
     }
 
+    @Test
+    public void testNewFileAdded() throws Exception {
+        final String patchName = "AddedOneNewFile.patch";
+        final Patch patch = loadPatch(getPatchPath(patchName));
+        assertNotNull(patch);
+
+        final List<? extends FileHeader> fileHeaders = patch.getFiles();
+        assertEquals(1, fileHeaders.size());
+
+        // file header 0
+        assertEquals(FileHeader.PatchType.UNIFIED, fileHeaders.get(0).getPatchType());
+        assertEquals(1, fileHeaders.get(0).getHunks().size());
+        assertEquals("ADD", fileHeaders.get(0).getChangeType().name());
+
+        final EditList edits = fileHeaders.get(0).toEditList();
+        assertEquals(1, edits.size());
+        assertEquals(new Edit(-1, -1, 0, 6), edits.get(0));
+        assertEquals(Edit.Type.INSERT, edits.get(0).getType());
+    }
+
     @Override
     protected String getPatchPath(String patchName) {
         return CONTEXT_SIZE_DEFAULT_DIR + patchName;
