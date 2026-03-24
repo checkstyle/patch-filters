@@ -17,6 +17,10 @@
         <property name="fileNamePattern" value="module\-info\.java$" />
     </module>
 
+    <!--IMPORTANT: Patch filter only works with files included in the patch file.-->
+    <!--To include unstaged and new files when generating the patch:-->
+    <!--git add --intent-to-add . && git diff HEAD > show.patch-->
+    <!--Using `git diff HEAD~1 HEAD` includes only committed changes.-->
     <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
         <property name="file" value="${checkstyle.patchfilter.patch}"/>
     </module>
