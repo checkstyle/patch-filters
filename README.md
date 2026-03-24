@@ -185,6 +185,76 @@ and expand `EqualsHashCode`, `FinalLocalVariable`'s context scope to ancestors' 
 
 ## PatchFilter Report Setup
 
+## Handling Unstaged and Uncommitted Changes
+
+By default, patch generation using `git diff HEAD~1 HEAD` only includes
+changes that have been committed. Unstaged changes (modified files not
+yet added) and untracked files (new files never added to git) will NOT
+appear in the patch file. This means:
+
+- Violations on unstaged modified lines will be shown even though
+  the developer is actively working on them
+- Violations on new untracked files will be suppressed entirely
+  because the filter does not know these files exist
+
+###  1: Use git add --intent-to-add (Recommended)
+
+This registers new files with git without fully staging them.
+The files will appear in the diff but will NOT be included in
+`git commit` unless explicitly staged afterward.
+```bash
+# Register untracked files so diff can see them
+git add --intent-to-add .
+
+# Now generate patch including all working tree changes vs last commit
+git diff HEAD~0 > show.patch
+```
+
+This is safe because `--intent-to-add` does not stage file content.
+Running `git commit` afterward will not accidentally commit these files.
+
+### 2a: Append Unstaged Changes (Linux/Mac)
+
+For environments where choice 1 is not suitable, generate the base
+patch and then append unstaged changes separately:
+```bash
+# Step 1: Base patch from last commit
+git diff HEAD~1 HEAD > show.patch
+
+# Step 2: Append unstaged changes to tracked files  
+git diff >> show.patch
+
+# Step 3: Append new untracked files
+git ls-files -o --exclude-standard -x show.patch \
+    | xargs -I {} git diff /dev/null {} >> show.patch
+```
+
+### 2b: Append Unstaged Changes (Windows)
+
+On Windows, `/dev/null` is not available. Use the following instead:
+```bash
+git diff HEAD~1 HEAD > show.patch
+
+git diff >> show.patch
+
+git ls-files -o --exclude-standard -x show.patch ^
+    | for /f "tokens=*" %f in ('more') do git diff --no-index NUL %f >> show.patch
+```
+
+Or use PowerShell on Windows:
+```powershell
+# Step 1: Base patch
+git diff HEAD~1 HEAD | Out-File -FilePath show.patch -Encoding utf8
+
+# Step 2: Unstaged tracked changes
+git diff | Add-Content -Path show.patch -Encoding utf8
+
+# Step 3: Untracked new files
+git ls-files -o --exclude-standard -x show.patch | ForEach-Object {
+    git diff --no-index $null $_ | Add-Content -Path show.patch -Encoding utf8
+}
+```
+
 ### Requirements
 
 - [Checkstyle repository](https://github.com/checkstyle) need to be cloned.
