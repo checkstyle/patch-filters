@@ -185,7 +185,7 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
      * @return true if it is matching
      */
     private boolean isFileNameMatching(TreeWalkerAuditEvent event) {
-        String eventFileName = event.getFileName();
+        String eventFileName = event.fileName();
         boolean result = eventFileName != null;
 
         if (result) {
@@ -225,7 +225,7 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
      */
     private boolean isLineMatching(TreeWalkerAuditEvent event) {
         boolean result = false;
-        if (event.getViolation() != null) {
+        if (event.violation() != null) {
             result = lineMatching(event.getLine());
         }
         return result;
@@ -337,7 +337,7 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     private static String getCheckName(TreeWalkerAuditEvent event) {
-        final String[] checkNames = event.getViolation().getSourceName().split("\\.");
+        final String[] checkNames = event.violation().getSourceName().split("\\.");
         return checkNames[checkNames.length - 1];
     }
 
@@ -352,7 +352,7 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
      * @return DetailAST event's corresponding ast node
      */
     private static DetailAST getEventAst(TreeWalkerAuditEvent event) {
-        DetailAST curNode = event.getRootAst();
+        DetailAST curNode = event.rootAst();
         DetailAST eventAst = null;
         while (curNode != null) {
             if (isMatchingAst(curNode, event)) {

@@ -142,8 +142,8 @@ public class GeneratePatchFile {
                     .readEnvironment().findGitDir().build();
             git = new Git(repository);
         }
-        catch (IOException ex) {
-            ex.printStackTrace();
+        catch (IOException exception) {
+            exception.printStackTrace();
         }
         diffReportDirName = new File(".").getAbsoluteFile().getParent() + "/DiffReport";
     }
@@ -406,8 +406,8 @@ public class GeneratePatchFile {
             out.write("</h2>\n</body></html>");
 
         }
-        catch (IOException ex) {
-            ex.printStackTrace();
+        catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 }

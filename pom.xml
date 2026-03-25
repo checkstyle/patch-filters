@@ -33,10 +33,10 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <checkstyle.version>10.4</checkstyle.version>
+    <checkstyle.version>13.3.0</checkstyle.version>
     <maven.checkstyle.plugin.version>3.2.0</maven.checkstyle.plugin.version>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
     <junit.version>5.9.1</junit.version>
   </properties>
 
@@ -116,7 +116,7 @@
               <includeTestResources>false</includeTestResources>
               <includeTestSourceDirectory>true</includeTestSourceDirectory>
               <configLocation>
-                https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle_checks.xml
+                https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle-checks.xml
               </configLocation>
               <propertiesLocation>config/checkstyle.properties</propertiesLocation>
               <failOnViolation>true</failOnViolation>

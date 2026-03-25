@@ -1,1 +1,1 @@
-Test.java:9: Summary javadoc is missing.
+Test.java:9:8: Summary javadoc is missing.
