@@ -38,10 +38,8 @@ import com.puppycrawl.tools.checkstyle.api.ExternalResourceHolder;
 import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
 
 /**
- * <p>
  * Filter {@code SuppressionJavaPatchFilter} rejects audit events for Check violations
  * according to a patch file.
- * </p>
  *
  * @since 8.34
  */
@@ -108,6 +106,7 @@ public class SuppressionJavaPatchFilter extends AutomaticBean implements
      * Setter to specify the location of the patch file.
      *
      * @param fileName name of the patch file.
+     * @since 8.34
      */
     public void setFile(String fileName) {
         file = fileName;
@@ -117,6 +116,7 @@ public class SuppressionJavaPatchFilter extends AutomaticBean implements
      * Setter to control if only consider added lines in file.
      *
      * @param strategy tells if only consider added lines is add, should be added or changed.
+     * @since 8.34
      */
     public void setStrategy(String strategy) {
         this.strategy = Strategy.valueOf(strategy.toUpperCase());
@@ -131,6 +131,8 @@ public class SuppressionJavaPatchFilter extends AutomaticBean implements
      *                                                         to their parent abstract nodes
      *                                                         to get their child nodes,
      *                                                         split by comma
+     *
+     * @since 8.34
      */
     public void setCheckNamesForContextStrategyByTokenOrParentSet(
             String checkNamesForContextStrategyByTokenOrParentSet) {
@@ -148,6 +150,7 @@ public class SuppressionJavaPatchFilter extends AutomaticBean implements
      *                                                         to their ancestor abstract nodes
      *                                                         to get their child nodes,
      *                                                         split by comma
+     * @since 8.34
      */
     public void setCheckNamesForContextStrategyByTokenOrAncestorSet(
             String checkNamesForContextStrategyByTokenOrAncestorSet) {
@@ -161,6 +164,7 @@ public class SuppressionJavaPatchFilter extends AutomaticBean implements
      *
      * @param supportContextStrategyChecks string has user defined checks that support
      *                                     context strategy
+     * @since 8.34
      */
     public void setSupportContextStrategyChecks(String supportContextStrategyChecks) {
         final String[] checksArray = supportContextStrategyChecks.split(COMMA);
@@ -173,6 +177,7 @@ public class SuppressionJavaPatchFilter extends AutomaticBean implements
      *
      * @param neverSuppressedChecks string has user defined Checks to never suppress
      *                              if files are touched, split by comma
+     * @since 8.34
      */
     public void setNeverSuppressedChecks(String neverSuppressedChecks) {
         final String[] checksArray = neverSuppressedChecks.split(COMMA);
@@ -186,6 +191,7 @@ public class SuppressionJavaPatchFilter extends AutomaticBean implements
      * and file is not found, the filter accept all audit events.
      *
      * @param optional tells if config file existence is optional.
+     * @since 8.34
      */
     public void setOptional(boolean optional) {
         this.optional = optional;

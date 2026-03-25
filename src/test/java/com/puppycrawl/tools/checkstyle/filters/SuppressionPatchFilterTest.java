@@ -30,7 +30,7 @@ public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTes
     }
 
     @Override
-    protected String getPackageLocation() {
+    public String getPackageLocation() {
         return "com/puppycrawl/tools/checkstyle/filters/suppressionpatchfilter/";
     }
 
