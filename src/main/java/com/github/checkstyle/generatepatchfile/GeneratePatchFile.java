@@ -141,8 +141,7 @@ public class GeneratePatchFile {
             this.repository = new FileRepositoryBuilder().setGitDir(gitDir)
                     .readEnvironment().findGitDir().build();
             git = new Git(repository);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         diffReportDirName = new File(".").getAbsoluteFile().getParent() + "/DiffReport";
@@ -261,14 +260,11 @@ public class GeneratePatchFile {
     private void generateDiffPatchWithGitCommand(int headNum, String patchFormat) throws Exception {
         if ("show".equals(patchFormat)) {
             runShellCommand("git show > show.patch");
-        }
-        else if ("diff".equals(patchFormat)) {
+        } else if ("diff".equals(patchFormat)) {
             runShellCommand("git diff HEAD~1 HEAD > show.patch");
-        }
-        else if ("format".equals(patchFormat)) {
+        } else if ("format".equals(patchFormat)) {
             runShellCommand("git format-patch -1");
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("patchFormat should be 'show', 'diff' or 'format'");
         }
         final File repoDir = new File(repoPath);
@@ -405,8 +401,7 @@ public class GeneratePatchFile {
             }
             out.write("</h2>\n</body></html>");
 
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }

@@ -209,12 +209,10 @@ public class SuppressionJavaPatchFilter extends AutomaticBean implements
             if (optional) {
                 if (FilterUtil.isFileExists(file)) {
                     loadPatchFile();
-                }
-                else {
+                } else {
                     filters = new HashSet<>();
                 }
-            }
-            else {
+            } else {
                 loadPatchFile();
             }
         }

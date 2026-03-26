@@ -52,8 +52,7 @@ public final class GeneratePatchFileLauncher {
         final String commitParam = args[6];
         if (commitParam.matches("(0|[1-9]\\d*)")) {
             generatePatchFile.generatePatch(Integer.parseInt(args[6]));
-        }
-        else {
+        } else {
             final String[] commitIds = commitParam.split(",");
             final Set<String> commitSet = new HashSet<>(Arrays.asList(commitIds));
             generatePatchFile.generatePatch(commitSet);
