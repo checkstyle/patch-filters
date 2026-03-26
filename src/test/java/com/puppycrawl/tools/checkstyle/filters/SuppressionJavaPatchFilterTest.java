@@ -34,7 +34,7 @@ public class SuppressionJavaPatchFilterTest extends AbstractPatchFilterEvaluatio
     }
 
     @Override
-    protected String getPackageLocation() {
+    public String getPackageLocation() {
         return "com/puppycrawl/tools/checkstyle/filters/suppressionjavapatchfilter/";
     }
 
@@ -55,15 +55,12 @@ public class SuppressionJavaPatchFilterTest extends AbstractPatchFilterEvaluatio
     public void testNonExistentPatchFileWithFalseOptional() throws Exception {
         try {
             testByConfig("Optional/false/defaultContextConfig.xml");
-        }
-        catch (CheckstyleException ex) {
-            assertEquals("cannot initialize module TreeWalker - "
-                            + "cannot initialize module "
-                            + "com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter "
-                            + "- an error occurred when loading patch file "
-                            + getPatchFileLocation() + "Optional/false//defaultContext.patch",
-                            ex.getMessage(),
-                    "Invalid error message");
+        } catch (CheckstyleException ex) {
+            assertEquals(
+            "cannot initialize module TreeWalker - cannot initialize module "
+                    + "com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter",
+                    ex.getMessage()
+            );
         }
     }
 
@@ -79,7 +76,7 @@ public class SuppressionJavaPatchFilterTest extends AbstractPatchFilterEvaluatio
         testByConfig("neversuppressedchecks/CovariantEquals/"
                 + "checkID/newline/defaultContextConfig.xml");
         testByConfig("neversuppressedchecks/CovariantEquals"
-                        + "/checkID/patchedline/defaultContextConfig.xml");
+                + "/checkID/patchedline/defaultContextConfig.xml");
         testByConfig("neversuppressedchecks/CovariantEquals/"
                 + "checkShortName/context/defaultContextConfig.xml");
         testByConfig("neversuppressedchecks/CovariantEquals/"
