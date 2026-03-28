@@ -38,8 +38,8 @@ import com.puppycrawl.tools.checkstyle.api.Filter;
 import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
 
 /**
- * Filter {@code SuppressionFilter} rejects audit events for Check violations according to a
- * patch file.
+ * Filter {@code SuppressionPatchFilter} rejects audit events for Check violations
+ * according to a patch file.
  *
  * @since 8.34
  */
