@@ -16,12 +16,12 @@ or the optional is set to true and patch file was not found the Filter suppresse
 
 #### Properties
 
- | name                  | description                                                  | type                                                         | default value |
- | --------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------- |
- | file                  | Specify the location of the patch file.                      | [String](https://checkstyle.sourceforge.io/property_types.html#String) | null          |
+ | name                  | description                                                                                                                                                                                                                               | type                                                         | default value |
+ | --------------------- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------------------------------------------------------------ | ------------- |
+ | file                  | Specify the location of the patch file.                                                                                                                                                                                                   | [String](https://checkstyle.sourceforge.io/property_types.html#String) | null          |
  | optional              | Control what to do when the file is not existing. If `optional` is set to `false` the file must exist, or else it ends with error. On the other hand if optional is `true` and file is not found, the filter suppresses all audit events. | [boolean](https://checkstyle.sourceforge.io/property_types.html#boolean) | false         |
- | strategy              | Control suppression scope that you need. If `startegy` is set to `newline`, it only accepts audit events for Check violations whose line number belong to added lines in patch file. `patchedline` will accept added/changed lines. | [String](https://checkstyle.sourceforge.io/property_types.html#String) | newline       |
- | neverSuppressedChecks | String has user defined Checks to never suppress if files are touched, split by comma. This property is useful for Checks that place violation on whole file or on not all (first/last) occurrence of cause/violated code. | [String](https://checkstyle.sourceforge.io/property_types.html#String) | null          |
+ | strategy              | Control suppression scope that you need. If `strategy` is set to `newline`, it only accepts audit events for Check violations whose line number belong to added lines in patch file. `patchedline` will accept added/changed lines.       | [String](https://checkstyle.sourceforge.io/property_types.html#String) | newline       |
+ | neverSuppressedChecks | String has user defined Checks to never suppress if files are touched, split by comma. This property is useful for Checks that place violation on whole file or on not all (first/last) occurrence of cause/violated code.                | [String](https://checkstyle.sourceforge.io/property_types.html#String) | null          |
 
 #### Examples
 
@@ -33,7 +33,7 @@ For example, the following configuration fragment directs the Checker to use a S
 </module>
 ```
 
-the following configuration fragment direts the Checker to use a SuppressionPatchFilter
+the following configuration fragment directs the Checker to use a SuppressionPatchFilter
 with patch file config/file.patch, whose strategy is `patchedline`,and never suppress
 checks `Translation` and `UniqueProperties`:
 ```xml
@@ -58,7 +58,7 @@ If there is no configured patch file or the optional is set to true and patch fi
 
 Note that it's ok to use all four properties (`supportContextStrategyChecks`, `checkNameForContextStrategyByTokenOrParentSet`, `checkNameForContextStrategyByTokenOrAncestorSet`,
 `neverSuppressedChecks`), and the context scope of the three is also growing, for TreeWalker checks only in one of the property, its context scope is the same as that property,
-if in two or all properties, then the The context scope is the maximum scope. 
+if in two or all properties, then The context scope is the maximum scope. 
 
 Attention: `supportContextStrategyChecks` and `checkNameForContextStrategyByTokenOrParentSet`, `checkNameForContextStrategyByTokenOrAncestorSet` 
 only have effect when the `strategy` property is set to `context`, `neverSuppressedChecks` is no such requirement.
@@ -158,7 +158,7 @@ with patch file config/file.patch and strategy is `patchedline`:
 </module>
 ```
 
-the following configuration fragment direts the Checker to use a SuppressionJavaPatchFilter
+the following configuration fragment directs the Checker to use a SuppressionJavaPatchFilter
 with patch file config/file.patch, whose strategy is `context`,
 support context strategy check `MethodLength` and never suppress checks `EmptyBlock` and `HiddenField`:
 ```xml
@@ -170,7 +170,7 @@ support context strategy check `MethodLength` and never suppress checks `EmptyBl
 </module>
 ```
 
-the following configuration fragment direts the Checker to use a SuppressionJavaPatchFilter
+the following configuration fragment directs the Checker to use a SuppressionJavaPatchFilter
 with patch file config/file.patch, whose strategy is `context`,
 expand `SuperFinalize`'s context scope to parents' node 
 and expand `EqualsHashCode`, `FinalLocalVariable`'s context scope to ancestors' node :

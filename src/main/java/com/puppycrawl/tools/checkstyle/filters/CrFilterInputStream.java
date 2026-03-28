@@ -40,6 +40,16 @@ public final class CrFilterInputStream extends InputStream {
         this.wrapper = input;
     }
 
+    /**
+     * Reads the next byte of data from the wrapped input stream,
+     * skipping over any carriage return ({@code \r}) characters.
+     * This normalizes Windows-style CRLF line endings in patch files
+     * to Unix-style LF endings before JGit parses them.
+     *
+     * @return the next byte of data that is not a carriage return,
+     *         or {@code -1} if the end of the stream is reached.
+     * @throws IOException if an I/O error occurs.
+     */
     @Override
     public int read() throws IOException {
         int value = wrapper.read();

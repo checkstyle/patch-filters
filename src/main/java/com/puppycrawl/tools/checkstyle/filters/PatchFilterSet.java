@@ -65,6 +65,16 @@ public final class PatchFilterSet implements Filter {
         return filters.toString();
     }
 
+    /**
+     * Returns {@code true} if any filter in the set accepts the audit event.
+     * Uses short-circuit evaluation — returns as soon as the first
+     * accepting filter is found. Returns {@code false} if no filters
+     * are registered or no filter accepts the event.
+     *
+     * @param event the audit event to evaluate.
+     * @return {@code true} if at least one filter accepts the event,
+     *         {@code false} otherwise.
+     */
     @Override
     public boolean accept(AuditEvent event) {
         boolean result = false;

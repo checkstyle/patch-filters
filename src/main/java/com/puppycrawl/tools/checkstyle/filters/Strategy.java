@@ -24,18 +24,27 @@ package com.puppycrawl.tools.checkstyle.filters;
  */
 public enum Strategy {
     /**
-     * New line strategy that suppress all violations except from new lines.
+     * Suppresses all violations except those on newly added lines
+     * (INSERT edits only) in the patch file.
+     * Corresponds to XML configuration value {@code newline}.
+     * Use this for strictest enforcement — only brand new code is checked.
      */
     NEWLINE,
 
     /**
-     * Patched line strategy that suppress all violations except from new/changed lines.
+     * Suppresses all violations except those on added or modified lines
+     * (INSERT and REPLACE edits) in the patch file.
+     * Corresponds to XML configuration value {@code patchedline}.
+     * Use this when both new and changed code should be checked.
      */
     PATCHEDLINE,
 
     /**
-     * Context line strategy that suppress all violations except from new/changed lines
-     * or matching context strategy.
+     * Suppresses all violations except those on added, modified,
+     * or deleted lines (INSERT, REPLACE, and DELETE edits).
+     * For checks in {@code supportContextStrategyChecks}, also considers
+     * violations whose child AST nodes fall within changed lines.
+     * Corresponds to XML configuration value {@code context}.
      */
     CONTEXT
 }
