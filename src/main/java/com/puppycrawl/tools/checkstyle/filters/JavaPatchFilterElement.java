@@ -51,6 +51,10 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
      */
     private static final Map<String, List<Integer>> CHECK_TO_ANCESTOR_NODES_MAP = new HashMap<>();
 
+    /** Checks whose violations should be attributed at enclosing type scope. */
+    private static final Set<String> CLASS_SCOPE_NEVER_SUPPRESSED_CHECKS = new HashSet<>(
+            Arrays.asList("CovariantEquals"));
+
     static {
         CHECK_TO_ANCESTOR_NODES_MAP.put("ArrayTrailingComma",
                 Arrays.asList(TokenTypes.ARRAY_INIT));
@@ -165,13 +169,13 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
 
         if (Strategy.CONTEXT == strategy) {
             result = isFileNameMatching(event)
-                    && (isNeverSuppressCheck(event)
+                    && (isMatchingByNeverSuppressedCheck(event)
                     || isMatchingByContextStrategy(event)
                     || isLineMatching(event));
         }
         else {
             result = isFileNameMatching(event)
-                    && (isNeverSuppressCheck(event)
+                    && (isMatchingByNeverSuppressedCheck(event)
                     || isLineMatching(event));
         }
 
@@ -213,6 +217,53 @@ public class JavaPatchFilterElement implements TreeWalkerFilter {
                     || neverSuppressedChecks.contains(event.getModuleId())) {
                 result = true;
             }
+        }
+        return result;
+    }
+
+    /**
+     * Apply stricter causality matching for checks configured under neverSuppressedChecks.
+     *
+     * @param event audit event
+     * @return true when violation can be attributed to changed lines in touched file
+     */
+    private boolean isMatchingByNeverSuppressedCheck(TreeWalkerAuditEvent event) {
+        boolean result = false;
+        if (isNeverSuppressCheck(event)) {
+            result = isLineMatching(event);
+            if (!result) {
+                final String checkShortName = getCheckShortName(event);
+                if (CLASS_SCOPE_NEVER_SUPPRESSED_CHECKS.contains(checkShortName)
+                        && strategy != Strategy.NEWLINE) {
+                    result = isChangedLineInsideEnclosingType(event);
+                }
+                else {
+                    result = true;
+                }
+            }
+        }
+        return result;
+    }
+
+    private boolean isChangedLineInsideEnclosingType(TreeWalkerAuditEvent event) {
+        final DetailAST eventAst = getEventAst(event);
+        DetailAST scopeAst = eventAst;
+        while (scopeAst != null && scopeAst.getType() != TokenTypes.CLASS_DEF
+                && scopeAst.getType() != TokenTypes.INTERFACE_DEF
+                && scopeAst.getType() != TokenTypes.ENUM_DEF
+                && scopeAst.getType() != TokenTypes.RECORD_DEF) {
+            scopeAst = scopeAst.getParent();
+        }
+        return isChangedLineInAstScope(scopeAst);
+    }
+
+    private boolean isChangedLineInAstScope(DetailAST ast) {
+        boolean result = false;
+        if (ast != null) {
+            final Map<String, Integer> childAstLineNoMap = getChildAstLineNo(ast);
+            final int childAstStartLine = childAstLineNoMap.get(MIN);
+            final int childAstEndLine = childAstLineNoMap.get(MAX);
+            result = lineMatching(childAstStartLine, childAstEndLine);
         }
         return result;
     }

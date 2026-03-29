@@ -163,7 +163,7 @@ public class SuppressionPatchFilter extends AutomaticBean
                 final List<List<Integer>> lineRangeList = loadPatchFileUtils.getLineRangeList();
                 final SuppressionPatchFilterElement element =
                         new SuppressionPatchFilterElement(fileName, lineRangeList,
-                                neverSuppressedChecks);
+                                neverSuppressedChecks, strategy);
                 filters.addFilter(element);
             }
         }
