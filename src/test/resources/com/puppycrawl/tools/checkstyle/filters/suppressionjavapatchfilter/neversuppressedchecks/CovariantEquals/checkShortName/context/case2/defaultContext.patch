@@ -1,0 +1,10 @@
+diff --git a/Test.java b/Test.java
+index 9af4e74..d6706f3 100644
+--- a/Test.java
++++ b/Test.java
+@@ -1,5 +1,6 @@
+ package TreeWalker.coding.CovariantEquals;
++// patched line outside any type
+ public class Test {
+     public boolean equals(TreeWalker.coding.CovariantEquals.Test i) {  // violation without filter
+         return false;
