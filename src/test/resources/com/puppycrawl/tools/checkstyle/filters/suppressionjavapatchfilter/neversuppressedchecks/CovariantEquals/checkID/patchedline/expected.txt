@@ -1,2 +1,1 @@
-Test.java:4:20: covariant equals without overriding equals(java.lang.Object).
 Test.java:11:20: covariant equals without overriding equals(java.lang.Object).

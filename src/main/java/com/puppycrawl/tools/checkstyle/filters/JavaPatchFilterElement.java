@@ -52,6 +52,10 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     private static final Map<String, List<Integer>>
             CHECK_TO_ANCESTOR_NODES_MAP = new HashMap<>();
 
+    /** Checks whose violations should be attributed at enclosing type scope. */
+    private static final Set<String> CLASS_SCOPE_NEVER_SUPPRESSED_CHECKS = new HashSet<>(
+            Arrays.asList("CovariantEquals"));
+
     static {
         CHECK_TO_ANCESTOR_NODES_MAP.put("ArrayTrailingComma",
                 Arrays.asList(TokenTypes.ARRAY_INIT));
@@ -176,13 +180,13 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
 
         if (Strategy.CONTEXT == strategy) {
             result = isFileNameMatching(event)
-                    && (isNeverSuppressCheck(event)
+                    && (isMatchingByNeverSuppressedCheck(event)
                     || isMatchingByContextStrategy(event)
                     || isLineMatching(event));
         }
         else {
             result = isFileNameMatching(event)
-                    && (isNeverSuppressCheck(event)
+                    && (isMatchingByNeverSuppressedCheck(event)
                     || isLineMatching(event));
         }
 
@@ -224,6 +228,79 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
                     || neverSuppressedChecks.contains(event.getModuleId())) {
                 result = true;
             }
+        }
+        return result;
+    }
+
+    /**
+     * Apply stricter causality matching for checks configured under neverSuppressedChecks.
+     *
+     * <p>Most checks report violations on the same line as the change, so the existing
+     * line matching logic works for them. However, some checks have violations whose
+     * causality is at a broader scope than the violation line itself:
+     *
+     * <ul>
+     * <li>{@code CovariantEquals} - violation is reported on method AST, but causality
+     * is type-level (missing {@code equals(Object)} in that class), so we attribute by
+     * enclosing type scope</li>
+     * </ul>
+     *
+     * <p>For all other checks, the fallback still applies and shows violations in touched
+     * files, so nothing is missed. As more checks with similar behavior are discovered,
+     * they can be added here with appropriate causality attribution logic.
+     *
+     * @param event audit event
+     * @return true when violation can be attributed to changed lines in touched file
+     */
+    private boolean isMatchingByNeverSuppressedCheck(TreeWalkerAuditEvent event) {
+        boolean result = false;
+        if (isNeverSuppressCheck(event)) {
+            result = isLineMatching(event);
+            if (!result) {
+                final String checkShortName = getCheckShortName(event);
+                if (CLASS_SCOPE_NEVER_SUPPRESSED_CHECKS.contains(checkShortName)
+                        && strategy != Strategy.NEWLINE) {
+                    result = isChangedLineInsideEnclosingType(event);
+                }
+                else {
+                    result = true;
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Checks whether any changed line falls within the enclosing type of the event.
+     *
+     * @param event audit event
+     * @return true if a changed line is inside the enclosing type scope
+     */
+    private boolean isChangedLineInsideEnclosingType(TreeWalkerAuditEvent event) {
+        final DetailAST eventAst = getEventAst(event);
+        DetailAST scopeAst = eventAst;
+        while (scopeAst != null && scopeAst.getType() != TokenTypes.CLASS_DEF
+                && scopeAst.getType() != TokenTypes.INTERFACE_DEF
+                && scopeAst.getType() != TokenTypes.ENUM_DEF
+                && scopeAst.getType() != TokenTypes.RECORD_DEF) {
+            scopeAst = scopeAst.getParent();
+        }
+        return isChangedLineInAstScope(scopeAst);
+    }
+
+    /**
+     * Checks whether any changed line falls within the provided AST scope.
+     *
+     * @param ast enclosing AST node to evaluate
+     * @return true if a changed line is inside the AST scope
+     */
+    private boolean isChangedLineInAstScope(DetailAST ast) {
+        boolean result = false;
+        if (ast != null) {
+            final Map<String, Integer> childAstLineNoMap = getChildAstLineNo(ast);
+            final int childAstStartLine = childAstLineNoMap.get(MIN);
+            final int childAstEndLine = childAstLineNoMap.get(MAX);
+            result = lineMatching(childAstStartLine, childAstEndLine);
         }
         return result;
     }
