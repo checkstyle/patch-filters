@@ -80,7 +80,7 @@ public class GeneratePatchFile {
     /**
      * RepoPath of repository that will be checked by checkstyle.
      */
-    private String repoPath;
+    private final String repoPath;
 
     /**
      * Repository instance.
@@ -90,32 +90,32 @@ public class GeneratePatchFile {
     /**
      * Path of checkstyle-tester.
      */
-    private String testerPath;
+    private final String testerPath;
 
     /**
      * Path of checkstyle.
      */
-    private String checkstyleRepoPath;
+    private final String checkstyleRepoPath;
 
     /**
      * Patch-branch of checkstyle.
      */
-    private String checkstyleBranch;
+    private final String checkstyleBranch;
 
     /**
      * BaseConfigFile.
      */
-    private File baseConfigFile;
+    private final File baseConfigFile;
 
     /**
      * PatchConfigFile.
      */
-    private File patchConfigFile;
+    private final File patchConfigFile;
 
     /**
      * Directory name which be store diff reports.
      */
-    private String diffReportDirName;
+    private final String diffReportDirName;
 
     /**
      * Init GeneratePatchFile.
