@@ -26,7 +26,7 @@ import java.io.InputStream;
  * This is a custom input stream that filters CR ({@code \r}) from the inputstream by skipping over
  * it.
  */
-public class CrFilterInputStream extends InputStream {
+public final class CrFilterInputStream extends InputStream {
 
     /** The wrapped input stream. */
     private InputStream wrapper;

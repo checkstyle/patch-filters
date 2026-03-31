@@ -30,7 +30,7 @@ import com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtil;
 /**
  * This filter element is immutable and processes.
  */
-public class SuppressionPatchFilterElement implements Filter {
+public final class SuppressionPatchFilterElement implements Filter {
 
     /**
      * The String of file names.

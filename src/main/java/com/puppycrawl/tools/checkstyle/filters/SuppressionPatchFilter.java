@@ -43,7 +43,7 @@ import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
  *
  * @since 8.34
  */
-public class SuppressionPatchFilter extends AutomaticBean
+public final class SuppressionPatchFilter extends AutomaticBean
         implements Filter, ExternalResourceHolder {
     /**
      * To split never Suppressed Checks and Ids's string.

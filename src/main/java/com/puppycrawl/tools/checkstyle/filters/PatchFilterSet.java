@@ -29,7 +29,7 @@ import com.puppycrawl.tools.checkstyle.api.Filter;
 /**
  * A filter set applies filters to AuditEvents.
  */
-public class PatchFilterSet implements Filter {
+public final class PatchFilterSet implements Filter {
     /** Filter set. */
     private final Set<Filter> filters = new HashSet<>();
 

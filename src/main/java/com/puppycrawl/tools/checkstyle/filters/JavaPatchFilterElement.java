@@ -35,7 +35,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 /**
  * This filter element is immutable and processes.
  */
-public class JavaPatchFilterElement implements TreeWalkerFilter {
+public final class JavaPatchFilterElement implements TreeWalkerFilter {
     /**
      * The key of minimum line in child ast lines.
      */
