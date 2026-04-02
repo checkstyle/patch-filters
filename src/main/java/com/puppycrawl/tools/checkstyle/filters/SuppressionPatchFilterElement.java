@@ -109,8 +109,7 @@ public final class SuppressionPatchFilterElement implements Filter {
                 result = true;
             }
             return result;
-        }
-        catch (ClassNotFoundException exception) {
+        } catch (ClassNotFoundException exception) {
             throw new IllegalStateException("Class " + sourceName + " not found", exception);
         }
     }

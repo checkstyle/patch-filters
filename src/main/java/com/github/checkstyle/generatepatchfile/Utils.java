@@ -53,8 +53,7 @@ public final class Utils {
                 final File destFile = new File(dest, file);
                 copyDir(srcFile, destFile);
             }
-        }
-        else {
+        } else {
             final InputStream inputStream = new FileInputStream(src);
             final OutputStream outputStream = new FileOutputStream(dest);
             final int size = 1024;

@@ -142,12 +142,10 @@ public final class SuppressionPatchFilter extends AutomaticBean
             if (optional) {
                 if (FilterUtil.isFileExists(file)) {
                     loadPatchFile();
-                }
-                else {
+                } else {
                     filters = new PatchFilterSet();
                 }
-            }
-            else {
+            } else {
                 loadPatchFile();
             }
         }

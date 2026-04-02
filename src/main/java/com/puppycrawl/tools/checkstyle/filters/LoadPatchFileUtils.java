@@ -87,15 +87,13 @@ public class LoadPatchFileUtils {
             if (lineRange != null) {
                 lineRangeList.add(lineRange);
             }
-        }
-        else if (Strategy.PATCHEDLINE == strategy) {
+        } else if (Strategy.PATCHEDLINE == strategy) {
             final List<Integer> lineRange = getLineRange(edit,
                     Arrays.asList(Edit.Type.INSERT, Edit.Type.REPLACE));
             if (lineRange != null) {
                 lineRangeList.add(lineRange);
             }
-        }
-        else {
+        } else {
             final List<Integer> lineRange = getLineRange(edit,
                     Arrays.asList(Edit.Type.INSERT, Edit.Type.REPLACE,
                             Edit.Type.DELETE));

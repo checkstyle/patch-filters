@@ -311,8 +311,7 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
                     eventAst = eventAst.getParent();
                 }
             }
-        }
-        else if (containsShortName(checkNamesForContextStrategyByTokenOrParentSet, event)) {
+        } else if (containsShortName(checkNamesForContextStrategyByTokenOrParentSet, event)) {
             if (eventAst != null) {
                 eventAst = eventAst.getParent();
             }
@@ -408,8 +407,7 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
             final int lineNo = ast.getLineNo();
             if (lineNo < childAstLineNoMap.get(MIN)) {
                 childAstLineNoMap.put(MIN, lineNo);
-            }
-            else if (lineNo > childAstLineNoMap.get(MAX)) {
+            } else if (lineNo > childAstLineNoMap.get(MAX)) {
                 childAstLineNoMap.put(MAX, lineNo);
             }
         }
