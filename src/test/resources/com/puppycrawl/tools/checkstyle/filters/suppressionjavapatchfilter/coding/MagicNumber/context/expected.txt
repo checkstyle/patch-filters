@@ -1,0 +1,1 @@
+Test.java:5:17: '256' is a magic number.

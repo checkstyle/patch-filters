@@ -1,0 +1,13 @@
+diff --git a/Test.java b/Test.java
+index f76a7ce..a39d9e6 100644
+--- a/Test.java
++++ b/Test.java
+@@ -2,7 +2,7 @@ package TreeWalker.MagicNumber;
+
+ public class Test {
+     public void test() {
+         int a = 256
+-                + 2;
++                + 1;  // violation without filter
+     }
+ }
