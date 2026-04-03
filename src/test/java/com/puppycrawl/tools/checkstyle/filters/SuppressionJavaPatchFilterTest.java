@@ -237,6 +237,7 @@ public class SuppressionJavaPatchFilterTest extends AbstractPatchFilterEvaluatio
     public void testMagicNumber() throws Exception {
         testByConfig("coding/MagicNumber/newline/defaultContextConfig.xml");
         testByConfig("coding/MagicNumber/patchedline/defaultContextConfig.xml");
+        testByConfig("coding/MagicNumber/context/defaultContextConfig.xml");
     }
 
     @Test
