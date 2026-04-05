@@ -231,6 +231,9 @@ public class SuppressionJavaPatchFilterTest extends AbstractPatchFilterEvaluatio
 
         testByConfig("coding/IllegalToken/patchedline/defaultContextConfig.xml");
         testByConfig("coding/IllegalToken/patchedline/zeroContextConfig.xml");
+
+        testByConfig("coding/IllegalToken/context/defaultContextConfig.xml");
+        testByConfig("coding/IllegalToken/context/zeroContextConfig.xml");
     }
 
     @Test
