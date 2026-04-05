@@ -1,0 +1,2 @@
+Test.java:5:14: Using 'outer:' is not allowed.
+Test.java:14:14: Using 'outer:' is not allowed.

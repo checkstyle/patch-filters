@@ -1,0 +1,25 @@
+diff --git a/Test.java b/Test.java
+index 762aa6a..ff7ee3e 100644
+--- a/Test.java
++++ b/Test.java
+@@ -3,12 +3,13 @@ package TreeWalker.illegalToken;
+ public class Test {
+     public void myTest() {
+-        outer:
++        outer:  // violation without filter
+         for (int i = 0; i < 5; i++) {
+             if (i == 1) {
+                 break outer;
+             }
+         }
+     }
++
++    public void test() {
++        outer:  // violation without filter
++        for (int i = 0; i < 3; i++) {
++            if (i == 2) {
++                break outer;
++            }
++        }
++    }
+ }
