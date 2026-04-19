@@ -1,0 +1,12 @@
+[general]
+ignore=body-is-missing,subject-case
+
+[title-max-length]
+line-length=200
+
+[title-match-regex]
+regex=^(Issue #\d+: .*|Pull #\d+: .*|(minor|config|infra|doc|spelling|dependency): .*)$
+
+[title-trailing-punctuation]
+
+[title-trailing-whitespace]
