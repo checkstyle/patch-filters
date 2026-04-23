@@ -75,15 +75,23 @@ public class SuppressionJavaPatchFilterTest extends AbstractPatchFilterEvaluatio
         testByConfig("neversuppressedchecks/CovariantEquals/"
                 + "checkID/context/defaultContextConfig.xml");
         testByConfig("neversuppressedchecks/CovariantEquals/"
+                + "checkID/context/case2/defaultContextConfig.xml");
+        testByConfig("neversuppressedchecks/CovariantEquals/"
                 + "checkID/newline/defaultContextConfig.xml");
         testByConfig("neversuppressedchecks/CovariantEquals"
                         + "/checkID/patchedline/defaultContextConfig.xml");
+        testByConfig("neversuppressedchecks/CovariantEquals"
+                + "/checkID/patchedline/case2/defaultContextConfig.xml");
         testByConfig("neversuppressedchecks/CovariantEquals/"
                 + "checkShortName/context/defaultContextConfig.xml");
+        testByConfig("neversuppressedchecks/CovariantEquals/"
+                + "checkShortName/context/case2/defaultContextConfig.xml");
         testByConfig("neversuppressedchecks/CovariantEquals/"
                 + "checkShortName/newline/defaultContextConfig.xml");
         testByConfig("neversuppressedchecks/CovariantEquals/"
                 + "checkShortName/patchedline/defaultContextConfig.xml");
+        testByConfig("neversuppressedchecks/CovariantEquals/"
+                + "checkShortName/patchedline/case2/defaultContextConfig.xml");
     }
 
     @Test
