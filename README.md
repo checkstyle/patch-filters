@@ -16,12 +16,12 @@ or the optional is set to true and patch file was not found the Filter suppresse
 
 #### Properties
 
- | name                  | description                                                                                                                                                                                                                               | type                                                         | default value |
- | --------------------- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------------------------------------------------------------ | ------------- |
- | file                  | Specify the location of the patch file.                                                                                                                                                                                                   | [String](https://checkstyle.sourceforge.io/property_types.html#String) | null          |
+ | name                  | description                                                                                                                                                                                                                               | type                                                                     | default value |
+ |-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|---------------|
+ | file                  | Specify the location of the patch file.                                                                                                                                                                                                   | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
  | optional              | Control what to do when the file is not existing. If `optional` is set to `false` the file must exist, or else it ends with error. On the other hand if optional is `true` and file is not found, the filter suppresses all audit events. | [boolean](https://checkstyle.sourceforge.io/property_types.html#boolean) | false         |
- | strategy              | Control suppression scope that you need. If `strategy` is set to `newline`, it only accepts audit events for Check violations whose line number belong to added lines in patch file. `patchedline` will accept added/changed lines.       | [String](https://checkstyle.sourceforge.io/property_types.html#String) | newline       |
- | neverSuppressedChecks | String has user defined Checks to never suppress if files are touched, split by comma. This property is useful for Checks that place violation on whole file or on not all (first/last) occurrence of cause/violated code.                | [String](https://checkstyle.sourceforge.io/property_types.html#String) | null          |
+ | strategy              | Control suppression scope that you need. If `strategy` is set to `newline`, it only accepts audit events for Check violations whose line number belong to added lines in patch file. `patchedline` will accept added/changed lines.       | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | newline       |
+ | neverSuppressedChecks | String has user defined Checks to never suppress if files are touched, split by comma. This property is useful for Checks that place violation on whole file or on not all (first/last) occurrence of cause/violated code.                | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
 
 #### Examples
 
@@ -65,15 +65,15 @@ only have effect when the `strategy` property is set to `context`, `neverSuppres
 
 #### Properties
 
- | name                                             | description                                                  | type                                                         | default value |
- | ------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------- |
- | file                                             | Specify the location of the patch file.                      | [String](https://checkstyle.sourceforge.io/property_types.html#String) | null          |
- | optional                                         | Control what to do when the file is not existing. If `optional` is set to `false` the file must exist, or else it ends with error. On the other hand if optional is `true` and file is not found, the filter suppresses all audit events. | [boolean](https://checkstyle.sourceforge.io/property_types.html#boolean) | false         |
- | strategy                                         | Control suppression scope that you need. If `startegy` is set to `newline`, it only accepts TreeWalker audit events for TreeWalker Check violations whose line number belong to added lines in patch file. `patchedline` will accept added/changed lines. if `strategy` is set to `context` , for checks listed in `supportContextStrategyChecks`, it will accept violations whose line number belong to added/changed/deleted lines and new code introduces violations outside of added/changed lines, but its child nodes in added/changed lines, for checks not listed in `supportContextStrategyChecks`, it will accept violations whose line number belong to added/changed/deleted lines in patch file. | [String](https://checkstyle.sourceforge.io/property_types.html#String) | newline       |
- | supportContextStrategyChecks                     | String has user defined Checks that support context strategy | [String](https://checkstyle.sourceforge.io/property_types.html#String) | null          |
- | checkNamesForContextStrategyByTokenOrParentSet | String has user defined TreeWalker Checks that need modify violation nodes to their parent node to expand the context scope, split by comma | [String](https://checkstyle.sourceforge.io/property_types.html#String) | null          |
- | checkNamesForContextStrategyByTokenOrAncestorSet | String has user defined TreeWalker Checks that need modify violation nodes to their ancestor node to expand the context scope, split by comma | [String](https://checkstyle.sourceforge.io/property_types.html#String) | null          |
- | neverSuppressedChecks                            | String has user defined TreeWalker Checks to never suppress if files are touched, split by comma. This property is useful for Checks that place violation on whole file or on not all (first/last) occurrence of cause/violated code. | [String](https://checkstyle.sourceforge.io/property_types.html#String) | null          |
+ | name                                             | description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | type                                                                     | default value |
+ |--------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|---------------|
+ | file                                             | Specify the location of the patch file.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
+ | optional                                         | Control what to do when the file is not existing. If `optional` is set to `false` the file must exist, or else it ends with error. On the other hand if optional is `true` and file is not found, the filter suppresses all audit events.                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | [boolean](https://checkstyle.sourceforge.io/property_types.html#boolean) | false         |
+ | strategy                                         | Control suppression scope that you need. If `startegy` is set to `newline`, it only accepts TreeWalker audit events for TreeWalker Check violations whose line number belong to added lines in patch file. `patchedline` will accept added/changed lines. if `strategy` is set to `context` , for checks listed in `supportContextStrategyChecks`, it will accept violations whose line number belong to added/changed/deleted lines and new code introduces violations outside of added/changed lines, but its child nodes in added/changed lines, for checks not listed in `supportContextStrategyChecks`, it will accept violations whose line number belong to added/changed/deleted lines in patch file. | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | newline       |
+ | supportContextStrategyChecks                     | String has user defined Checks that support context strategy                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
+ | checkNamesForContextStrategyByTokenOrParentSet   | String has user defined TreeWalker Checks that need modify violation nodes to their parent node to expand the context scope, split by comma                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
+ | checkNamesForContextStrategyByTokenOrAncestorSet | String has user defined TreeWalker Checks that need modify violation nodes to their ancestor node to expand the context scope, split by comma                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
+ | neverSuppressedChecks                            | String has user defined TreeWalker Checks to never suppress if files are touched, split by comma. This property is useful for Checks that place violation on whole file or on not all (first/last) occurrence of cause/violated code.                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
 
 #### Notes
 
@@ -184,6 +184,87 @@ and expand `EqualsHashCode`, `FinalLocalVariable`'s context scope to ancestors' 
 ```
 
 ## PatchFilter Report Setup
+
+### Generate `show.patch` for local and CI validation
+
+You can point both patch filters to the same generated patch file:
+
+```xml
+<module name="com.puppycrawl.tools.checkstyle.filters.SuppressionPatchFilter">
+    <property name="file" value="show.patch"/>
+    <property name="strategy" value="patchedline"/>
+</module>
+
+<module name="TreeWalker">
+    <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter">
+        <property name="file" value="show.patch"/>
+        <property name="strategy" value="patchedline"/>
+    </module>
+</module>
+```
+
+Pick patch generation mode based on the workflow you want to validate:
+
+- Last commit only (linear local history): `git diff HEAD~1 HEAD > show.patch`
+- Last `N` commits (for example last 3): `git diff HEAD~3 HEAD > show.patch`
+- Full Pull Request diff against base branch (Travis-like result):
+  `git diff origin/master...HEAD > show.patch`
+
+`origin/master...HEAD` uses the merge-base internally, so it shows the whole branch delta like
+Travis merge validation, even if your CI does not create a temporary merge commit.
+
+### Maven example: last commit only
+
+```xml
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>exec-maven-plugin</artifactId>
+    <version>3.0.0</version>
+    <executions>
+        <execution>
+            <phase>verify</phase>
+            <goals>
+                <goal>exec</goal>
+            </goals>
+        </execution>
+    </executions>
+    <configuration>
+        <executable>git</executable>
+        <arguments>
+            <argument>diff</argument>
+            <argument>HEAD~1</argument>
+            <argument>HEAD</argument>
+        </arguments>
+        <outputFile>${maven.multiModuleProjectDirectory}/show.patch</outputFile>
+    </configuration>
+</plugin>
+```
+
+### Maven example: validate last `N` commits
+
+Use the same plugin and replace `HEAD~1` with `HEAD~${patch.lastCommits}`.
+For example, running Maven with `-Dpatch.lastCommits=3` checks the last 3 commits.
+
+```xml
+<arguments>
+    <argument>diff</argument>
+    <argument>HEAD~${patch.lastCommits}</argument>
+    <argument>HEAD</argument>
+</arguments>
+```
+
+### Maven example: Travis-like Pull Request diff
+
+Use three-dot diff to compare your branch with base branch from merge-base:
+
+```xml
+<arguments>
+    <argument>diff</argument>
+    <argument>origin/master...HEAD</argument>
+</arguments>
+```
+
+Before running Maven in CI, make sure the base branch is fetched (for example `origin/master`).
 
 ## Handling Unstaged and Uncommitted Changes
 
