@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * GeneratePatchFileWithGitCommandLauncher.
+ * GeneratePatchFileLauncher.
  */
 public final class GeneratePatchFileLauncher {
 
@@ -40,6 +40,20 @@ public final class GeneratePatchFileLauncher {
      * @throws Exception exception
      */
     public static void main(String[] args) throws Exception {
+        final int requiredArgs = 7;
+        if (args.length < requiredArgs) {
+            System.err.println("Usage: GeneratePatchFileLauncher"
+                    + " <repoPath>"
+                    + " <checkstyleRepoPath>"
+                    + " <testerPath>"
+                    + " <checkstyleBranch>"
+                    + " <baseConfigFile>"
+                    + " <patchConfigFile>"
+                    + " <commitIdOrCount>");
+            System.err.println("  commitIdOrCount: a non-negative integer (number of recent"
+                    + " commits) or a comma-separated list of commit SHAs");
+            System.exit(1);
+        }
         final String repoPath = args[0];
         final String checkstyleRepoPath = args[1];
         final String testerPath = args[2];

@@ -37,6 +37,21 @@ public final class GeneratePatchFileWithGitCommandLauncher {
      * @throws Exception exception
      */
     public static void main(String[] args) throws Exception {
+        final int requiredArgs = 8;
+        if (args.length < requiredArgs) {
+            System.err.println("Usage: GeneratePatchFileWithGitCommandLauncher"
+                    + " <repoPath>"
+                    + " <checkstyleRepoPath>"
+                    + " <testerPath>"
+                    + " <checkstyleBranch>"
+                    + " <baseConfigFile>"
+                    + " <patchConfigFile>"
+                    + " <commitCount>"
+                    + " <gitCommand>");
+            System.err.println("  commitCount: a non-negative integer");
+            System.err.println("  gitCommand:  git command string to generate the patch");
+            System.exit(1);
+        }
         final String repoPath = args[0];
         final String checkstyleRepoPath = args[1];
         final String testerPath = args[2];
