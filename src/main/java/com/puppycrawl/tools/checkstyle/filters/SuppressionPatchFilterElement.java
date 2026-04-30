@@ -53,10 +53,11 @@ public final class SuppressionPatchFilterElement implements Filter {
      *
      * @param fileName      names of filtered files
      * @param lineRangeList list of line range for line number filtering
-     * @param neverSuppressedChecks set has user defined Checks to never suppress
-     *                              if files are touched
+     * @param neverSuppressedChecks set has user defined Checks to never
+     *                              suppress if files are touched
      */
-    public SuppressionPatchFilterElement(String fileName, List<List<Integer>> lineRangeList,
+    public SuppressionPatchFilterElement(String fileName,
+                                         List<List<Integer>> lineRangeList,
                                          Set<String> neverSuppressedChecks) {
         this.fileName = fileName;
         this.lineRangeList = lineRangeList;
@@ -111,7 +112,8 @@ public final class SuppressionPatchFilterElement implements Filter {
             return result;
         }
         catch (ClassNotFoundException exception) {
-            throw new IllegalStateException("Class " + sourceName + " not found", exception);
+            throw new IllegalStateException("Class " + sourceName
+                    + " not found", exception);
         }
     }
 
@@ -164,7 +166,8 @@ public final class SuppressionPatchFilterElement implements Filter {
     }
 
     private static String getCheckShortName(AuditEvent event) {
-        final String[] checkNames = event.getViolation().getSourceName().split("\\.");
+        final String[] checkNames =
+                event.getViolation().getSourceName().split("\\.");
         return checkNames[checkNames.length - 1];
     }
 }

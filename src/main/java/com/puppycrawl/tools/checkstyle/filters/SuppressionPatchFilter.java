@@ -38,8 +38,8 @@ import com.puppycrawl.tools.checkstyle.api.Filter;
 import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
 
 /**
- * Filter {@code SuppressionPatchFilter} rejects audit events for Check violations
- * according to a patch file.
+ * Filter {@code SuppressionPatchFilter} rejects audit events for Check
+ * violations according to a patch file.
  *
  * @since 8.34
  */
@@ -69,10 +69,10 @@ public final class SuppressionPatchFilter extends AutomaticBean
     private Strategy strategy = Strategy.NEWLINE;
 
     /**
-     * Set has user defined Checks to never suppress if files are referenced in patch.
-     * This property is useful for Checks that place violation on whole file oron not
-     * all (first/last) occurrence of cause/violated code. Example: Translation,
-     * UniqueProperty, RegexpMultiline.
+     * Set has user defined Checks to never suppress if files are referenced
+     * in patch. This property is useful for Checks that place violation on
+     * whole file oron not all (first/last) occurrence of cause/violated code.
+     * Example: Translation, UniqueProperty, RegexpMultiline.
      */
     private Set<String> neverSuppressedChecks;
 
@@ -94,7 +94,8 @@ public final class SuppressionPatchFilter extends AutomaticBean
     /**
      * Setter to control if only consider added lines in file.
      *
-     * @param strategy tells if only consider added lines is add, should be added or changed.
+     * @param strategy tells if only consider added lines is add, should be
+     *                 added or changed.
      * @since 8.34
      */
     public void setStrategy(String strategy) {
@@ -102,10 +103,12 @@ public final class SuppressionPatchFilter extends AutomaticBean
     }
 
     /**
-     * Setter to set has user defined list of Checks to NEVER suppress if files are touched.
+     * Setter to set has user defined list of Checks to NEVER suppress if
+     * files are touched.
      *
-     * @param neverSuppressedChecks string has user defined Checks to never suppress
-     *                              if files are touched, split by comma
+     * @param neverSuppressedChecks string has user defined Checks to never
+     *                              suppress if files are touched, split by
+     *                              comma
      * @since 8.34
      */
     public void setNeverSuppressedChecks(String neverSuppressedChecks) {
@@ -161,19 +164,22 @@ public final class SuppressionPatchFilter extends AutomaticBean
             for (FileHeader fileHeader : fileHeaders) {
                 final LoadPatchFileUtils loadPatchFileUtils =
                         new LoadPatchFileUtils(fileHeader, strategy);
-                final String fileName = loadPatchFileUtils.getFileName();
-                final List<List<Integer>> lineRangeList = loadPatchFileUtils.getLineRangeList();
+                final String fileName =
+                        loadPatchFileUtils.getFileName();
+                final List<List<Integer>> lineRangeList =
+                        loadPatchFileUtils.getLineRangeList();
                 final SuppressionPatchFilterElement element =
-                        new SuppressionPatchFilterElement(fileName, lineRangeList,
-                                neverSuppressedChecks);
+                        new SuppressionPatchFilterElement(fileName,
+                                lineRangeList, neverSuppressedChecks);
                 filters.addFilter(element);
             }
         }
-        // -@cs[IllegalCatch] There is no other way to deliver filename that was under
-        // processing when a jgit exception occurs.
+        // -@cs[IllegalCatch] There is no other way to deliver filename that
+        // was under processing when a jgit exception occurs.
         catch (Exception exception) {
-            throw new CheckstyleException("an error occurred when loading patch file "
-                    + file, exception);
+            throw new CheckstyleException(
+                    "an error occurred when loading patch file " + file,
+                    exception);
         }
     }
 
