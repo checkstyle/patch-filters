@@ -29,6 +29,26 @@ import java.util.Set;
  */
 public final class GeneratePatchFileLauncher {
 
+    /**
+     * CHECKSTYLE_BRANCH_ARG_INDEX.
+     */
+    private static final int CHECKSTYLE_BRANCH_ARG_INDEX = 3;
+
+    /**
+     * BASE_CONFIG_FILE_ARG_INDEX.
+     */
+    private static final int BASE_CONFIG_FILE_ARG_INDEX = 4;
+
+    /**
+     * PATCH_CONFIG_FILE_ARG_INDEX.
+     */
+    private static final int PATCH_CONFIG_FILE_ARG_INDEX = 5;
+
+    /**
+     * COMMIT_PARAM_ARG_INDEX.
+     */
+    private static final int COMMIT_PARAM_ARG_INDEX = 6;
+
     private GeneratePatchFileLauncher() {
 
     }
@@ -58,16 +78,16 @@ public final class GeneratePatchFileLauncher {
         final String repoPath = args[0];
         final String checkstyleRepoPath = args[1];
         final String testerPath = args[2];
-        final String checkstyleBranch = args[3];
-        final File baseConfigFile = new File(args[4]);
-        final File patchConfigFile = new File(args[5]);
+        final String checkstyleBranch = args[CHECKSTYLE_BRANCH_ARG_INDEX];
+        final File baseConfigFile = new File(args[BASE_CONFIG_FILE_ARG_INDEX]);
+        final File patchConfigFile = new File(args[PATCH_CONFIG_FILE_ARG_INDEX]);
         final GeneratePatchFile generatePatchFile =
                 new GeneratePatchFile(repoPath, testerPath, checkstyleRepoPath,
                         checkstyleBranch, baseConfigFile, patchConfigFile);
-        final String commitParam = args[6];
+        final String commitParam = args[COMMIT_PARAM_ARG_INDEX];
         if (commitParam.matches("(0|[1-9]\\d*)")) {
             generatePatchFile.generatePatch(
-                    Integer.parseInt(args[6]));
+                    Integer.parseInt(args[COMMIT_PARAM_ARG_INDEX]));
         }
         else {
             final String[] commitIds = commitParam.split(",");

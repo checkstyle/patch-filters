@@ -26,6 +26,31 @@ import java.io.File;
  * */
 public final class GeneratePatchFileWithGitCommandLauncher {
 
+    /**
+     * CHECKSTYLE_BRANCH_ARG_INDEX.
+     */
+    private static final int CHECKSTYLE_BRANCH_ARG_INDEX = 3;
+
+    /**
+     * BASE_CONFIG_FILE_ARG_INDEX.
+     */
+    private static final int BASE_CONFIG_FILE_ARG_INDEX = 4;
+
+    /**
+     * PATCH_CONFIG_FILE_ARG_INDEX.
+     */
+    private static final int PATCH_CONFIG_FILE_ARG_INDEX = 5;
+
+    /**
+     * COMMIT_COUNT_ARG_INDEX.
+     */
+    private static final int COMMIT_COUNT_ARG_INDEX = 6;
+
+    /**
+     * GIT_COMMAND_ARG_INDEX.
+     */
+    private static final int GIT_COMMAND_ARG_INDEX = 7;
+
     private GeneratePatchFileWithGitCommandLauncher() {
 
     }
@@ -57,13 +82,13 @@ public final class GeneratePatchFileWithGitCommandLauncher {
         final String repoPath = args[0];
         final String checkstyleRepoPath = args[1];
         final String testerPath = args[2];
-        final String checkstyleBranch = args[3];
-        final File baseConfigFile = new File(args[4]);
-        final File patchConfigFile = new File(args[5]);
+        final String checkstyleBranch = args[CHECKSTYLE_BRANCH_ARG_INDEX];
+        final File baseConfigFile = new File(args[BASE_CONFIG_FILE_ARG_INDEX]);
+        final File patchConfigFile = new File(args[PATCH_CONFIG_FILE_ARG_INDEX]);
         final GeneratePatchFile generatePatchFile =
                 new GeneratePatchFile(repoPath, testerPath, checkstyleRepoPath,
                         checkstyleBranch, baseConfigFile, patchConfigFile);
         generatePatchFile.generatePatchWithGitCommand(
-                Integer.parseInt(args[6]), args[7]);
+                Integer.parseInt(args[COMMIT_COUNT_ARG_INDEX]), args[GIT_COMMAND_ARG_INDEX]);
     }
 }
