@@ -38,7 +38,7 @@ public final class PatchFilterSet implements Filter {
      *
      * @param filter the Filter to add.
      */
-    public void addFilter(Filter filter) {
+    public void addFilter(final Filter filter) {
         filters.add(filter);
     }
 
@@ -47,7 +47,7 @@ public final class PatchFilterSet implements Filter {
      *
      * @param filter filter to remove.
      */
-    public void removeFilter(Filter filter) {
+    public void removeFilter(final Filter filter) {
         filters.remove(filter);
     }
 
@@ -76,7 +76,7 @@ public final class PatchFilterSet implements Filter {
      *         {@code false} otherwise.
      */
     @Override
-    public boolean accept(AuditEvent event) {
+    public boolean accept(final AuditEvent event) {
         boolean result = false;
         for (Filter filter : filters) {
             if (filter.accept(event)) {

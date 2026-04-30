@@ -80,8 +80,7 @@ public class LoadPatchFileUtils {
         return lineRangeList;
     }
 
-    private void addSingleLineRange(List<List<Integer>> lineRangeList,
-                                    Edit edit) {
+    private void addSingleLineRange(final List<List<Integer>> lineRangeList, final Edit edit) {
         if (Strategy.NEWLINE == strategy) {
             final List<Integer> lineRange = getLineRange(edit,
                     Arrays.asList(Edit.Type.INSERT));
@@ -106,8 +105,7 @@ public class LoadPatchFileUtils {
         }
     }
 
-    private static List<Integer> getLineRange(Edit edit,
-                                              List<Edit.Type> typeList) {
+    private static List<Integer> getLineRange(final Edit edit, final List<Edit.Type> typeList) {
         List<Integer> lineRange = null;
         if (typeList.contains(edit.getType())) {
             lineRange = new ArrayList<>();

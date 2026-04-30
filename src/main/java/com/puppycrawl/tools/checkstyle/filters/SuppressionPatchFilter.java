@@ -130,7 +130,7 @@ public final class SuppressionPatchFilter extends AutomaticBean
     }
 
     @Override
-    public boolean accept(AuditEvent event) {
+    public boolean accept(final AuditEvent event) {
         return filters.accept(event);
     }
 

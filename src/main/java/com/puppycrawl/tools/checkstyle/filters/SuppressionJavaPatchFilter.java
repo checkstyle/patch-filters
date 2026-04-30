@@ -138,9 +138,7 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
      */
     public void setCheckNamesForContextStrategyByTokenOrParentSet(
             String checkNamesForContextStrategyByTokenOrParentSet) {
-        final String[] checksArray =
-                checkNamesForContextStrategyByTokenOrParentSet
-                        .split(COMMA);
+        final String[] checksArray = checkNamesForContextStrategyByTokenOrParentSet.split(COMMA);
         this.checkNamesForContextStrategyByTokenOrParentSet =
                 new HashSet<>(Arrays.asList(checksArray));
     }
@@ -159,9 +157,7 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
      */
     public void setCheckNamesForContextStrategyByTokenOrAncestorSet(
             String checkNamesForContextStrategyByTokenOrAncestorSet) {
-        final String[] checksArray =
-                checkNamesForContextStrategyByTokenOrAncestorSet
-                        .split(COMMA);
+        final String[] checksArray = checkNamesForContextStrategyByTokenOrAncestorSet.split(COMMA);
         this.checkNamesForContextStrategyByTokenOrAncestorSet =
                 new HashSet<>(Arrays.asList(checksArray));
     }
@@ -173,10 +169,8 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
      *                                     support context strategy
      * @since 8.34
      */
-    public void setSupportContextStrategyChecks(
-            String supportContextStrategyChecks) {
-        final String[] checksArray =
-                supportContextStrategyChecks.split(COMMA);
+    public void setSupportContextStrategyChecks(String supportContextStrategyChecks) {
+        final String[] checksArray = supportContextStrategyChecks.split(COMMA);
         this.supportContextStrategyChecks = new HashSet<>(Arrays.asList(checksArray));
         this.supportContextStrategyChecks.addAll(SUPPORT_CONTEXT_STRATEGY_CHECKS);
     }
@@ -191,10 +185,8 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
      * @since 8.34
      */
     public void setNeverSuppressedChecks(String neverSuppressedChecks) {
-        final String[] checksArray =
-                neverSuppressedChecks.split(COMMA);
-        this.neverSuppressedChecks =
-                new HashSet<>(Arrays.asList(checksArray));
+        final String[] checksArray = neverSuppressedChecks.split(COMMA);
+        this.neverSuppressedChecks = new HashSet<>(Arrays.asList(checksArray));
     }
 
     /**
@@ -211,7 +203,7 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
     }
 
     @Override
-    public boolean accept(TreeWalkerAuditEvent treeWalkerAuditEvent) {
+    public boolean accept(final TreeWalkerAuditEvent treeWalkerAuditEvent) {
         boolean result = false;
         for (TreeWalkerFilter filter : filters) {
             if (filter.accept(treeWalkerAuditEvent)) {

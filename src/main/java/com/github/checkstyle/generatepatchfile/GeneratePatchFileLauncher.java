@@ -39,7 +39,7 @@ public final class GeneratePatchFileLauncher {
      * @param args parameters
      * @throws Exception exception
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(final String[] args) throws Exception {
         final int requiredArgs = 7;
         if (args.length < requiredArgs) {
             System.err.println("Usage: GeneratePatchFileLauncher"

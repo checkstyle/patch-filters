@@ -36,7 +36,7 @@ public final class GeneratePatchFileWithGitCommandLauncher {
      * @param args parameters
      * @throws Exception exception
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(final String[] args) throws Exception {
         final int requiredArgs = 8;
         if (args.length < requiredArgs) {
             System.err.println(

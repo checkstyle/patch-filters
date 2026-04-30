@@ -42,7 +42,7 @@ public final class Utils {
      * @param dest dest dir.
      * @throws IOException IO exception.
      */
-    public static void copyDir(File src, File dest) throws IOException {
+    public static void copyDir(final File src, final File dest) throws IOException {
         if (src.isDirectory()) {
             if (!dest.exists()) {
                 dest.mkdir();

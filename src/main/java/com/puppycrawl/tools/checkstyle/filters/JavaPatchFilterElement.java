@@ -142,16 +142,12 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
      *                                 suppress if files are touched
      */
     public JavaPatchFilterElement(String fileName,
-                                   List<List<Integer>> lineRangeList,
-                                   Strategy strategy,
-                                   Set<String>
-                                           checkNamesForContextStrategyByTokenOrParentSet,
-                                   Set<String>
-                                           checkNamesForContextStrategyByTokenOrAncestorSet,
-                                   Set<String>
-                                           supportContextStrategyChecks,
-                                   Set<String>
-                                           neverSuppressedChecks) {
+            List<List<Integer>> lineRangeList,
+            Strategy strategy,
+            Set<String> checkNamesForContextStrategyByTokenOrParentSet,
+            Set<String> checkNamesForContextStrategyByTokenOrAncestorSet,
+            Set<String> supportContextStrategyChecks,
+            Set<String> neverSuppressedChecks) {
         this.fileName = fileName;
         this.lineRangeList = lineRangeList;
         this.strategy = strategy;
@@ -195,7 +191,7 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
      * @param event {@code TreeWalkerAuditEvent} object
      * @return true if it is matching
      */
-    private boolean isFileNameMatching(TreeWalkerAuditEvent event) {
+    private boolean isFileNameMatching(final TreeWalkerAuditEvent event) {
         String eventFileName = event.fileName();
         boolean result = eventFileName != null;
 
@@ -242,7 +238,7 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
         return result;
     }
 
-    private boolean lineMatching(int currentLine) {
+    private boolean lineMatching(final int currentLine) {
         boolean result = false;
         for (List<Integer> singleLineRangeList : lineRangeList) {
             final int startLine = singleLineRangeList.get(0) + 1;
@@ -271,7 +267,7 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
      * @return true if one line is between childAstStartLine and
      *         childAstEndLine line number.
      */
-    private boolean lineMatching(int childAstStartLine, int childAstEndLine) {
+    private boolean lineMatching(final int childAstStartLine, final int childAstEndLine) {
         boolean result = false;
         for (List<Integer> singleLineRangeList : lineRangeList) {
             final int startLine = singleLineRangeList.get(0) + 1;
@@ -298,7 +294,7 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
      * @param event {@code TreeWalkerAuditEvent} object
      * @return true if it is matching or not set.
      */
-    private boolean isMatchingByContextStrategy(TreeWalkerAuditEvent event) {
+    private boolean isMatchingByContextStrategy(final TreeWalkerAuditEvent event) {
         boolean result = false;
         if (containsShortName(supportContextStrategyChecks, event)
                 || containsShortName(
@@ -318,7 +314,7 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
         return result;
     }
 
-    private DetailAST getAncestorAst(TreeWalkerAuditEvent event) {
+    private DetailAST getAncestorAst(final TreeWalkerAuditEvent event) {
         DetailAST eventAst = getEventAst(event);
         if (containsShortName(
                 checkNamesForContextStrategyByTokenOrAncestorSet, event)) {
@@ -358,13 +354,12 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
 
     }
 
-    private static String getCheckName(TreeWalkerAuditEvent event) {
-        final String[] checkNames = event.violation()
-                .getSourceName().split("\\.");
+    private static String getCheckName(final TreeWalkerAuditEvent event) {
+        final String[] checkNames = event.violation().getSourceName().split("\\.");
         return checkNames[checkNames.length - 1];
     }
 
-    private static String getCheckShortName(TreeWalkerAuditEvent event) {
+    private static String getCheckShortName(final TreeWalkerAuditEvent event) {
         return getCheckName(event).replaceAll("Check", "");
     }
 
@@ -374,7 +369,7 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
      * @param event {@code TreeWalkerAuditEvent} object
      * @return DetailAST event's corresponding ast node
      */
-    private static DetailAST getEventAst(TreeWalkerAuditEvent event) {
+    private static DetailAST getEventAst(final TreeWalkerAuditEvent event) {
         DetailAST curNode = event.rootAst();
         DetailAST eventAst = null;
         while (curNode != null) {
@@ -399,7 +394,7 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
      * @return Map contains ast node's all child nodes' max and min line
      *         number
      */
-    private static Map<String, Integer> getChildAstLineNo(DetailAST ast) {
+    private static Map<String, Integer> getChildAstLineNo(final DetailAST ast) {
         final Map<String, Integer> childAstLineNoMap = new HashMap<>();
         DetailAST curNode = ast;
         childAstLineNoMap.put(MIN, curNode.getLineNo());
@@ -429,8 +424,8 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
      *                          and min line number
      * @param ast DetailAST event's ast node's child node
      */
-    private static void setChildAstLineNo(
-            Map<String, Integer> childAstLineNoMap, DetailAST ast) {
+    private static void setChildAstLineNo(final Map<String, Integer> childAstLineNoMap,
+            final DetailAST ast) {
         if (ast != null) {
             final int lineNo = ast.getLineNo();
             if (lineNo < childAstLineNoMap.get(MIN)) {
@@ -449,8 +444,7 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
      * @param event {@code TreeWalkerAuditEvent} object
      * @return true if it is matching.
      */
-    private static boolean isMatchingAst(DetailAST ast,
-                                         TreeWalkerAuditEvent event) {
+    private static boolean isMatchingAst(final DetailAST ast, final TreeWalkerAuditEvent event) {
         return ast.getType() == event.getTokenType()
                 && ast.getLineNo() == event.getLine()
                 && ast.getColumnNo() == event.getColumnCharIndex();

@@ -57,15 +57,15 @@ public final class SuppressionPatchFilterElement implements Filter {
      *                              suppress if files are touched
      */
     public SuppressionPatchFilterElement(String fileName,
-                                         List<List<Integer>> lineRangeList,
-                                         Set<String> neverSuppressedChecks) {
+            List<List<Integer>> lineRangeList,
+            Set<String> neverSuppressedChecks) {
         this.fileName = fileName;
         this.lineRangeList = lineRangeList;
         this.neverSuppressedChecks = neverSuppressedChecks;
     }
 
     @Override
-    public boolean accept(AuditEvent event) {
+    public boolean accept(final AuditEvent event) {
         return isFileNameMatching(event)
                 && (isTreeWalkerChecksMatching(event)
                 || isNeverSuppressCheck(event)
@@ -78,7 +78,7 @@ public final class SuppressionPatchFilterElement implements Filter {
      * @param event event
      * @return true if it is matching
      */
-    private boolean isFileNameMatching(AuditEvent event) {
+    private boolean isFileNameMatching(final AuditEvent event) {
         String eventFileName = event.getFileName();
         boolean result = eventFileName != null;
 
@@ -101,7 +101,7 @@ public final class SuppressionPatchFilterElement implements Filter {
      * @return true if it is matching
      * @throws IllegalStateException if source class can not be found.
      */
-    private static boolean isTreeWalkerChecksMatching(AuditEvent event) {
+    private static boolean isTreeWalkerChecksMatching(final AuditEvent event) {
         boolean result = false;
         final String sourceName = event.getViolation().getSourceName();
         try {
@@ -123,7 +123,7 @@ public final class SuppressionPatchFilterElement implements Filter {
      * @param event event to process.
      * @return true if line and column are matching or not set.
      */
-    private boolean isLineMatching(AuditEvent event) {
+    private boolean isLineMatching(final AuditEvent event) {
         boolean result = false;
         if (event.getViolation() != null) {
             for (List<Integer> aLineRangeList : lineRangeList) {
@@ -145,7 +145,7 @@ public final class SuppressionPatchFilterElement implements Filter {
      * @param event event
      * @return true if it is matching
      */
-    private boolean isNeverSuppressCheck(AuditEvent event) {
+    private boolean isNeverSuppressCheck(final AuditEvent event) {
         boolean result = false;
         if (neverSuppressedChecks != null) {
             if (containsShortName(neverSuppressedChecks, event)
@@ -156,8 +156,8 @@ public final class SuppressionPatchFilterElement implements Filter {
         return result;
     }
 
-    private static boolean containsShortName(Set<String> checkNameSet,
-                                      AuditEvent event) {
+    private static boolean containsShortName(final Set<String> checkNameSet,
+                                      final AuditEvent event) {
         final String checkShortName = getCheckShortName(event);
         final String shortName = checkShortName.replaceAll("Check", "");
         return checkNameSet.contains(checkShortName)
@@ -165,9 +165,8 @@ public final class SuppressionPatchFilterElement implements Filter {
 
     }
 
-    private static String getCheckShortName(AuditEvent event) {
-        final String[] checkNames =
-                event.getViolation().getSourceName().split("\\.");
+    private static String getCheckShortName(final AuditEvent event) {
+        final String[] checkNames = event.getViolation().getSourceName().split("\\.");
         return checkNames[checkNames.length - 1];
     }
 }

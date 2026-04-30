@@ -158,7 +158,7 @@ public class GeneratePatchFile {
      * @throws Exception exception
      * @throws IllegalArgumentException runPatchNum should be greater than 1.
      */
-    public void generatePatch(int runPatchNum) throws Exception {
+    public void generatePatch(final int runPatchNum) throws Exception {
         if (runPatchNum <= 1) {
             throw new IllegalArgumentException(
                     "runPatchNum should be greater than 1");
@@ -178,7 +178,7 @@ public class GeneratePatchFile {
      * @param commits a set of commitIDs
      * @throws Exception exception
      */
-    public void generatePatch(Set<String> commits) throws Exception {
+    public void generatePatch(final Set<String> commits) throws Exception {
         final List<RevCommit> revisions = getAllCommits();
         for (int revisionNumber = 0; revisionNumber < revisions.size() - 1;
                 ++revisionNumber) {
@@ -200,8 +200,8 @@ public class GeneratePatchFile {
      * @param patchFormat choose git command to create patch format
      * @throws Exception exception
      */
-    public void generatePatchWithGitCommand(int runPatchNum, String patchFormat)
-            throws Exception {
+    public void generatePatchWithGitCommand(final int runPatchNum,
+            final String patchFormat) throws Exception {
         final String headSha = getHeadSha();
         for (int patchNum = 1; patchNum < runPatchNum; patchNum++) {
             generateDiffPatchWithGitCommand(patchNum, patchFormat);
@@ -232,8 +232,7 @@ public class GeneratePatchFile {
         return commitList;
     }
 
-    private void generateTwoCommitDiffPatch(RevCommit commitOld,
-                                            RevCommit commitNew)
+    private void generateTwoCommitDiffPatch(final RevCommit commitOld, final RevCommit commitNew)
             throws Exception {
         final int commitNameLength = 7;
         final String subDirName = getSimpleRepoName() + "-"
@@ -273,8 +272,8 @@ public class GeneratePatchFile {
         }
     }
 
-    private void generateDiffPatchWithGitCommand(int headNum, String patchFormat)
-            throws Exception {
+    private void generateDiffPatchWithGitCommand(final int headNum,
+            final String patchFormat) throws Exception {
         if ("show".equals(patchFormat)) {
             runShellCommand("git show > show.patch");
         }
@@ -316,7 +315,7 @@ public class GeneratePatchFile {
         }
     }
 
-    private void runShellCommand(String command) throws Exception {
+    private void runShellCommand(final String command) throws Exception {
         final List<String> cmds = new ArrayList<>();
         cmds.add("sh");
         cmds.add("-c");
@@ -333,7 +332,7 @@ public class GeneratePatchFile {
         }
     }
 
-    private File createDestDirName(String subDirName) throws Exception {
+    private File createDestDirName(final String subDirName) throws Exception {
         final File destDirFile = new File(diffReportDirName, subDirName);
         if (destDirFile.exists()) {
             throw new IOException("commit dir exists, please delete");
@@ -354,7 +353,7 @@ public class GeneratePatchFile {
         }
     }
 
-    private void checkout(String commitName) throws Exception {
+    private void checkout(final String commitName) throws Exception {
         git.checkout().setName(commitName).call();
     }
 
@@ -421,12 +420,10 @@ public class GeneratePatchFile {
                             commitDirName, simpleRepoName, commitDirName);
                     out.write(repoCommitInfo);
                     out.write(brLine);
-                    final File commitDir =
-                            new File(diffReportDirName, commitDirName);
-                    final String[] patchFileList = commitDir.list(
-                            (dir, name) -> name.endsWith(".txt"));
-                    final String patchFileInfo = String.format(
-                            "<a href='%s/%s'>%s-patch</a>\n",
+                    final File commitDir = new File(diffReportDirName, commitDirName);
+                    final String[] patchFileList =
+                            commitDir.list((dir, name) -> name.endsWith(".txt"));
+                    final String patchFileInfo = String.format("<a href='%s/%s'>%s-patch</a>\n",
                             commitDirName, patchFileList[0], commitDirName);
                     out.write(patchFileInfo);
                     out.write(brLine);

@@ -36,7 +36,7 @@ public final class CrFilterInputStream extends InputStream {
      *
      * @param input The input stream to wrap.
      */
-    public CrFilterInputStream(InputStream input) {
+    public CrFilterInputStream(final InputStream input) {
         this.wrapper = input;
     }
 
