@@ -49,7 +49,8 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     /**
      * Mapping between a check and its ancestor token types.
      */
-    private static final Map<String, List<Integer>> CHECK_TO_ANCESTOR_NODES_MAP = new HashMap<>();
+    private static final Map<String, List<Integer>>
+            CHECK_TO_ANCESTOR_NODES_MAP = new HashMap<>();
 
     static {
         CHECK_TO_ANCESTOR_NODES_MAP.put("ArrayTrailingComma",
@@ -69,7 +70,7 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
                 Arrays.asList(TokenTypes.CLASS_DEF));
         CHECK_TO_ANCESTOR_NODES_MAP.put("FinalLocalVariable",
                 Arrays.asList(TokenTypes.METHOD_DEF,
-                TokenTypes.VARIABLE_DEF, TokenTypes.CTOR_DEF));
+                        TokenTypes.VARIABLE_DEF, TokenTypes.CTOR_DEF));
         CHECK_TO_ANCESTOR_NODES_MAP.put("FallThrough",
                 Arrays.asList(TokenTypes.LITERAL_SWITCH));
         CHECK_TO_ANCESTOR_NODES_MAP.put("InnerTypeLast",
@@ -82,16 +83,18 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     /**
-     * Set of checks that support context strategy but need modify violation nodes
-     * to their parent abstract nodes to get their child nodes.
+     * Set of checks that support context strategy but need modify violation
+     * nodes to their parent abstract nodes to get their child nodes.
      */
-    private final Set<String> checkNamesForContextStrategyByTokenOrParentSet = new HashSet<>();
+    private final Set<String> checkNamesForContextStrategyByTokenOrParentSet =
+            new HashSet<>();
 
     /**
-     * Set of checks that support context strategy but need modify violation nodes
-     * to their ancestor abstract nodes to get their child nodes.
+     * Set of checks that support context strategy but need modify violation
+     * nodes to their ancestor abstract nodes to get their child nodes.
      */
-    private final Set<String> checkNamesForContextStrategyByTokenOrAncestorSet = new HashSet<>();
+    private final Set<String> checkNamesForContextStrategyByTokenOrAncestorSet =
+            new HashSet<>();
 
     /**
      * Set has user defined Checks that support context strategy.
@@ -118,30 +121,37 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
      * Constructs a {@code SuppressPatchFilterElement} for a
      * file name pattern.
      *
-     * @param fileName                                         names of filtered files
-     * @param lineRangeList                                    list of line range for line number
-     *                                                         filtering
-     * @param strategy                                         strategy that used
-     * @param checkNamesForContextStrategyByTokenOrParentSet   user defined Checks that need modify
-     *                                                         violation nodes to their parent
-     *                                                         abstract nodes to get their child
-     *                                                         nodes
-     * @param checkNamesForContextStrategyByTokenOrAncestorSet user defined Checks that need modify
-     *                                                         violation nodes to their ancestor
-     *                                                         abstract nodes to get their child
-     *                                                         nodes
-     * @param supportContextStrategyChecks                     user defined Checks that support
-     *                                                         context strategy
-     * @param neverSuppressedChecks                            set has user defined Checks to never
-     *                                                         suppress if files are touched
+     * @param fileName                 names of filtered files
+     * @param lineRangeList            list of line range for line number
+     *                                 filtering
+     * @param strategy                 strategy that used
+     * @param checkNamesForContextStrategyByTokenOrParentSet
+     *                                 user defined Checks that need modify
+     *                                 violation nodes to their parent
+     *                                 abstract nodes to get their child
+     *                                 nodes
+     * @param checkNamesForContextStrategyByTokenOrAncestorSet
+     *                                 user defined Checks that need modify
+     *                                 violation nodes to their ancestor
+     *                                 abstract nodes to get their child
+     *                                 nodes
+     * @param supportContextStrategyChecks
+     *                                 user defined Checks that support
+     *                                 context strategy
+     * @param neverSuppressedChecks    set has user defined Checks to never
+     *                                 suppress if files are touched
      */
     public JavaPatchFilterElement(String fileName,
                                    List<List<Integer>> lineRangeList,
                                    Strategy strategy,
-                                   Set<String> checkNamesForContextStrategyByTokenOrParentSet,
-                                   Set<String> checkNamesForContextStrategyByTokenOrAncestorSet,
-                                   Set<String> supportContextStrategyChecks,
-                                   Set<String> neverSuppressedChecks) {
+                                   Set<String>
+                                           checkNamesForContextStrategyByTokenOrParentSet,
+                                   Set<String>
+                                           checkNamesForContextStrategyByTokenOrAncestorSet,
+                                   Set<String>
+                                           supportContextStrategyChecks,
+                                   Set<String>
+                                           neverSuppressedChecks) {
         this.fileName = fileName;
         this.lineRangeList = lineRangeList;
         this.strategy = strategy;
@@ -154,7 +164,8 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
                     checkNamesForContextStrategyByTokenOrAncestorSet);
         }
         if (supportContextStrategyChecks != null) {
-            this.supportContextStrategyChecks.addAll(supportContextStrategyChecks);
+            this.supportContextStrategyChecks.addAll(
+                    supportContextStrategyChecks);
         }
         this.neverSuppressedChecks = neverSuppressedChecks;
     }
@@ -253,9 +264,12 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
      * Check whether at least one line from lineRangeList is between
      * event ast node's child nodes' min and max line number.
      *
-     * @param childAstStartLine event ast node's child nodes' min line number
-     * @param childAstEndLine   event ast node's child nodes' max line number
-     * @return true if one line is between childAstStartLine and childAstEndLine line number.
+     * @param childAstStartLine event ast node's child nodes' min line
+     *                          number
+     * @param childAstEndLine   event ast node's child nodes' max line
+     *                          number
+     * @return true if one line is between childAstStartLine and
+     *         childAstEndLine line number.
      */
     private boolean lineMatching(int childAstStartLine, int childAstEndLine) {
         boolean result = false;
@@ -266,8 +280,10 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
                 endLine++;
             }
 
-            result = childAstStartLine <= startLine && startLine <= childAstEndLine
-                    || childAstStartLine <= endLine - 1 && endLine - 1 <= childAstEndLine;
+            result = childAstStartLine <= startLine
+                    && startLine <= childAstEndLine
+                    || childAstStartLine <= endLine - 1
+                    && endLine - 1 <= childAstEndLine;
 
             if (result) {
                 break;
@@ -285,12 +301,15 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     private boolean isMatchingByContextStrategy(TreeWalkerAuditEvent event) {
         boolean result = false;
         if (containsShortName(supportContextStrategyChecks, event)
-                || containsShortName(checkNamesForContextStrategyByTokenOrParentSet, event)
-                || containsShortName(checkNamesForContextStrategyByTokenOrAncestorSet, event)) {
+                || containsShortName(
+                        checkNamesForContextStrategyByTokenOrParentSet, event)
+                || containsShortName(
+                        checkNamesForContextStrategyByTokenOrAncestorSet, event)) {
             final DetailAST eventAst = getAncestorAst(event);
 
             if (eventAst != null) {
-                final Map<String, Integer> childAstLineNoMap = getChildAstLineNo(eventAst);
+                final Map<String, Integer> childAstLineNoMap =
+                    getChildAstLineNo(eventAst);
                 final int childAstStartLine = childAstLineNoMap.get(MIN);
                 final int childAstEndLine = childAstLineNoMap.get(MAX);
                 result = lineMatching(childAstStartLine, childAstEndLine);
@@ -301,18 +320,21 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
 
     private DetailAST getAncestorAst(TreeWalkerAuditEvent event) {
         DetailAST eventAst = getEventAst(event);
-        if (containsShortName(checkNamesForContextStrategyByTokenOrAncestorSet, event)) {
+        if (containsShortName(
+                checkNamesForContextStrategyByTokenOrAncestorSet, event)) {
             if (eventAst != null) {
                 eventAst = eventAst.getParent();
                 final List<Integer> checkAncestorNodesList =
                         CHECK_TO_ANCESTOR_NODES_MAP.get(getCheckShortName(event));
                 while (eventAst != null && checkAncestorNodesList != null
-                        && !checkAncestorNodesList.contains(eventAst.getType())) {
+                        && !checkAncestorNodesList.contains(
+                                eventAst.getType())) {
                     eventAst = eventAst.getParent();
                 }
             }
         }
-        else if (containsShortName(checkNamesForContextStrategyByTokenOrParentSet, event)) {
+        else if (containsShortName(
+                checkNamesForContextStrategyByTokenOrParentSet, event)) {
             if (eventAst != null) {
                 eventAst = eventAst.getParent();
             }
@@ -337,7 +359,8 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     private static String getCheckName(TreeWalkerAuditEvent event) {
-        final String[] checkNames = event.violation().getSourceName().split("\\.");
+        final String[] checkNames = event.violation()
+                .getSourceName().split("\\.");
         return checkNames[checkNames.length - 1];
     }
 
@@ -373,7 +396,8 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
      * Find min and max line numbers from AST node and its children.
      *
      * @param ast DetailAST event's corresponding ast node
-     * @return Map contains ast node's all child nodes' max and min line number
+     * @return Map contains ast node's all child nodes' max and min line
+     *         number
      */
     private static Map<String, Integer> getChildAstLineNo(DetailAST ast) {
         final Map<String, Integer> childAstLineNoMap = new HashMap<>();
@@ -384,7 +408,8 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
             DetailAST toVisit = curNode.getFirstChild();
             setChildAstLineNo(childAstLineNoMap, curNode);
             setChildAstLineNo(childAstLineNoMap, toVisit);
-            while (curNode != null && toVisit == null && curNode != ast.getParent()) {
+            while (curNode != null && toVisit == null
+                    && curNode != ast.getParent()) {
                 toVisit = curNode.getNextSibling();
                 curNode = curNode.getParent();
             }
@@ -400,10 +425,12 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
      * Update childAstLineNoMap if line number of ast is smaller
      * or larger than current min and max value.
      *
-     * @param childAstLineNoMap Map contains ast node's all child nodes' max and min line number
+     * @param childAstLineNoMap Map contains ast node's all child nodes' max
+     *                          and min line number
      * @param ast DetailAST event's ast node's child node
      */
-    private static void setChildAstLineNo(Map<String, Integer> childAstLineNoMap, DetailAST ast) {
+    private static void setChildAstLineNo(
+            Map<String, Integer> childAstLineNoMap, DetailAST ast) {
         if (ast != null) {
             final int lineNo = ast.getLineNo();
             if (lineNo < childAstLineNoMap.get(MIN)) {
@@ -422,7 +449,8 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
      * @param event {@code TreeWalkerAuditEvent} object
      * @return true if it is matching.
      */
-    private static boolean isMatchingAst(DetailAST ast, TreeWalkerAuditEvent event) {
+    private static boolean isMatchingAst(DetailAST ast,
+                                         TreeWalkerAuditEvent event) {
         return ast.getType() == event.getTokenType()
                 && ast.getLineNo() == event.getLine()
                 && ast.getColumnNo() == event.getColumnCharIndex();

@@ -23,8 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * This is a custom input stream that filters CR ({@code \r}) from the inputstream by skipping over
- * it.
+ * This is a custom input stream that filters CR ({@code \r}) from the
+ * inputstream by skipping over it.
  */
 public final class CrFilterInputStream extends InputStream {
 

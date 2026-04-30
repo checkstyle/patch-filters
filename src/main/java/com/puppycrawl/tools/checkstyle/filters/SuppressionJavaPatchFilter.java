@@ -38,8 +38,8 @@ import com.puppycrawl.tools.checkstyle.api.ExternalResourceHolder;
 import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
 
 /**
- * Filter {@code SuppressionJavaPatchFilter} rejects audit events for Check violations
- * according to a patch file.
+ * Filter {@code SuppressionJavaPatchFilter} rejects audit events for Check
+ * violations according to a patch file.
  *
  * @since 8.34
  */
@@ -61,10 +61,10 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
     private String file;
 
     /**
-     * Control what to do when the file is not existing. If {@code optional} is
-     * set to {@code false} the file must exist, or else it ends with error.
-     * On the other hand if optional is {@code true} and file is not found,
-     * the filter accept all audit events.
+     * Control what to do when the file is not existing. If {@code optional}
+     * is set to {@code false} the file must exist, or else it ends with
+     * error. On the other hand if optional is {@code true} and file is not
+     * found, the filter accept all audit events.
      */
     private boolean optional;
 
@@ -91,9 +91,9 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
     private Set<String> supportContextStrategyChecks;
 
     /**
-     * Set has user defined Checks to never suppress if files are referenced in patch.
-     * This property is useful for Checks that current context strategy can not cover all
-     * violations.
+     * Set has user defined Checks to never suppress if files are referenced
+     * in patch. This property is useful for Checks that current context
+     * strategy can not cover all violations.
      */
     private Set<String> neverSuppressedChecks;
 
@@ -115,7 +115,8 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
     /**
      * Setter to control if only consider added lines in file.
      *
-     * @param strategy tells if only consider added lines is add, should be added or changed.
+     * @param strategy tells if only consider added lines is add, should be
+     *                 added or changed.
      * @since 8.34
      */
     public void setStrategy(String strategy) {
@@ -123,38 +124,44 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
     }
 
     /**
-     * Setter to set has user defined list of Checks need modify violation nodes
-     * to their parent abstract nodes to get their child nodes.
+     * Setter to set has user defined list of Checks need modify violation
+     * nodes to their parent abstract nodes to get their child nodes.
      *
-     * @param checkNamesForContextStrategyByTokenOrParentSet string which is  user defined Checks
-     *                                                         that need modify violation nodes
-     *                                                         to their parent abstract nodes
-     *                                                         to get their child nodes,
-     *                                                         split by comma
+     * @param checkNamesForContextStrategyByTokenOrParentSet
+     *                                 string which is  user defined Checks
+     *                                 that need modify violation nodes
+     *                                 to their parent abstract nodes
+     *                                 to get their child nodes,
+     *                                 split by comma
      *
      * @since 8.34
      */
     public void setCheckNamesForContextStrategyByTokenOrParentSet(
             String checkNamesForContextStrategyByTokenOrParentSet) {
-        final String[] checksArray = checkNamesForContextStrategyByTokenOrParentSet.split(COMMA);
+        final String[] checksArray =
+                checkNamesForContextStrategyByTokenOrParentSet
+                        .split(COMMA);
         this.checkNamesForContextStrategyByTokenOrParentSet =
                 new HashSet<>(Arrays.asList(checksArray));
     }
 
     /**
-     * Setter to set has user defined list of Checks need modify violation nodes
-     * to their ancestor abstract nodes to get their child nodes.
+     * Setter to set has user defined list of Checks need modify violation
+     * nodes to their ancestor abstract nodes to get their child nodes.
      *
-     * @param checkNamesForContextStrategyByTokenOrAncestorSet string which is  user defined Checks
-     *                                                         that need modify violation nodes
-     *                                                         to their ancestor abstract nodes
-     *                                                         to get their child nodes,
-     *                                                         split by comma
+     * @param checkNamesForContextStrategyByTokenOrAncestorSet
+     *                                 string which is  user defined Checks
+     *                                 that need modify violation nodes
+     *                                 to their ancestor abstract nodes
+     *                                 to get their child nodes,
+     *                                 split by comma
      * @since 8.34
      */
     public void setCheckNamesForContextStrategyByTokenOrAncestorSet(
             String checkNamesForContextStrategyByTokenOrAncestorSet) {
-        final String[] checksArray = checkNamesForContextStrategyByTokenOrAncestorSet.split(COMMA);
+        final String[] checksArray =
+                checkNamesForContextStrategyByTokenOrAncestorSet
+                        .split(COMMA);
         this.checkNamesForContextStrategyByTokenOrAncestorSet =
                 new HashSet<>(Arrays.asList(checksArray));
     }
@@ -162,32 +169,38 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
     /**
      * Setter to set has user defined Checks that support context strategy.
      *
-     * @param supportContextStrategyChecks string has user defined checks that support
-     *                                     context strategy
+     * @param supportContextStrategyChecks string has user defined checks that
+     *                                     support context strategy
      * @since 8.34
      */
-    public void setSupportContextStrategyChecks(String supportContextStrategyChecks) {
-        final String[] checksArray = supportContextStrategyChecks.split(COMMA);
+    public void setSupportContextStrategyChecks(
+            String supportContextStrategyChecks) {
+        final String[] checksArray =
+                supportContextStrategyChecks.split(COMMA);
         this.supportContextStrategyChecks = new HashSet<>(Arrays.asList(checksArray));
         this.supportContextStrategyChecks.addAll(SUPPORT_CONTEXT_STRATEGY_CHECKS);
     }
 
     /**
-     * Setter to set has user defined list of Checks to NEVER suppress if files are touched.
+     * Setter to set has user defined list of Checks to NEVER suppress if
+     * files are touched.
      *
-     * @param neverSuppressedChecks string has user defined Checks to never suppress
-     *                              if files are touched, split by comma
+     * @param neverSuppressedChecks string has user defined Checks to never
+     *                              suppress if files are touched, split by
+     *                              comma
      * @since 8.34
      */
     public void setNeverSuppressedChecks(String neverSuppressedChecks) {
-        final String[] checksArray = neverSuppressedChecks.split(COMMA);
-        this.neverSuppressedChecks = new HashSet<>(Arrays.asList(checksArray));
+        final String[] checksArray =
+                neverSuppressedChecks.split(COMMA);
+        this.neverSuppressedChecks =
+                new HashSet<>(Arrays.asList(checksArray));
     }
 
     /**
      * Setter to control what to do when the file is not existing.
-     * If {@code optional} is set to {@code false} the file must exist, or else
-     * it ends with error. On the other hand if optional is {@code true}
+     * If {@code optional} is set to {@code false} the file must exist, or
+     * else it ends with error. On the other hand if optional is {@code true}
      * and file is not found, the filter accept all audit events.
      *
      * @param optional tells if config file existence is optional.
@@ -235,7 +248,8 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
                 final LoadPatchFileUtils loadPatchFileUtils =
                         new LoadPatchFileUtils(fileHeader, strategy);
                 final String fileName = loadPatchFileUtils.getFileName();
-                final List<List<Integer>> lineRangeList = loadPatchFileUtils.getLineRangeList();
+                final List<List<Integer>> lineRangeList =
+                        loadPatchFileUtils.getLineRangeList();
                 final JavaPatchFilterElement element =
                         new JavaPatchFilterElement(fileName, lineRangeList,
                                 strategy,
@@ -246,11 +260,12 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
                 filters.add(element);
             }
         }
-        // -@cs[IllegalCatch] There is no other way to deliver filename that was under
-        // processing when a jgit exception occurs.
+        // -@cs[IllegalCatch] There is no other way to deliver filename that
+        // was under processing when a jgit exception occurs.
         catch (Exception exception) {
-            throw new CheckstyleException("an error occurred when loading patch file "
-                    + file, exception);
+            throw new CheckstyleException(
+                    "an error occurred when loading patch file " + file,
+                    exception);
         }
     }
 

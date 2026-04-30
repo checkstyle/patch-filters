@@ -50,8 +50,9 @@ public final class GeneratePatchFileLauncher {
                     + " <baseConfigFile>"
                     + " <patchConfigFile>"
                     + " <commitIdOrCount>");
-            System.err.println("  commitIdOrCount: a non-negative integer (number of recent"
-                    + " commits) or a comma-separated list of commit SHAs");
+            System.err.println("  commitIdOrCount: a non-negative integer "
+                    + "(number of recent commits) or a comma-separated list "
+                    + "of commit SHAs");
             System.exit(1);
         }
         final String repoPath = args[0];
@@ -65,11 +66,13 @@ public final class GeneratePatchFileLauncher {
                         checkstyleBranch, baseConfigFile, patchConfigFile);
         final String commitParam = args[6];
         if (commitParam.matches("(0|[1-9]\\d*)")) {
-            generatePatchFile.generatePatch(Integer.parseInt(args[6]));
+            generatePatchFile.generatePatch(
+                    Integer.parseInt(args[6]));
         }
         else {
             final String[] commitIds = commitParam.split(",");
-            final Set<String> commitSet = new HashSet<>(Arrays.asList(commitIds));
+            final Set<String> commitSet =
+                    new HashSet<>(Arrays.asList(commitIds));
             generatePatchFile.generatePatch(commitSet);
         }
     }
