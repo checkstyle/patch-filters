@@ -121,24 +121,24 @@ public class GeneratePatchFile {
     /**
      * Init GeneratePatchFile.
      *
-     * @param repoPath           RepoPath of repository that will be checked
-     *                           by checkstyle.
-     * @param testerPath         Path of checkstyle-tester.
-     * @param checkstyleRepoPath Path of checkstyle.
-     * @param checkstyleBranch   Patch-branch of checkstyle.
-     * @param baseConfigFile     BaseConfigFile.
-     * @param patchConfigFile    PatchConfigFile.
+     * @param repoPathValue           RepoPath of repository that will be checked
+     *                                by checkstyle.
+     * @param testerPathValue         Path of checkstyle-tester.
+     * @param checkstyleRepoPathValue Path of checkstyle.
+     * @param checkstyleBranchValue   Patch-branch of checkstyle.
+     * @param baseConfigFileValue     BaseConfigFile.
+     * @param patchConfigFileValue    PatchConfigFile.
      */
-    public GeneratePatchFile(String repoPath, String testerPath,
-                             String checkstyleRepoPath, String checkstyleBranch,
-                             File baseConfigFile, File patchConfigFile) {
-        this.testerPath = testerPath;
-        this.checkstyleRepoPath = checkstyleRepoPath;
-        this.checkstyleBranch = checkstyleBranch;
-        this.baseConfigFile = baseConfigFile;
-        this.patchConfigFile = patchConfigFile;
-        this.repoPath = repoPath;
-        final File gitDir = new File(repoPath, ".git");
+    public GeneratePatchFile(String repoPathValue, String testerPathValue,
+                             String checkstyleRepoPathValue, String checkstyleBranchValue,
+                             File baseConfigFileValue, File patchConfigFileValue) {
+        this.testerPath = testerPathValue;
+        this.checkstyleRepoPath = checkstyleRepoPathValue;
+        this.checkstyleBranch = checkstyleBranchValue;
+        this.baseConfigFile = baseConfigFileValue;
+        this.patchConfigFile = patchConfigFileValue;
+        this.repoPath = repoPathValue;
+        final File gitDir = new File(repoPathValue, ".git");
         try {
             this.repository = new FileRepositoryBuilder().setGitDir(gitDir)
                     .readEnvironment().findGitDir().build();

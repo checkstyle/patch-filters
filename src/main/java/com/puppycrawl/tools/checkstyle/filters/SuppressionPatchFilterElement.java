@@ -51,17 +51,17 @@ public final class SuppressionPatchFilterElement implements Filter {
      * Constructs a {@code SuppressPatchFilterElement} for a
      * file name pattern.
      *
-     * @param fileName      names of filtered files
-     * @param lineRangeList list of line range for line number filtering
-     * @param neverSuppressedChecks set has user defined Checks to never
-     *                              suppress if files are touched
+     * @param fileNameValue      names of filtered files
+     * @param lineRangeListValue list of line range for line number filtering
+     * @param neverSuppressedChecksValue set has user defined Checks to never
+     *                                   suppress if files are touched
      */
-    public SuppressionPatchFilterElement(String fileName,
-                                         List<List<Integer>> lineRangeList,
-                                         Set<String> neverSuppressedChecks) {
-        this.fileName = fileName;
-        this.lineRangeList = lineRangeList;
-        this.neverSuppressedChecks = neverSuppressedChecks;
+    public SuppressionPatchFilterElement(String fileNameValue,
+                                         List<List<Integer>> lineRangeListValue,
+                                         Set<String> neverSuppressedChecksValue) {
+        this.fileName = fileNameValue;
+        this.lineRangeList = lineRangeListValue;
+        this.neverSuppressedChecks = neverSuppressedChecksValue;
     }
 
     @Override

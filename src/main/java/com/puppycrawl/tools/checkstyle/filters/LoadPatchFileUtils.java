@@ -45,12 +45,12 @@ public class LoadPatchFileUtils {
     /**
      * Init LoadPatchFileUtils.
      *
-     * @param fileHeader FileHeader
-     * @param strategy String
+     * @param fileHeaderValue FileHeader
+     * @param strategyValue String
      */
-    public LoadPatchFileUtils(FileHeader fileHeader, Strategy strategy) {
-        this.fileHeader = fileHeader;
-        this.strategy = strategy;
+    public LoadPatchFileUtils(FileHeader fileHeaderValue, Strategy strategyValue) {
+        this.fileHeader = fileHeaderValue;
+        this.strategy = strategyValue;
     }
 
     /**

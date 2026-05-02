@@ -115,19 +115,19 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
     /**
      * Setter to control if only consider added lines in file.
      *
-     * @param strategy tells if only consider added lines is add, should be
+     * @param strategyName tells if only consider added lines is add, should be
      *                 added or changed.
      * @since 8.34
      */
-    public void setStrategy(String strategy) {
-        this.strategy = Strategy.valueOf(strategy.toUpperCase());
+    public void setStrategy(String strategyName) {
+        this.strategy = Strategy.valueOf(strategyName.toUpperCase());
     }
 
     /**
      * Setter to set has user defined list of Checks need modify violation
      * nodes to their parent abstract nodes to get their child nodes.
      *
-     * @param checkNamesForContextStrategyByTokenOrParentSet
+     * @param checkNamesForContextStrategyByTokenOrParentSetValue
      *                                 string which is  user defined Checks
      *                                 that need modify violation nodes
      *                                 to their parent abstract nodes
@@ -137,9 +137,9 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
      * @since 8.34
      */
     public void setCheckNamesForContextStrategyByTokenOrParentSet(
-            String checkNamesForContextStrategyByTokenOrParentSet) {
+            String checkNamesForContextStrategyByTokenOrParentSetValue) {
         final String[] checksArray =
-                checkNamesForContextStrategyByTokenOrParentSet
+                checkNamesForContextStrategyByTokenOrParentSetValue
                         .split(COMMA);
         this.checkNamesForContextStrategyByTokenOrParentSet =
                 new HashSet<>(Arrays.asList(checksArray));
@@ -149,7 +149,7 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
      * Setter to set has user defined list of Checks need modify violation
      * nodes to their ancestor abstract nodes to get their child nodes.
      *
-     * @param checkNamesForContextStrategyByTokenOrAncestorSet
+     * @param checkNamesForContextStrategyByTokenOrAncestorSetValue
      *                                 string which is  user defined Checks
      *                                 that need modify violation nodes
      *                                 to their ancestor abstract nodes
@@ -158,9 +158,9 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
      * @since 8.34
      */
     public void setCheckNamesForContextStrategyByTokenOrAncestorSet(
-            String checkNamesForContextStrategyByTokenOrAncestorSet) {
+            String checkNamesForContextStrategyByTokenOrAncestorSetValue) {
         final String[] checksArray =
-                checkNamesForContextStrategyByTokenOrAncestorSet
+                checkNamesForContextStrategyByTokenOrAncestorSetValue
                         .split(COMMA);
         this.checkNamesForContextStrategyByTokenOrAncestorSet =
                 new HashSet<>(Arrays.asList(checksArray));
@@ -169,14 +169,14 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
     /**
      * Setter to set has user defined Checks that support context strategy.
      *
-     * @param supportContextStrategyChecks string has user defined checks that
+     * @param supportContextStrategyChecksValue string has user defined checks that
      *                                     support context strategy
      * @since 8.34
      */
     public void setSupportContextStrategyChecks(
-            String supportContextStrategyChecks) {
+            String supportContextStrategyChecksValue) {
         final String[] checksArray =
-                supportContextStrategyChecks.split(COMMA);
+                supportContextStrategyChecksValue.split(COMMA);
         this.supportContextStrategyChecks = new HashSet<>(Arrays.asList(checksArray));
         this.supportContextStrategyChecks.addAll(SUPPORT_CONTEXT_STRATEGY_CHECKS);
     }
@@ -185,14 +185,14 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
      * Setter to set has user defined list of Checks to NEVER suppress if
      * files are touched.
      *
-     * @param neverSuppressedChecks string has user defined Checks to never
+     * @param neverSuppressedChecksValue string has user defined Checks to never
      *                              suppress if files are touched, split by
      *                              comma
      * @since 8.34
      */
-    public void setNeverSuppressedChecks(String neverSuppressedChecks) {
+    public void setNeverSuppressedChecks(String neverSuppressedChecksValue) {
         final String[] checksArray =
-                neverSuppressedChecks.split(COMMA);
+                neverSuppressedChecksValue.split(COMMA);
         this.neverSuppressedChecks =
                 new HashSet<>(Arrays.asList(checksArray));
     }
@@ -203,11 +203,11 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
      * else it ends with error. On the other hand if optional is {@code true}
      * and file is not found, the filter accept all audit events.
      *
-     * @param optional tells if config file existence is optional.
+     * @param optionalValue tells if config file existence is optional.
      * @since 8.34
      */
-    public void setOptional(boolean optional) {
-        this.optional = optional;
+    public void setOptional(boolean optionalValue) {
+        this.optional = optionalValue;
     }
 
     @Override
