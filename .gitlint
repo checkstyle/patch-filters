@@ -5,7 +5,7 @@ ignore=body-is-missing,subject-case
 line-length=200
 
 [title-match-regex]
-regex=^(Issue #\d+: .*|Pull #\d+: .*|(minor|config|infra|doc|spelling|dependency): .*)$
+regex=^(Issue #\d+: .*|Pull #\d+: .*|(minor|config|infra|doc|spelling|dependency): .*|Bump .*)$
 
 [title-trailing-punctuation]
 
