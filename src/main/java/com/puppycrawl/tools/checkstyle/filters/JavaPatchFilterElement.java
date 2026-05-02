@@ -121,53 +121,53 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
      * Constructs a {@code SuppressPatchFilterElement} for a
      * file name pattern.
      *
-     * @param fileName                 names of filtered files
-     * @param lineRangeList            list of line range for line number
-     *                                 filtering
-     * @param strategy                 strategy that used
-     * @param checkNamesForContextStrategyByTokenOrParentSet
-     *                                 user defined Checks that need modify
-     *                                 violation nodes to their parent
-     *                                 abstract nodes to get their child
-     *                                 nodes
-     * @param checkNamesForContextStrategyByTokenOrAncestorSet
-     *                                 user defined Checks that need modify
-     *                                 violation nodes to their ancestor
-     *                                 abstract nodes to get their child
-     *                                 nodes
-     * @param supportContextStrategyChecks
-     *                                 user defined Checks that support
-     *                                 context strategy
-     * @param neverSuppressedChecks    set has user defined Checks to never
-     *                                 suppress if files are touched
+     * @param fileNameValue                 names of filtered files
+     * @param lineRangeListValue            list of line range for line number
+     *                                      filtering
+     * @param strategyValue                 strategy that used
+     * @param checkNamesForContextStrategyByTokenOrParentSetValue
+     *                                      user defined Checks that need modify
+     *                                      violation nodes to their parent
+     *                                      abstract nodes to get their child
+     *                                      nodes
+     * @param checkNamesForContextStrategyByTokenOrAncestorSetValue
+     *                                      user defined Checks that need modify
+     *                                      violation nodes to their ancestor
+     *                                      abstract nodes to get their child
+     *                                      nodes
+     * @param supportContextStrategyChecksValue
+     *                                      user defined Checks that support
+     *                                      context strategy
+     * @param neverSuppressedChecksValue    set has user defined Checks to never
+     *                                      suppress if files are touched
      */
-    public JavaPatchFilterElement(String fileName,
-                                   List<List<Integer>> lineRangeList,
-                                   Strategy strategy,
+    public JavaPatchFilterElement(String fileNameValue,
+                                   List<List<Integer>> lineRangeListValue,
+                                   Strategy strategyValue,
                                    Set<String>
-                                           checkNamesForContextStrategyByTokenOrParentSet,
+                                           checkNamesForContextStrategyByTokenOrParentSetValue,
                                    Set<String>
-                                           checkNamesForContextStrategyByTokenOrAncestorSet,
+                                           checkNamesForContextStrategyByTokenOrAncestorSetValue,
                                    Set<String>
-                                           supportContextStrategyChecks,
+                                           supportContextStrategyChecksValue,
                                    Set<String>
-                                           neverSuppressedChecks) {
-        this.fileName = fileName;
-        this.lineRangeList = lineRangeList;
-        this.strategy = strategy;
-        if (checkNamesForContextStrategyByTokenOrParentSet != null) {
+                                           neverSuppressedChecksValue) {
+        this.fileName = fileNameValue;
+        this.lineRangeList = lineRangeListValue;
+        this.strategy = strategyValue;
+        if (checkNamesForContextStrategyByTokenOrParentSetValue != null) {
             this.checkNamesForContextStrategyByTokenOrParentSet.addAll(
-                    checkNamesForContextStrategyByTokenOrParentSet);
+                    checkNamesForContextStrategyByTokenOrParentSetValue);
         }
-        if (checkNamesForContextStrategyByTokenOrAncestorSet != null) {
+        if (checkNamesForContextStrategyByTokenOrAncestorSetValue != null) {
             this.checkNamesForContextStrategyByTokenOrAncestorSet.addAll(
-                    checkNamesForContextStrategyByTokenOrAncestorSet);
+                    checkNamesForContextStrategyByTokenOrAncestorSetValue);
         }
-        if (supportContextStrategyChecks != null) {
+        if (supportContextStrategyChecksValue != null) {
             this.supportContextStrategyChecks.addAll(
-                    supportContextStrategyChecks);
+                    supportContextStrategyChecksValue);
         }
-        this.neverSuppressedChecks = neverSuppressedChecks;
+        this.neverSuppressedChecks = neverSuppressedChecksValue;
     }
 
     @Override
