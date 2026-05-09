@@ -51,6 +51,16 @@ public final class GeneratePatchFileWithGitCommandLauncher {
      */
     private static final int GIT_COMMAND_ARG_INDEX = 7;
 
+    /**
+     * Required number of command line arguments.
+     */
+    private static final int REQUIRED_ARGS = 8;
+
+    /**
+     * Exit code for invalid arguments.
+     */
+    private static final int EXIT_CODE_INVALID_ARGS = 1;
+
     private GeneratePatchFileWithGitCommandLauncher() {
 
     }
@@ -62,8 +72,7 @@ public final class GeneratePatchFileWithGitCommandLauncher {
      * @throws Exception exception
      */
     public static void main(String[] args) throws Exception {
-        final int requiredArgs = 8;
-        if (args.length < requiredArgs) {
+        if (args.length < REQUIRED_ARGS) {
             System.err.println(
                     "Usage: GeneratePatchFileWithGitCommandLauncher"
                     + " <repoPath>"
@@ -77,7 +86,7 @@ public final class GeneratePatchFileWithGitCommandLauncher {
             System.err.println("  commitCount: a non-negative integer");
             System.err.println(
                     "  gitCommand:  git command string to generate the patch");
-            System.exit(1);
+            System.exit(EXIT_CODE_INVALID_ARGS);
         }
         final String repoPath = args[0];
         final String checkstyleRepoPath = args[1];

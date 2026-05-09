@@ -17,8 +17,6 @@
                      |TranslationCheckTest|LocalizedMessageTest|AbstractFileSetCheckTest|
                      |AbstractCheckTest|AutomaticBeanTest|GeneratePatchFile|
                      |AbstractPatchFilterEvaluationTest)\.java"/>
-    <suppress checks="MagicNumber"
-            files="GeneratePatchFileLauncher|GeneratePatchFileWithGitCommandLauncher\.java"/>
     <suppress checks="UncommentedMain"
             files="GeneratePatchFileLauncher|GeneratePatchFileWithGitCommandLauncher\.java"/>
     

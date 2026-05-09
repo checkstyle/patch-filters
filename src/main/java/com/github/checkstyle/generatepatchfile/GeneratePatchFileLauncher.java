@@ -49,6 +49,16 @@ public final class GeneratePatchFileLauncher {
      */
     private static final int COMMIT_PARAM_ARG_INDEX = 6;
 
+    /**
+     * Required number of command line arguments.
+     */
+    private static final int REQUIRED_ARGS = 7;
+
+    /**
+     * Exit code for invalid arguments.
+     */
+    private static final int EXIT_CODE_INVALID_ARGS = 1;
+
     private GeneratePatchFileLauncher() {
 
     }
@@ -60,8 +70,7 @@ public final class GeneratePatchFileLauncher {
      * @throws Exception exception
      */
     public static void main(String[] args) throws Exception {
-        final int requiredArgs = 7;
-        if (args.length < requiredArgs) {
+        if (args.length < REQUIRED_ARGS) {
             System.err.println("Usage: GeneratePatchFileLauncher"
                     + " <repoPath>"
                     + " <checkstyleRepoPath>"
@@ -73,7 +82,7 @@ public final class GeneratePatchFileLauncher {
             System.err.println("  commitIdOrCount: a non-negative integer "
                     + "(number of recent commits) or a comma-separated list "
                     + "of commit SHAs");
-            System.exit(1);
+            System.exit(EXIT_CODE_INVALID_ARGS);
         }
         final String repoPath = args[0];
         final String checkstyleRepoPath = args[1];
