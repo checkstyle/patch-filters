@@ -80,6 +80,12 @@ public class LoadPatchFileUtils {
         return lineRangeList;
     }
 
+    /**
+     * Adds a single line range to the list based on the edit type and strategy.
+     *
+     * @param lineRangeList the list to add the line range to
+     * @param edit the edit to process
+     */
     private void addSingleLineRange(List<List<Integer>> lineRangeList,
                                     Edit edit) {
         if (Strategy.NEWLINE == strategy) {
@@ -106,6 +112,13 @@ public class LoadPatchFileUtils {
         }
     }
 
+    /**
+     * Gets the line range from an edit if it matches the specified types.
+     *
+     * @param edit the edit to process
+     * @param typeList the list of edit types to match
+     * @return the line range as a list of two integers, or null if type doesn't match
+     */
     private static List<Integer> getLineRange(Edit edit,
                                               List<Edit.Type> typeList) {
         List<Integer> lineRange = null;

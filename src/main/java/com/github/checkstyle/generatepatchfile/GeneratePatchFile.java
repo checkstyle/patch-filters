@@ -211,6 +211,12 @@ public class GeneratePatchFile {
         checkout(headSha);
     }
 
+    /**
+     * Gets the SHA of the current HEAD commit.
+     *
+     * @return the HEAD commit SHA
+     * @throws Exception if git command fails
+     */
     private String getHeadSha() throws Exception {
         runShellCommand("git rev-parse HEAD > HEAD_SHA");
         final Path path = new File(repoPath, "HEAD_SHA").toPath();
@@ -219,6 +225,12 @@ public class GeneratePatchFile {
         return headSha;
     }
 
+    /**
+     * Retrieves all commits from the repository.
+     *
+     * @return list of all commits
+     * @throws Exception if git operation fails
+     */
     private List<RevCommit> getAllCommits() throws Exception {
         final Iterable<RevCommit> commits =
                 git.log().add(repository.resolve("HEAD")).call();
@@ -232,6 +244,14 @@ public class GeneratePatchFile {
         return commitList;
     }
 
+    /**
+     * Generates a diff patch between two commits.
+     *
+     * @param commitOld the older commit
+     * @param commitNew the newer commit
+     * @throws Exception if patch generation fails
+     * @throws IOException if patch file cannot be moved
+     */
     private void generateTwoCommitDiffPatch(RevCommit commitOld,
                                             RevCommit commitNew)
             throws Exception {
@@ -273,6 +293,15 @@ public class GeneratePatchFile {
         }
     }
 
+    /**
+     * Generates a diff patch using git command.
+     *
+     * @param headNum the HEAD number
+     * @param patchFormat the patch format (show, diff, or format)
+     * @throws Exception if patch generation fails
+     * @throws IllegalArgumentException if patchFormat is invalid
+     * @throws IOException if patch file cannot be moved
+     */
     private void generateDiffPatchWithGitCommand(int headNum, String patchFormat)
             throws Exception {
         if ("show".equals(patchFormat)) {
@@ -316,6 +345,13 @@ public class GeneratePatchFile {
         }
     }
 
+    /**
+     * Runs a shell command in the repository directory.
+     *
+     * @param command the shell command to execute
+     * @throws Exception if command execution fails
+     * @throws IllegalStateException if command returns non-zero exit code
+     */
     private void runShellCommand(String command) throws Exception {
         final List<String> cmds = new ArrayList<>();
         cmds.add("sh");
@@ -333,6 +369,14 @@ public class GeneratePatchFile {
         }
     }
 
+    /**
+     * Creates a destination directory with the given subdirectory name.
+     *
+     * @param subDirName the subdirectory name
+     * @return the created directory file
+     * @throws Exception if directory already exists or creation fails
+     * @throws IOException if directory already exists
+     */
     private File createDestDirName(String subDirName) throws Exception {
         final File destDirFile = new File(diffReportDirName, subDirName);
         if (destDirFile.exists()) {
@@ -341,6 +385,12 @@ public class GeneratePatchFile {
         return destDirFile;
     }
 
+    /**
+     * Checks out HEAD~1 using git command.
+     *
+     * @throws Exception if checkout fails
+     * @throws IllegalStateException if git checkout command fails
+     */
     private void checkoutWithGitCommand() throws Exception {
         final Process process = new ProcessBuilder()
                 .directory(new File(repoPath))
@@ -354,10 +404,24 @@ public class GeneratePatchFile {
         }
     }
 
+    /**
+     * Checks out a specific commit.
+     *
+     * @param commitName the commit name or SHA to checkout
+     * @throws Exception if checkout fails
+     */
     private void checkout(String commitName) throws Exception {
         git.checkout().setName(commitName).call();
     }
 
+    /**
+     * Generates Checkstyle reports by running diff.groovy.
+     *
+     * @return the reports directory
+     * @throws InterruptedException if process is interrupted
+     * @throws IOException if report directory is invalid
+     * @throws IllegalStateException if diff.groovy execution fails
+     */
     private File generate()
             throws InterruptedException, IOException {
         final Process process = new ProcessBuilder()
@@ -386,11 +450,19 @@ public class GeneratePatchFile {
         return reportDir;
     }
 
+    /**
+     * Extracts the simple repository name from the repository path.
+     *
+     * @return the repository name
+     */
     private String getSimpleRepoName() {
         final String[] repoPaths = repoPath.split("/");
         return repoPaths[repoPaths.length - 1];
     }
 
+    /**
+     * Generates a summary index.html file for all generated reports.
+     */
     private void generateSummaryIndexHtml() {
         final File indexFile = new File(diffReportDirName, "index.html");
         try (FileWriter out = new FileWriter(indexFile)) {
