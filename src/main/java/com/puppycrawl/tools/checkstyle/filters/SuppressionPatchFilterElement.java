@@ -156,6 +156,13 @@ public final class SuppressionPatchFilterElement implements Filter {
         return result;
     }
 
+    /**
+     * Checks if the check name set contains the event's check short name.
+     *
+     * @param checkNameSet the set of check names
+     * @param event the audit event
+     * @return true if the set contains the check short name
+     */
     private static boolean containsShortName(Set<String> checkNameSet,
                                       AuditEvent event) {
         final String checkShortName = getCheckShortName(event);
@@ -165,6 +172,12 @@ public final class SuppressionPatchFilterElement implements Filter {
 
     }
 
+    /**
+     * Gets the short check name from the event.
+     *
+     * @param event the audit event
+     * @return the short check name
+     */
     private static String getCheckShortName(AuditEvent event) {
         final String[] checkNames =
                 event.getViolation().getSourceName().split("\\.");

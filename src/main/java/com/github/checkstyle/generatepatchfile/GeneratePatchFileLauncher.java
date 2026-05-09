@@ -59,6 +59,9 @@ public final class GeneratePatchFileLauncher {
      */
     private static final int EXIT_CODE_INVALID_ARGS = 1;
 
+    /**
+     * Private constructor to prevent instantiation.
+     */
     private GeneratePatchFileLauncher() {
 
     }

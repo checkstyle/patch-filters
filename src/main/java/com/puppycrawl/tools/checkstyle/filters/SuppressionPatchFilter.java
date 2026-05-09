@@ -156,6 +156,11 @@ public final class SuppressionPatchFilter extends AutomaticBean
         }
     }
 
+    /**
+     * Loads and parses the patch file to create filter elements.
+     *
+     * @throws CheckstyleException if patch file cannot be loaded or parsed
+     */
     private void loadPatchFile() throws CheckstyleException {
         try (InputStream is = new CrFilterInputStream(new FileInputStream(file))) {
             final Patch patch = new Patch();

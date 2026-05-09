@@ -242,6 +242,12 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
         return result;
     }
 
+    /**
+     * Checks if the current line matches any line range in the patch.
+     *
+     * @param currentLine the line number to check
+     * @return true if the line matches a range in the patch
+     */
     private boolean lineMatching(int currentLine) {
         boolean result = false;
         for (List<Integer> singleLineRangeList : lineRangeList) {
@@ -318,6 +324,12 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
         return result;
     }
 
+    /**
+     * Gets the ancestor AST node for the event based on the check's context strategy.
+     *
+     * @param event the TreeWalkerAuditEvent
+     * @return the ancestor AST node, or null if not found
+     */
     private DetailAST getAncestorAst(TreeWalkerAuditEvent event) {
         DetailAST eventAst = getEventAst(event);
         if (containsShortName(
@@ -358,12 +370,24 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
 
     }
 
+    /**
+     * Gets the check name from the event.
+     *
+     * @param event the TreeWalkerAuditEvent
+     * @return the check name
+     */
     private static String getCheckName(TreeWalkerAuditEvent event) {
         final String[] checkNames = event.violation()
                 .getSourceName().split("\\.");
         return checkNames[checkNames.length - 1];
     }
 
+    /**
+     * Gets the short check name (without "Check" suffix) from the event.
+     *
+     * @param event the TreeWalkerAuditEvent
+     * @return the short check name
+     */
     private static String getCheckShortName(TreeWalkerAuditEvent event) {
         return getCheckName(event).replaceAll("Check", "");
     }
