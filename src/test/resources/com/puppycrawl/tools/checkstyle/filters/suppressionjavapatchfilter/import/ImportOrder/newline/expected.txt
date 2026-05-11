@@ -1,1 +1,1 @@
-Test.java:5:1: Wrong order for 'java.awt.DefaultFocusTraversalPolicy' import.
+Test.java:5:1: Wrong lexicographical order for 'java.awt.DefaultFocusTraversalPolicy' import. Should be before 'java.awt.Dialog'.
