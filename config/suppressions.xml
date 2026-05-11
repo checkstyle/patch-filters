@@ -14,11 +14,5 @@
                      |AbstractPatchFilterEvaluationTest)\.java"/>
     <suppress checks="UncommentedMain"
             files="GeneratePatchFileLauncher|GeneratePatchFileWithGitCommandLauncher\.java"/>
-    
-    <!-- Suppressions for checkstyle 13.3.0 upgrade - to be resolved incrementally -->
-    <!-- Issue #382: Suppress violations introduced by dependency bump to v13.3.0 -->
-    <suppress checks="LineLength" files=".*\.java"/>
-    <suppress checks="FinalParameters" files=".*\.java"/>
-    <suppress checks="RightCurly" files=".*\.java"/>
-    <suppress checks="Translation" files=".*\.properties"/>
+
 </suppressions>
