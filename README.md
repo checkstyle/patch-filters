@@ -43,58 +43,61 @@ checks `Translation` and `UniqueProperties`:
     <property name="neverSuppressedChecks" value="Translation,UniqueProperties" />
 </module>
 ```
-
 ### SuppressionJavaPatchFilter
 
-Filter SuppressionJavaPatchFilter(TreeWalker level) has three different strategies that control suppression
-scope. if property `strategy` is set to `newline`, then it only accepts TreeWalker audit events for TreeWalker
-Check violations whose line number belong to added lines in patch file and will suppress all TreeWalker Checks’
-violation messages which are not from added lines. if property `strategy` is set to `patchedline`, it will accept
-all violations whose line number belong to added/changed lines in patch file. if property `strategy` is set to `context`,
-for checks listed in `supportContextStrategyChecks`, it will not only accept violations whose line number belong to added/changed/deleted lines,
-but also consider a wider context that new code introduces violations outside of added/changed lines, but its child nodes in added/changed lines,
-for checks not listed in `supportContextStrategyChecks`, it will accept violations whose line number belong to added/changed/deleted lines in patch file.
-If there is no configured patch file or the optional is set to true and patch file was not found the Filter suppresses all audit events.
+Filter SuppressionJavaPatchFilter (TreeWalker level) supports three strategies for controlling which
+violations get suppressed:
 
-Note that it's ok to use all four properties (`supportContextStrategyChecks`, `checkNameForContextStrategyByTokenOrParentSet`, `checkNameForContextStrategyByTokenOrAncestorSet`,
-`neverSuppressedChecks`), and the context scope of the three is also growing, for TreeWalker checks only in one of the property, its context scope is the same as that property,
-if in two or all properties, then The context scope is the maximum scope. 
+- `newline` — only accepts violations on lines that were added in the patch
+- `patchedline` — accepts violations on added or changed lines
+- `context` — for checks registered in `contextStrategy`, it widens the window: it accepts violations
+  whose AST scope (own node, parent, or ancestor) overlaps with any changed line, not just the exact
+  violation line. For all other checks it falls back to line-by-line matching.
 
-Attention: `supportContextStrategyChecks` and `checkNameForContextStrategyByTokenOrParentSet`, `checkNameForContextStrategyByTokenOrAncestorSet` 
-only have effect when the `strategy` property is set to `context`, `neverSuppressedChecks` is no such requirement.
+If no patch file is configured, or `optional` is `true` and the file is missing, the filter suppresses
+all audit events.
 
 #### Properties
 
- | name                                             | description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | type                                                                     | default value |
- |--------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|---------------|
- | file                                             | Specify the location of the patch file.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
- | optional                                         | Control what to do when the file is not existing. If `optional` is set to `false` the file must exist, or else it ends with error. On the other hand if optional is `true` and file is not found, the filter suppresses all audit events.                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | [boolean](https://checkstyle.sourceforge.io/property_types.html#boolean) | false         |
- | strategy                                         | Control suppression scope that you need. If `startegy` is set to `newline`, it only accepts TreeWalker audit events for TreeWalker Check violations whose line number belong to added lines in patch file. `patchedline` will accept added/changed lines. if `strategy` is set to `context` , for checks listed in `supportContextStrategyChecks`, it will accept violations whose line number belong to added/changed/deleted lines and new code introduces violations outside of added/changed lines, but its child nodes in added/changed lines, for checks not listed in `supportContextStrategyChecks`, it will accept violations whose line number belong to added/changed/deleted lines in patch file. | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | newline       |
- | supportContextStrategyChecks                     | String has user defined Checks that support context strategy                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
- | checkNamesForContextStrategyByTokenOrParentSet   | String has user defined TreeWalker Checks that need modify violation nodes to their parent node to expand the context scope, split by comma                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
- | checkNamesForContextStrategyByTokenOrAncestorSet | String has user defined TreeWalker Checks that need modify violation nodes to their ancestor node to expand the context scope, split by comma                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
- | neverSuppressedChecks                            | String has user defined TreeWalker Checks to never suppress if files are touched, split by comma. This property is useful for Checks that place violation on whole file or on not all (first/last) occurrence of cause/violated code.                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
+ | name                                             | description                                                                                                                                                                                                                                                                                              | type                                                                     | default value |
+ |--------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|---------------|
+ | file                                             | Path to the patch file.                                                                                                                                                                                                                                                                                  | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
+ | optional                                         | If `false`, the patch file must exist or the run fails. If `true` and the file is missing, all audit events are suppressed.                                                                                                                                                                              | [boolean](https://checkstyle.sourceforge.io/property_types.html#boolean) | false         |
+ | strategy                                         | Suppression scope. `newline` matches added lines only, `patchedline` matches added or changed lines, `context` uses AST-scope matching for registered checks and line matching for the rest.                                                                                                              | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | newline       |
+ | contextStrategy                                  | **Preferred.** Comma-separated list of `CheckName:SCOPE` or `CheckName:TOKEN_TYPE` entries. `SCOPE` is one of `SELF` (violation's own node), `PARENT` (immediate parent node), or `ANCESTOR` (walk up using the built-in token map). `TOKEN_TYPE` is any Checkstyle `TokenTypes` constant (e.g. `LITERAL_SWITCH`, `CLASS_DEF`) — walks up to the first ancestor of that type, which works for any check including custom ones. Only applies when `strategy` is `context`. | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
+ | neverSuppressedChecks                            | Comma-separated list of checks that should never be suppressed when the file is touched. Useful for checks that report at file level or on the first/last occurrence of a pattern.                                                                                                                       | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
+ | supportContextStrategyChecks                     | **Deprecated** since 10.x — use `contextStrategy` with `CheckName:SELF` instead. Comma-separated checks that use their own AST node as the context window.                                                                                                                                              | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
+ | checkNamesForContextStrategyByTokenOrParentSet   | **Deprecated** since 10.x — use `contextStrategy` with `CheckName:PARENT` instead. Comma-separated checks that walk up to the immediate parent node.                                                                                                                                                    | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
+ | checkNamesForContextStrategyByTokenOrAncestorSet | **Deprecated** since 10.x — use `contextStrategy` with an explicit token type (e.g. `FallThrough:LITERAL_SWITCH`) instead. Comma-separated checks that walk up to a specific ancestor; the token type was previously hardcoded internally.                                                               | [String](https://checkstyle.sourceforge.io/property_types.html#String)   | null          |
+
+#### contextStrategy scope guide
+
+| Use | When |
+|-----|------|
+| `CheckName:SELF` | The check reports the violation on the exact node it cares about |
+| `CheckName:PARENT` | The violation is on a child token but context is one level up |
+| `CheckName:LITERAL_SWITCH` (or any TokenTypes name) | The violation is deeply nested; you know the enclosing token type |
+| `CheckName:ANCESTOR` | The violation is deeply nested and the check is in the built-in list below (legacy support) |
 
 #### Notes
 
-Currently, the following checks support `checkNamesForContextStrategyByTokenOrAncestorSet` property, 
-other checks using this property will get the same effect like `checkNamesForContextStrategyByTokenOrParentSet`:
+The following checks have built-in ancestor token mappings and work with both `ANCESTOR` and their
+explicit token type via `contextStrategy`:
 
-* ArrayTrailingComma
-* AvoidNestedBlocks
-* CommentsIndentation
-* DefaultComesLast
-* DeclarationOrder
-* EqualsHashCode
-* FinalLocalVariable
-* FallThrough
-* RightCurly
+* ArrayTrailingComma — walks to `ARRAY_INIT`
+* AvoidNestedBlocks — walks to `SLIST`
+* CommentsIndentation — walks to `METHOD_DEF`, `SLIST`, `CLASS_DEF`, `INTERFACE_DEF`, `RECORD_DEF`, `ENUM_DEF`
+* DefaultComesLast — walks to `LITERAL_SWITCH`
+* DeclarationOrder — walks to `CLASS_DEF`, `INTERFACE_DEF`, `ENUM_DEF`
+* EqualsHashCode — walks to `CLASS_DEF`
+* FinalLocalVariable — walks to `METHOD_DEF`, `VARIABLE_DEF`, `CTOR_DEF`
+* FallThrough — walks to `LITERAL_SWITCH`
+* InnerTypeLast — walks to `CLASS_DEF`, `INTERFACE_DEF`, `RECORD_DEF`, `ENUM_DEF`
+* RightCurly — walks to `LITERAL_TRY`, `LITERAL_IF`
+* VariableDeclarationUsageDistance — walks to `SLIST`
 
-#### Notes
-
-Currently, the following checks will suppress some violations that should not be suppressed when using `supportContextStrategyChecks`. 
-And you can use `checkNamesForContextStrategyByTokenOrParentSet`, `checkNamesForContextStrategyByTokenOrAncestorSet` 
-or `neverSuppressedChecks` to get the larger context scope to solve this problem:
+The following checks suppress more than expected when using `SELF` scope and need `PARENT`,
+an explicit token type, or `neverSuppressedChecks` instead:
 
 * ParameterNumberCheck
 * SuperClone
@@ -103,8 +106,8 @@ or `neverSuppressedChecks` to get the larger context scope to solve this problem
 * OverloadMethodsDeclarationOrder
 * UnnecessarySemicolonInEnumeration
 
-Also, the following checks will suppress some violations that should not be suppressed when using `supportContextStrategyChecks` or `checkNamesForContextStrategyByTokenOrParentSet`. 
-So you need use `checkNamesForContextStrategyByTokenOrAncestorSet` or `neverSuppressedChecks` to solve this problem:
+The following checks suppress more than expected even with `PARENT` and need an explicit token type
+or `neverSuppressedChecks`:
 
 * ArrayTrailingComma
 * AvoidNestedBlocks
@@ -117,8 +120,7 @@ So you need use `checkNamesForContextStrategyByTokenOrAncestorSet` or `neverSupp
 * RightCurly
 * VariableDeclarationUsageDistance
 
-Then the following checks will suppress some violations that should not be suppressed unless you use 
-`neverSuppressedChecks`:
+The following checks need `neverSuppressedChecks` regardless of scope:
 
 * CovariantEquals
 * EmptyLineSeparator
@@ -140,8 +142,7 @@ Then the following checks will suppress some violations that should not be suppr
 
 #### Examples
 
-For example, the following configuration fragment directs the Checker to use a SuppressionJavaPatchFilter
-with patch file config/file.patch and strategy is `newline`:
+Basic setup with `newline` strategy:
 ```xml
 <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter">
     <property name="file" value="config/file.patch" />
@@ -149,8 +150,7 @@ with patch file config/file.patch and strategy is `newline`:
 </module>
 ```
 
-the following configuration fragment directs the Checker to use a SuppressionJavaPatchFilter
-with patch file config/file.patch and strategy is `patchedline`:
+Using `patchedline` to cover added and changed lines:
 ```xml
 <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter">
     <property name="file" value="config/file.patch" />
@@ -158,29 +158,43 @@ with patch file config/file.patch and strategy is `patchedline`:
 </module>
 ```
 
-the following configuration fragment directs the Checker to use a SuppressionJavaPatchFilter
-with patch file config/file.patch, whose strategy is `context`,
-support context strategy check `MethodLength` and never suppress checks `EmptyBlock` and `HiddenField`:
+Using `context` with the new unified `contextStrategy` property (recommended):
 ```xml
 <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter">
     <property name="file" value="config/file.patch" />
     <property name="strategy" value="context" />
-    <property name="supportContextStrategyChecks" value="MethodLength," />
+    <!-- SELF: use the check's own AST node as the context window -->
+    <!-- PARENT: walk up to the immediate parent node -->
+    <!-- LITERAL_SWITCH: explicit token type — walk up to the enclosing switch statement -->
+    <property name="contextStrategy"
+              value="MethodLength:SELF,
+                     SuperFinalize:PARENT,
+                     FallThrough:LITERAL_SWITCH,
+                     EqualsHashCode:CLASS_DEF" />
     <property name="neverSuppressedChecks" value="EmptyBlock,HiddenField" />
 </module>
 ```
 
-the following configuration fragment directs the Checker to use a SuppressionJavaPatchFilter
-with patch file config/file.patch, whose strategy is `context`,
-expand `SuperFinalize`'s context scope to parents' node 
-and expand `EqualsHashCode`, `FinalLocalVariable`'s context scope to ancestors' node :
+Migrating from the old three properties to `contextStrategy`:
 ```xml
+<!-- OLD (deprecated but still works) -->
 <module name="com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter">
     <property name="file" value="config/file.patch" />
     <property name="strategy" value="context" />
-    <property name="checkNamesForContextStrategyByTokenOrParentSet" value="SuperFinalize," />
+    <property name="supportContextStrategyChecks" value="MethodLength" />
+    <property name="checkNamesForContextStrategyByTokenOrParentSet" value="SuperFinalize" />
     <property name="checkNamesForContextStrategyByTokenOrAncestorSet" value="EqualsHashCode,FinalLocalVariable" />
 </module>
+
+<!-- NEW (equivalent, single property) -->
+<module name="com.puppycrawl.tools.checkstyle.filters.SuppressionJavaPatchFilter">
+    <property name="file" value="config/file.patch" />
+    <property name="strategy" value="context" />
+    <property name="contextStrategy"
+              value="MethodLength:SELF, SuperFinalize:PARENT,
+                     EqualsHashCode:CLASS_DEF, FinalLocalVariable:METHOD_DEF" />
+</module>
+```
 ```
 
 ## PatchFilter Report Setup
