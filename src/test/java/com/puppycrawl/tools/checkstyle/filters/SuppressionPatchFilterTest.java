@@ -52,6 +52,12 @@ public class SuppressionPatchFilterTest extends AbstractPatchFilterEvaluationTes
     }
 
     @Test
+    public void testRenameWithModification() throws Exception {
+        testByConfig("RenameWithModification/newline/defaultContextConfig.xml");
+        testByConfig("RenameWithModification/patchedline/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testFileLength() throws Exception {
         testByConfig("FileLength/newline/defaultContextConfig.xml");
         testByConfig("FileLength/newline/zeroContextConfig.xml");
