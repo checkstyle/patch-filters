@@ -92,16 +92,16 @@ public class GitDiffOnOpenSourceTest extends AbstractModuleTestSupport {
     }
 
     private static SuppressionPatchFilter
+        createSuppressionPatchFilter(String fileName) throws Exception {
+        return createSuppressionPatchFilter(fileName, "patchedline");
+    }
+
+    private static SuppressionPatchFilter
         createSuppressionPatchFilter(String fileName, String strategy) throws Exception {
         final SuppressionPatchFilter suppressionPatchFilter = new SuppressionPatchFilter();
         suppressionPatchFilter.setFile(fileName);
         suppressionPatchFilter.setStrategy(strategy);
         suppressionPatchFilter.finishLocalSetup();
         return suppressionPatchFilter;
-    }
-
-    private static SuppressionPatchFilter
-        createSuppressionPatchFilter(String fileName) throws Exception {
-        return createSuppressionPatchFilter(fileName, "patchedline");
     }
 }
