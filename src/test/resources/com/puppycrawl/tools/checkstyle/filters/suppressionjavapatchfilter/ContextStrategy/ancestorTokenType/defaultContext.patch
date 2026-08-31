@@ -1,0 +1,23 @@
+diff --git a/Test.java b/Test.java
+index 397f121..cf434a7 100644
+--- a/Test.java
++++ b/Test.java
+@@ -5,9 +5,9 @@ public class Test {
+         switch (i) {
+             case 0:
+                 i++;
++                break;
+             case 1:
+                 i++;
+-                // falls through
+             case 2:  // violation without filter
+             case 3:
+             case 4: {
+@@ -19,7 +19,6 @@ public class Test {
+                 i++;
+             case 7:  // violation without filter
+                 i++;
+-                break;
+         }
+     }
+ }

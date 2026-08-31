@@ -21,6 +21,7 @@ package com.puppycrawl.tools.checkstyle.filters;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -33,7 +34,8 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 /**
- * This filter element is immutable and processes.
+ * Immutable filter element that decides whether to suppress a single violation
+ * for one file in the patch. Used internally by {@code SuppressionJavaPatchFilter}.
  */
 public final class JavaPatchFilterElement implements TreeWalkerFilter {
     /**
@@ -47,7 +49,10 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     private static final String MAX = "max";
 
     /**
-     * Mapping between a check and its ancestor token types.
+     * Default ancestor token types for known checks, used when a check is
+     * registered with {@link ContextScope#ANCESTOR} but the user has not
+     * supplied an explicit token type via {@code contextStrategy}.
+     * For example, {@code FallThrough} maps to {@code LITERAL_SWITCH}.
      */
     private static final Map<String, List<Integer>>
             CHECK_TO_ANCESTOR_NODES_MAP = new HashMap<>();
@@ -87,23 +92,18 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     /**
-     * Set of checks that support context strategy but need modify violation
-     * nodes to their parent abstract nodes to get their child nodes.
+     * Maps each check name (short or full class name) to its context scope.
+     * Built from the {@code contextStrategy} property, or from the old deprecated
+     * setters for backward compatibility.
      */
-    private final Set<String> checkNamesForContextStrategyByTokenOrParentSet =
-            new HashSet<>();
+    private final Map<String, ContextScope> contextStrategyMap;
 
     /**
-     * Set of checks that support context strategy but need modify violation
-     * nodes to their ancestor abstract nodes to get their child nodes.
+     * Explicit ancestor token types supplied by the user via {@code contextStrategy},
+     * for example {@code FallThrough:LITERAL_SWITCH}. Takes priority over
+     * {@link #CHECK_TO_ANCESTOR_NODES_MAP} when present.
      */
-    private final Set<String> checkNamesForContextStrategyByTokenOrAncestorSet =
-            new HashSet<>();
-
-    /**
-     * Set has user defined Checks that support context strategy.
-     */
-    private final Set<String> supportContextStrategyChecks = new HashSet<>();
+    private final Map<String, List<Integer>> userDefinedAncestorTokensMap;
 
     /** The String of file names. */
     private final String fileName;
@@ -122,56 +122,44 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     private final Strategy strategy;
 
     /**
-     * Constructs a {@code SuppressPatchFilterElement} for a
-     * file name pattern.
+     * Creates a filter element for one file in the patch.
      *
-     * @param fileNameValue                 names of filtered files
-     * @param lineRangeListValue            list of line range for line number
-     *                                      filtering
-     * @param strategyValue                 strategy that used
-     * @param checkNamesForContextStrategyByTokenOrParentSetValue
-     *                                      user defined Checks that need modify
-     *                                      violation nodes to their parent
-     *                                      abstract nodes to get their child
-     *                                      nodes
-     * @param checkNamesForContextStrategyByTokenOrAncestorSetValue
-     *                                      user defined Checks that need modify
-     *                                      violation nodes to their ancestor
-     *                                      abstract nodes to get their child
-     *                                      nodes
-     * @param supportContextStrategyChecksValue
-     *                                      user defined Checks that support
-     *                                      context strategy
-     * @param neverSuppressedChecksValue    set has user defined Checks to never
-     *                                      suppress if files are touched
+     * @param fileNameValue                     file name suffix from the patch header
+     * @param lineRangeListValue                changed line ranges for this file
+     * @param strategyValue                     suppression strategy to apply
+     * @param contextStrategyMapValue           check name to scope map; may be {@code null}
+     * @param userDefinedAncestorTokensMapValue explicit ancestor token types from the
+     *                                          {@code contextStrategy} property; may be
+     *                                          {@code null}
+     * @param neverSuppressedChecksValue        checks that should never be suppressed
      */
     public JavaPatchFilterElement(String fileNameValue,
                                    List<List<Integer>> lineRangeListValue,
                                    Strategy strategyValue,
-                                   Set<String>
-                                           checkNamesForContextStrategyByTokenOrParentSetValue,
-                                   Set<String>
-                                           checkNamesForContextStrategyByTokenOrAncestorSetValue,
-                                   Set<String>
-                                           supportContextStrategyChecksValue,
-                                   Set<String>
-                                           neverSuppressedChecksValue) {
+                                   Map<String, ContextScope> contextStrategyMapValue,
+                                   Map<String, List<Integer>> userDefinedAncestorTokensMapValue,
+                                   Set<String> neverSuppressedChecksValue) {
         this.fileName = fileNameValue;
         this.lineRangeList = lineRangeListValue;
         this.strategy = strategyValue;
-        if (checkNamesForContextStrategyByTokenOrParentSetValue != null) {
-            this.checkNamesForContextStrategyByTokenOrParentSet.addAll(
-                    checkNamesForContextStrategyByTokenOrParentSetValue);
-        }
-        if (checkNamesForContextStrategyByTokenOrAncestorSetValue != null) {
-            this.checkNamesForContextStrategyByTokenOrAncestorSet.addAll(
-                    checkNamesForContextStrategyByTokenOrAncestorSetValue);
-        }
-        if (supportContextStrategyChecksValue != null) {
-            this.supportContextStrategyChecks.addAll(
-                    supportContextStrategyChecksValue);
-        }
         this.neverSuppressedChecks = neverSuppressedChecksValue;
+        final Map<String, ContextScope> contextMap;
+        if (contextStrategyMapValue == null) {
+            contextMap = Collections.emptyMap();
+        }
+        else {
+            contextMap = Collections.unmodifiableMap(new HashMap<>(contextStrategyMapValue));
+        }
+        this.contextStrategyMap = contextMap;
+        final Map<String, List<Integer>> ancestorMap;
+        if (userDefinedAncestorTokensMapValue == null) {
+            ancestorMap = Collections.emptyMap();
+        }
+        else {
+            ancestorMap = Collections.unmodifiableMap(
+                    new HashMap<>(userDefinedAncestorTokensMapValue));
+        }
+        this.userDefinedAncestorTokensMap = ancestorMap;
     }
 
     @Override
@@ -233,24 +221,18 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     /**
-     * Apply stricter causality matching for checks configured under neverSuppressedChecks.
+     * Handles checks in {@code neverSuppressedChecks} with tighter scope logic.
      *
-     * <p>Most checks report violations on the same line as the change, so the existing
-     * line matching logic works for them. However, some checks have violations whose
-     * causality is at a broader scope than the violation line itself:
+     * <p>Most checks just need a line match. A few are special:
+     * {@code CovariantEquals} fires on a method but the real cause is the enclosing
+     * type missing an {@code equals(Object)} override, so we check whether any changed
+     * line falls inside that type instead.
      *
-     * <ul>
-     * <li>{@code CovariantEquals} - violation is reported on method AST, but causality
-     * is type-level (missing {@code equals(Object)} in that class), so we attribute by
-     * enclosing type scope</li>
-     * </ul>
-     *
-     * <p>For all other checks, the fallback still applies and shows violations in touched
-     * files, so nothing is missed. As more checks with similar behavior are discovered,
-     * they can be added here with appropriate causality attribution logic.
+     * <p>For anything not in {@link #CLASS_SCOPE_NEVER_SUPPRESSED_CHECKS} the
+     * fallback is to show the violation whenever the file is touched.
      *
      * @param event audit event
-     * @return true when violation can be attributed to changed lines in touched file
+     * @return true if the violation should be shown
      */
     private boolean isMatchingByNeverSuppressedCheck(TreeWalkerAuditEvent event) {
         boolean result = false;
@@ -271,10 +253,11 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     /**
-     * Checks whether any changed line falls within the enclosing type of the event.
+     * Returns true if any changed line falls inside the enclosing class/interface/enum/record
+     * that contains the violation.
      *
      * @param event audit event
-     * @return true if a changed line is inside the enclosing type scope
+     * @return true if a changed line is inside the enclosing type
      */
     private boolean isChangedLineInsideEnclosingType(TreeWalkerAuditEvent event) {
         final DetailAST eventAst = getEventAst(event);
@@ -289,10 +272,11 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     /**
-     * Checks whether any changed line falls within the provided AST scope.
+     * Returns true if any changed line falls within the line range covered by {@code ast}
+     * and all its descendants.
      *
-     * @param ast enclosing AST node to evaluate
-     * @return true if a changed line is inside the AST scope
+     * @param ast the enclosing node
+     * @return true if a changed line is inside this node's range
      */
     private boolean isChangedLineInAstScope(DetailAST ast) {
         boolean result = false;
@@ -376,19 +360,18 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     /**
-     * Is matching by context strategy.
+     * Returns true if the violation's resolved AST scope overlaps with a changed line.
+     * Looks the check up in {@link #contextStrategyMap} by short or full name,
+     * resolves the node via {@link #getAncestorAst}, then checks line overlap.
      *
-     * @param event {@code TreeWalkerAuditEvent} object
-     * @return true if it is matching or not set.
+     * @param event the audit event
+     * @return true if the context scope overlaps a changed line
      */
     private boolean isMatchingByContextStrategy(TreeWalkerAuditEvent event) {
         boolean result = false;
-        if (containsShortName(supportContextStrategyChecks, event)
-                || containsShortName(
-                        checkNamesForContextStrategyByTokenOrParentSet, event)
-                || containsShortName(
-                        checkNamesForContextStrategyByTokenOrAncestorSet, event)) {
-            final DetailAST eventAst = getAncestorAst(event);
+        final ContextScope scope = resolveContextScope(event);
+        if (scope != null) {
+            final DetailAST eventAst = getAncestorAst(event, scope);
 
             if (eventAst != null) {
                 final Map<String, Integer> childAstLineNoMap =
@@ -402,33 +385,83 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     /**
-     * Gets the ancestor AST node for the event based on the check's context strategy.
+     * Returns the scope for the check that raised {@code event},
+     * or {@code null} if the check is not in {@link #contextStrategyMap}.
+     * Tries the full class name first, then the short name.
      *
-     * @param event the TreeWalkerAuditEvent
-     * @return the ancestor AST node, or null if not found
+     * @param event the audit event
+     * @return the assigned {@link ContextScope}, or null
      */
-    private DetailAST getAncestorAst(TreeWalkerAuditEvent event) {
+    private ContextScope resolveContextScope(TreeWalkerAuditEvent event) {
+        final String checkName = getCheckName(event);
+        final String checkShortName = getCheckShortName(event);
+        ContextScope scope = contextStrategyMap.get(checkName);
+        if (scope == null) {
+            scope = contextStrategyMap.get(checkShortName);
+        }
+        return scope;
+    }
+
+    /**
+     * Returns the AST node to use as the context window for line matching.
+     *
+     * <ul>
+     * <li>{@link ContextScope#SELF} — the violation node itself</li>
+     * <li>{@link ContextScope#PARENT} — the immediate parent</li>
+     * <li>{@link ContextScope#ANCESTOR} — walks up until hitting a node whose token type
+     *     is in {@link #userDefinedAncestorTokensMap} (user-supplied) or
+     *     {@link #CHECK_TO_ANCESTOR_NODES_MAP} (built-in fallback)</li>
+     * </ul>
+     *
+     * @param event the audit event
+     * @param scope the scope to apply (never null)
+     * @return the resolved node, or null if not found
+     */
+    private DetailAST getAncestorAst(TreeWalkerAuditEvent event, ContextScope scope) {
         DetailAST eventAst = getEventAst(event);
-        if (containsShortName(
-                checkNamesForContextStrategyByTokenOrAncestorSet, event)) {
-            if (eventAst != null) {
-                eventAst = eventAst.getParent();
-                final List<Integer> checkAncestorNodesList =
-                        CHECK_TO_ANCESTOR_NODES_MAP.get(getCheckShortName(event));
-                while (eventAst != null && checkAncestorNodesList != null
-                        && !checkAncestorNodesList.contains(
-                                eventAst.getType())) {
+        switch (scope) {
+            case SELF -> {
+                // Use the violation's own AST node as the context window.
+            }
+            case PARENT -> {
+                if (eventAst != null) {
                     eventAst = eventAst.getParent();
                 }
             }
-        }
-        else if (containsShortName(
-                checkNamesForContextStrategyByTokenOrParentSet, event)) {
-            if (eventAst != null) {
-                eventAst = eventAst.getParent();
+            case ANCESTOR -> {
+                if (eventAst != null) {
+                    eventAst = eventAst.getParent();
+                    List<Integer> ancestorTokens =
+                            resolveAncestorTokens(getCheckName(event));
+                    if (ancestorTokens == null) {
+                        ancestorTokens = resolveAncestorTokens(getCheckShortName(event));
+                    }
+                    if (ancestorTokens == null) {
+                        ancestorTokens =
+                                CHECK_TO_ANCESTOR_NODES_MAP.get(getCheckShortName(event));
+                    }
+                    while (eventAst != null && ancestorTokens != null
+                            && !ancestorTokens.contains(eventAst.getType())) {
+                        eventAst = eventAst.getParent();
+                    }
+                }
+            }
+            default -> {
+                // No other values exist in ContextScope; this case is unreachable.
             }
         }
         return eventAst;
+    }
+
+    /**
+     * Returns the user-supplied ancestor token list for the given check name,
+     * or {@code null} if none was set.
+     *
+     * @param checkName short or full check name
+     * @return token-type list, or null
+     */
+    private List<Integer> resolveAncestorTokens(String checkName) {
+        return userDefinedAncestorTokensMap.get(checkName);
     }
 
     /**
@@ -448,10 +481,10 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     /**
-     * Gets the check name from the event.
+     * Returns the simple class name of the check that raised the event.
      *
-     * @param event the TreeWalkerAuditEvent
-     * @return the check name
+     * @param event the audit event
+     * @return simple class name (e.g. {@code FallThroughCheck})
      */
     private static String getCheckName(TreeWalkerAuditEvent event) {
         final String[] checkNames = event.violation()
@@ -460,20 +493,22 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     /**
-     * Gets the short check name (without "Check" suffix) from the event.
+     * Returns the check name with the {@code Check} suffix stripped.
+     * For example, {@code FallThroughCheck} becomes {@code FallThrough}.
      *
-     * @param event the TreeWalkerAuditEvent
-     * @return the short check name
+     * @param event the audit event
+     * @return short check name
      */
     private static String getCheckShortName(TreeWalkerAuditEvent event) {
         return getCheckName(event).replaceAll("Check", "");
     }
 
     /**
-     * Return event's corresponding ast node using iterative algorithm.
+     * Walks the AST to find the node that matches the event's token type,
+     * line, and column. Returns null if no match is found.
      *
-     * @param event {@code TreeWalkerAuditEvent} object
-     * @return DetailAST event's corresponding ast node
+     * @param event the audit event
+     * @return the matching AST node, or null
      */
     private static DetailAST getEventAst(TreeWalkerAuditEvent event) {
         DetailAST curNode = event.rootAst();
@@ -494,11 +529,11 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     /**
-     * Find min and max line numbers from AST node and its children.
+     * Scans {@code ast} and all its descendants to find the min and max line numbers.
+     * The result map has keys {@link #MIN} and {@link #MAX}.
      *
-     * @param ast DetailAST event's corresponding ast node
-     * @return Map contains ast node's all child nodes' max and min line
-     *         number
+     * @param ast the root node to scan
+     * @return map with min and max line numbers across the subtree
      */
     private static Map<String, Integer> getChildAstLineNo(DetailAST ast) {
         final Map<String, Integer> childAstLineNoMap = new HashMap<>();
@@ -523,12 +558,11 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     /**
-     * Update childAstLineNoMap if line number of ast is smaller
-     * or larger than current min and max value.
+     * Updates the min/max map if {@code ast}'s line number is outside the current range.
+     * Does nothing if {@code ast} is null.
      *
-     * @param childAstLineNoMap Map contains ast node's all child nodes' max
-     *                          and min line number
-     * @param ast DetailAST event's ast node's child node
+     * @param childAstLineNoMap running min/max map
+     * @param ast               node to check; may be null
      */
     private static void setChildAstLineNo(
             Map<String, Integer> childAstLineNoMap, DetailAST ast) {
@@ -544,11 +578,11 @@ public final class JavaPatchFilterElement implements TreeWalkerFilter {
     }
 
     /**
-     * Check whether AST node matches event's node.
+     * Returns true if {@code ast} matches the token type, line, and column of the event.
      *
-     * @param ast DetailAST
-     * @param event {@code TreeWalkerAuditEvent} object
-     * @return true if it is matching.
+     * @param ast   node to test
+     * @param event the audit event
+     * @return true if the node is the one the event points at
      */
     private static boolean isMatchingAst(DetailAST ast,
                                          TreeWalkerAuditEvent event) {
