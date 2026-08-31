@@ -69,12 +69,10 @@ public class LoadPatchFileUtils {
      */
     public List<List<Integer>> getLineRangeList() {
         final List<List<Integer>> lineRangeList = new ArrayList<>();
-        if (!"RENAME".equals(fileHeader.getChangeType().name())) {
-            for (HunkHeader hunkHeader : fileHeader.getHunks()) {
-                final EditList edits = hunkHeader.toEditList();
-                for (Edit edit : edits) {
-                    addSingleLineRange(lineRangeList, edit);
-                }
+        for (HunkHeader hunkHeader : fileHeader.getHunks()) {
+            final EditList edits = hunkHeader.toEditList();
+            for (Edit edit : edits) {
+                addSingleLineRange(lineRangeList, edit);
             }
         }
         return lineRangeList;
