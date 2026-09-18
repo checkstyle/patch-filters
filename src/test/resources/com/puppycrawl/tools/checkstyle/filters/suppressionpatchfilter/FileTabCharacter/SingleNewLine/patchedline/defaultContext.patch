@@ -6,7 +6,7 @@ index 63f6e7c..8e0f63c 100644
  
  
  
-+    // Contains a tab ->	<- //warns  // violation without filter
++    // Contains a tab ->	<- //warns  // violation 'Line contains a tab character.'
      // Long line ----------------------------------------------------------------
      // Long line ----------------------------------------------------------------
-     // Contains a tab ->	<- //warns
+     // Contains a tab ->	<- //warns  // filtered violation 'Line contains a tab character.'
