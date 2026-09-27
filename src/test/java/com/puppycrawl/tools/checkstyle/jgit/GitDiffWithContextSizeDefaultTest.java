@@ -106,6 +106,27 @@ public class GitDiffWithContextSizeDefaultTest extends AbstractJgitPatchParserEv
     }
 
     @Test
+    public void testHaveRenamedWithChangedFile() throws Exception {
+        final String patchName = "HaveRenamedWithChangedFile.patch";
+        final Patch patch = loadPatch(getPatchPath(patchName));
+        assertNotNull(patch);
+
+        final List<? extends FileHeader> fileHeaders = patch.getFiles();
+        assertEquals(1, fileHeaders.size());
+
+        assertEquals(FileHeader.PatchType.UNIFIED, fileHeaders.get(0).getPatchType());
+        assertEquals("RENAME", fileHeaders.get(0).getChangeType().name());
+        assertEquals("src/main/java/Test3.java", fileHeaders.get(0).getOldPath());
+        assertEquals("src/main/java/Test.java", fileHeaders.get(0).getNewPath());
+        assertEquals(1, fileHeaders.get(0).getHunks().size());
+
+        final EditList edits0 = fileHeaders.get(0).toEditList();
+        assertEquals(1, edits0.size());
+        assertEquals(new Edit(4, 5, 4, 5), edits0.get(0));
+        assertEquals(Edit.Type.REPLACE, edits0.get(0).getType());
+    }
+
+    @Test
     public void testHaveRemovedFile() throws Exception {
         final String patchName = "HaveRemovedFile.patch";
         final Patch patch = loadPatch(getPatchPath(patchName));

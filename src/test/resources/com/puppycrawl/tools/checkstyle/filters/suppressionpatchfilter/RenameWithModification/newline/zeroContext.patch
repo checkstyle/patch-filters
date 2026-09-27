@@ -1,0 +1,10 @@
+diff --git a/Foo.java b/Bar.java
+similarity index 55%
+rename from Foo.java
+rename to Bar.java
+index d188913..400ac79 100644
+--- a/Foo.java
++++ b/Bar.java
+@@ -5 +5 @@
+-        System.out.println("short");
++        System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");

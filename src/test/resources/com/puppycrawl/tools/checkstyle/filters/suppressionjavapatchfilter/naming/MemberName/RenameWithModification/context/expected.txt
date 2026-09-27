@@ -1,0 +1,1 @@
+Bar.java:4:17: Name 'I' must match pattern '^(id)|([a-z][a-z0-9][a-zA-Z0-9]+)$'.

@@ -1,0 +1,16 @@
+diff --git a/Foo.java b/Bar.java
+similarity index 55%
+rename from Foo.java
+rename to Bar.java
+index d188913..400ac79 100644
+--- a/Foo.java
++++ b/Bar.java
+@@ -2,7 +2,7 @@ package Checker;
+
+ public class Foo {
+     public static void main(String[] args) {
+-        System.out.println("short");
++        System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+         System.out.println();
+         System.out.println();
+     }

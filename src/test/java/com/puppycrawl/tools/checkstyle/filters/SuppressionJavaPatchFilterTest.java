@@ -599,6 +599,22 @@ public class SuppressionJavaPatchFilterTest extends AbstractPatchFilterEvaluatio
     }
 
     @Test
+    public void testRenameWithModification() throws Exception {
+        testByConfig("naming/MemberName/RenameWithModification/newline/defaultContextConfig.xml");
+        testByConfig("naming/MemberName/RenameWithModification"
+                + "/patchedline/defaultContextConfig.xml");
+        testByConfig("naming/MemberName/RenameWithModification/context/defaultContextConfig.xml");
+    }
+
+    @Test
+    public void testRenameWithoutModification() throws Exception {
+        testByConfig("naming/MemberName/RenameWithoutModification"
+                + "/newline/defaultContextConfig.xml");
+        testByConfig("naming/MemberName/RenameWithoutModification"
+                + "/patchedline/defaultContextConfig.xml");
+    }
+
+    @Test
     public void testBooleanExpressionComplexity() throws Exception {
         testByConfig("metrics/BooleanExpressionComplexity/newline/defaultContextConfig.xml");
         testByConfig("metrics/BooleanExpressionComplexity/patchedline/defaultContextConfig.xml");
