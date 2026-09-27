@@ -7,7 +7,7 @@ public class Test {
 
 
 
-    // Contains a tab ->	<- //warns  // violation without filter
+    // Contains a tab ->	<- //warns  // violation '25: Line contains a tab character.'
     // Long line ----------------------------------------------------------------
     // Long line ----------------------------------------------------------------
     // Contains a tab ->	<- //warns
