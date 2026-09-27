@@ -51,6 +51,20 @@ public class SuppressionJavaPatchFilterTest extends AbstractPatchFilterEvaluatio
         testByConfig("ShortName/neverSuppressedChecks/defaultContextConfig.xml");
     }
 
+    /**
+     * Tests the unified {@code contextStrategy} property.
+     * Covers SELF, PARENT, ANCESTOR, and explicit token type ({@code FallThrough:LITERAL_SWITCH}).
+     *
+     * @throws Exception if config or check processing fails
+     */
+    @Test
+    public void testContextStrategy() throws Exception {
+        testByConfig("ContextStrategy/self/defaultContextConfig.xml");
+        testByConfig("ContextStrategy/parent/defaultContextConfig.xml");
+        testByConfig("ContextStrategy/ancestor/defaultContextConfig.xml");
+        testByConfig("ContextStrategy/ancestorTokenType/defaultContextConfig.xml");
+    }
+
     @Test
     public void testNonExistentPatchFileWithFalseOptional() throws Exception {
         try {
