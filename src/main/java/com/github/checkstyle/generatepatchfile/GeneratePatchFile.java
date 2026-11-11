@@ -74,6 +74,11 @@ public class GeneratePatchFile {
     private static final String PATCH_TXT = "patch.txt";
 
     /**
+     * GIT_ADD_INTENT_TO_ADD_COMMAND.
+     */
+    private static final String GIT_ADD_INTENT_TO_ADD_COMMAND = "git add -N .";
+
+    /**
      * Git instance.
      */
     private Git git;
@@ -261,6 +266,9 @@ public class GeneratePatchFile {
         final File destDirFile = createDestDirName(subDirName);
         final boolean succ = destDirFile.mkdirs();
         if (succ) {
+            checkout(commitNew.getName());
+            runShellCommand(GIT_ADD_INTENT_TO_ADD_COMMAND);
+
             final File patchFile = new File(diffReportDirName, PATCH_TXT);
             final PrintStream ps =
                     new PrintStream(new FileOutputStream(patchFile));
@@ -278,7 +286,6 @@ public class GeneratePatchFile {
             diffFormatter.format(entries);
             diffFormatter.close();
 
-            checkout(commitNew.getName());
             final File reportDir = generate();
             Utils.copyDir(reportDir, destDirFile);
 
@@ -308,7 +315,8 @@ public class GeneratePatchFile {
             runShellCommand("git show > show.patch");
         }
         else if ("diff".equals(patchFormat)) {
-            runShellCommand("git diff HEAD~1 HEAD > show.patch");
+            runShellCommand(GIT_ADD_INTENT_TO_ADD_COMMAND);
+            runShellCommand("git diff HEAD~0 > show.patch");
         }
         else if ("format".equals(patchFormat)) {
             runShellCommand("git format-patch -1");
