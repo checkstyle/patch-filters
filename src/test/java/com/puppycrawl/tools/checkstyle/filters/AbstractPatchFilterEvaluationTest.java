@@ -29,11 +29,12 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
@@ -47,6 +48,14 @@ import com.puppycrawl.tools.checkstyle.internal.utils.BriefUtLogger;
 abstract class AbstractPatchFilterEvaluationTest extends AbstractModuleTestSupport {
 
     private static final String CONTEXT_CONFIG_PATTERN = "(default|zero)ContextConfig.xml";
+
+    /**
+     * Pattern to match inline violation comments in test files.
+     * Matches: // violation 'message'
+     * or: // filtered violation below 'message'
+     */
+    private static final Pattern VIOLATION_PATTERN = Pattern.compile(
+            "//\\s*(?:filtered\\s+)?violation(?:\\s+below)?\\s+'([^']+)'");
 
     protected abstract String getPatchFileLocation();
 
@@ -95,18 +104,81 @@ abstract class AbstractPatchFilterEvaluationTest extends AbstractModuleTestSuppo
         try (ByteArrayInputStream inputStream = new ByteArrayInputStream(stream.toByteArray());
              LineNumberReader lnr = new LineNumberReader(
                      new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            final String expectedFile = configPath.replaceFirst(CONTEXT_CONFIG_PATTERN,
-                    "expected.txt");
-            final Path expectedFilePath = Paths.get(getPath(expectedFile));
-            final List<String> expected = Files.readAllLines(expectedFilePath);
-            final List<String> actuals = lnr.lines().toList();
+
+            final List<String> expected = extractExpectedViolations(path);
+            final List<String> actuals = lnr.lines()
+                    .filter(line -> !line.equals("Audit done."))
+                    .toList();
+
+            assertEquals(expected.size(), actuals.size(),
+                    "Number of violations does not match");
 
             for (int index = 0; index < expected.size(); index++) {
-                final String expectedResult = path + File.separator + expected.get(index);
-                assertEquals(expectedResult, actuals.get(index),
-                        "error message " + index + ". Expected file: " + expectedFilePath);
+                final String expectedViolation = expected.get(index);
+                final String actualViolation = actuals.get(index);
+                final String expectedResult = path + File.separator + expectedViolation;
+                assertEquals(expectedResult, actualViolation, "error message " + index);
             }
-            assertEquals(expected.size(), errorCounter, "unexpected output: " + lnr.readLine());
+            assertEquals(expected.size(), errorCounter,
+                    "unexpected output: " + lnr.readLine());
         }
+    }
+
+    /**
+     * Extracts expected violation messages from inline comments in test files.
+     * Falls back to expected.txt if no inline violations are found.
+     * Parses comments like: // violation 'message'
+     *
+     * @param path the directory path containing test files
+     * @return list of expected violation messages in format "filename:line: message"
+     * @throws IOException if file reading fails
+     */
+    private List<String> extractExpectedViolations(String path) throws IOException {
+        final List<String> violations = new ArrayList<>();
+        final File directory = new File(path);
+        final File[] files = directory.listFiles((dir, name) -> {
+            return name.endsWith(".java") || name.endsWith(".properties");
+        });
+
+        if (files != null) {
+            Arrays.sort(files);
+
+            for (File file : files) {
+                final List<String> lines =
+                        Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
+                for (int index = 0; index < lines.size(); index++) {
+                    final String line = lines.get(index);
+                    final Matcher matcher = VIOLATION_PATTERN.matcher(line);
+                    if (matcher.find()) {
+                        final String violationMessage = matcher.group(1);
+                        final int lineNumber = index + 1;
+                        final String formattedMessage;
+                        if (violationMessage.matches("\\d+:.*")) {
+                            formattedMessage = ":" + violationMessage;
+                        }
+                        else {
+                            formattedMessage = ": " + violationMessage;
+                        }
+                        violations.add(file.getName() + ":" + lineNumber + formattedMessage);
+                    }
+                }
+            }
+        }
+
+        final List<String> result;
+        if (violations.isEmpty()) {
+            final File expectedFile = new File(path, "expected.txt");
+            if (expectedFile.exists()) {
+                result = Files.readAllLines(expectedFile.toPath(), StandardCharsets.UTF_8);
+            }
+            else {
+                result = violations;
+            }
+        }
+        else {
+            result = violations;
+        }
+
+        return result;
     }
 }
