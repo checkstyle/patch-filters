@@ -23,9 +23,12 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.eclipse.jgit.patch.FileHeader;
 import org.eclipse.jgit.patch.Patch;
@@ -35,6 +38,7 @@ import com.puppycrawl.tools.checkstyle.TreeWalkerFilter;
 import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.ExternalResourceHolder;
+import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
 
 /**
@@ -45,14 +49,15 @@ import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
  */
 public final class SuppressionJavaPatchFilter extends AutomaticBean implements
         TreeWalkerFilter, ExternalResourceHolder {
-    /**
-     * To split never Suppressed Checks and Ids's string.
-     */
+
+    /** Logger for deprecation warnings. */
+    private static final Logger LOG =
+            Logger.getLogger(SuppressionJavaPatchFilter.class.getName());
+
+    /** Delimiter for splitting comma-separated property values. */
     private static final String COMMA = ",";
 
-    /**
-     * List of checks that support context strategy.
-     */
+    /** Hardcoded list of checks that always use SELF scope. Currently empty. */
     private static final List<String> SUPPORT_CONTEXT_STRATEGY_CHECKS = Arrays.asList();
 
     /**
@@ -74,21 +79,17 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
     private Strategy strategy = Strategy.NEWLINE;
 
     /**
-     * Set has user defined Checks that need modify violation nodes
-     * to their parent abstract nodes to get their child nodes.
+     * Maps each check name to its context scope.
+     * Built from the {@code contextStrategy} property or from the deprecated setters.
      */
-    private Set<String> checkNamesForContextStrategyByTokenOrParentSet;
+    private Map<String, ContextScope> contextStrategyMap = new HashMap<>();
 
     /**
-     * Set has user defined Checks that need modify violation nodes
-     * to their ancestor abstract nodes to get their child nodes.
+     * Ancestor token types explicitly set via {@code contextStrategy} (e.g.
+     * {@code FallThrough:LITERAL_SWITCH}). These take priority over the
+     * built-in lookup table in {@code JavaPatchFilterElement}.
      */
-    private Set<String> checkNamesForContextStrategyByTokenOrAncestorSet;
-
-    /**
-     * Set has user defined Checks that support context strategy.
-     */
-    private Set<String> supportContextStrategyChecks;
+    private Map<String, List<Integer>> userDefinedAncestorTokensMap = new HashMap<>();
 
     /**
      * Set has user defined Checks to never suppress if files are referenced
@@ -124,46 +125,134 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
     }
 
     /**
+     * Configures the unified context strategy for checks running under the
+     * {@code context} strategy.
+     *
+     * <p>Accepts a comma-separated list of {@code CheckName:SCOPE} or
+     * {@code CheckName:TOKEN_TYPE} pairs. {@code SCOPE} is one of:
+     * <ul>
+     *   <li>{@code SELF} — match against the violation's own AST node</li>
+     *   <li>{@code PARENT} — match against the immediate parent node</li>
+     *   <li>{@code ANCESTOR} — walk up using the built-in token map
+     *       (for checks already listed there)</li>
+     *   <li>Any valid {@code TokenTypes} constant name (e.g. {@code LITERAL_SWITCH},
+     *       {@code CLASS_DEF}) — walk up to the first ancestor of that token type;
+     *       works for any check, including custom ones</li>
+     * </ul>
+     *
+     * <p>Whitespace around names is trimmed. Examples:
+     * <pre>
+     * &lt;property name="contextStrategy"
+     *           value="MethodLength:SELF, RightCurly:PARENT, FallThrough:LITERAL_SWITCH"/&gt;
+     * </pre>
+     *
+     * @param contextStrategyValue comma-separated entries
+     * @throws IllegalArgumentException if an entry is malformed or the scope/token name
+     *         is not recognised
+     * @since 10.x
+     */
+    public void setContextStrategy(String contextStrategyValue) {
+        final String[] entries = contextStrategyValue.split(COMMA);
+        for (String entry : entries) {
+            final String trimmed = entry.trim();
+            final int colonIndex = trimmed.lastIndexOf(':');
+            if (colonIndex < 1 || colonIndex == trimmed.length() - 1) {
+                throw new IllegalArgumentException(
+                        "contextStrategy entry must be 'CheckName:SCOPE' or "
+                                + "'CheckName:TOKEN_TYPE', got: '" + trimmed + "'");
+            }
+            final String checkName = trimmed.substring(0, colonIndex).trim();
+            final String scopeName = trimmed.substring(colonIndex + 1).trim().toUpperCase();
+
+            ContextScope scope = null;
+            try {
+                scope = ContextScope.valueOf(scopeName);
+            }
+            catch (IllegalArgumentException ignored) {
+                scope = null;
+            }
+
+            if (scope != null) {
+                contextStrategyMap.put(checkName, scope);
+            }
+            else {
+                try {
+                    final int tokenType =
+                            TokenTypes.class.getField(scopeName).getInt(null);
+                    contextStrategyMap.put(checkName, ContextScope.ANCESTOR);
+                    userDefinedAncestorTokensMap.put(
+                            checkName, Collections.singletonList(tokenType));
+                }
+                catch (NoSuchFieldException | IllegalAccessException exc) {
+                    throw new IllegalArgumentException(
+                            "Unknown scope or token type '" + scopeName
+                                    + "' in contextStrategy entry '" + trimmed
+                                    + "'. Use SELF, PARENT, ANCESTOR, or a valid "
+                                    + "TokenTypes constant name (e.g. LITERAL_SWITCH,"
+                                    + " CLASS_DEF, SLIST).", exc);
+                }
+            }
+        }
+    }
+
+    /**
      * Setter to set has user defined list of Checks need modify violation
      * nodes to their parent abstract nodes to get their child nodes.
      *
      * @param checkNamesForContextStrategyByTokenOrParentSetValue
-     *                                 string which is  user defined Checks
+     *                                 string which is user defined Checks
      *                                 that need modify violation nodes
      *                                 to their parent abstract nodes
      *                                 to get their child nodes,
      *                                 split by comma
-     *
      * @since 8.34
+     * @deprecated Since 10.x. Use {@code contextStrategy} with {@code CheckName:PARENT} instead.
+     *             Example: {@code &lt;property name="contextStrategy"
+     *             value="RightCurly:PARENT"/&gt;}.
      */
+    @Deprecated(since = "10.x", forRemoval = true)
     public void setCheckNamesForContextStrategyByTokenOrParentSet(
             String checkNamesForContextStrategyByTokenOrParentSetValue) {
-        final String[] checksArray =
-                checkNamesForContextStrategyByTokenOrParentSetValue
-                        .split(COMMA);
-        this.checkNamesForContextStrategyByTokenOrParentSet =
-                new HashSet<>(Arrays.asList(checksArray));
+        LOG.warning("Deprecated property 'checkNamesForContextStrategyByTokenOrParentSet'. "
+                + "Use contextStrategy with :PARENT scope instead. "
+                + "Example: <property name=\"contextStrategy\" value=\"CheckName:PARENT\"/>");
+        for (String check : checkNamesForContextStrategyByTokenOrParentSetValue.split(COMMA)) {
+            contextStrategyMap.put(check.trim(), ContextScope.PARENT);
+        }
     }
 
     /**
      * Setter to set has user defined list of Checks need modify violation
      * nodes to their ancestor abstract nodes to get their child nodes.
      *
+     * <p>Note: The ancestor token type used for each check was previously hardcoded
+     * inside {@code JavaPatchFilterElement}. With the new {@code contextStrategy}
+     * property you can now specify the exact token type explicitly, e.g.
+     * {@code FallThrough:LITERAL_SWITCH}, which eliminates the need for that
+     * hardcoded map.
+     *
      * @param checkNamesForContextStrategyByTokenOrAncestorSetValue
-     *                                 string which is  user defined Checks
+     *                                 string which is user defined Checks
      *                                 that need modify violation nodes
      *                                 to their ancestor abstract nodes
      *                                 to get their child nodes,
      *                                 split by comma
      * @since 8.34
+     * @deprecated Since 10.x. Use {@code contextStrategy} with an explicit token type instead.
+     *             Example: {@code &lt;property name="contextStrategy"
+     *             value="FallThrough:LITERAL_SWITCH"/&gt;}.
      */
+    @Deprecated(since = "10.x", forRemoval = true)
     public void setCheckNamesForContextStrategyByTokenOrAncestorSet(
             String checkNamesForContextStrategyByTokenOrAncestorSetValue) {
-        final String[] checksArray =
-                checkNamesForContextStrategyByTokenOrAncestorSetValue
-                        .split(COMMA);
-        this.checkNamesForContextStrategyByTokenOrAncestorSet =
-                new HashSet<>(Arrays.asList(checksArray));
+        LOG.warning("Deprecated property 'checkNamesForContextStrategyByTokenOrAncestorSet'. "
+                + "Use contextStrategy with an explicit token type instead. "
+                + "Example: <property name=\"contextStrategy\" "
+                + "value=\"FallThrough:LITERAL_SWITCH\"/>");
+        for (String check
+                : checkNamesForContextStrategyByTokenOrAncestorSetValue.split(COMMA)) {
+            contextStrategyMap.put(check.trim(), ContextScope.ANCESTOR);
+        }
     }
 
     /**
@@ -172,13 +261,22 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
      * @param supportContextStrategyChecksValue string has user defined checks that
      *                                     support context strategy
      * @since 8.34
+     * @deprecated Since 10.x. Use {@code contextStrategy} with {@code CheckName:SELF} instead.
+     *             Example: {@code &lt;property name="contextStrategy"
+     *             value="MethodLength:SELF"/&gt;}.
      */
+    @Deprecated(since = "10.x", forRemoval = true)
     public void setSupportContextStrategyChecks(
             String supportContextStrategyChecksValue) {
-        final String[] checksArray =
-                supportContextStrategyChecksValue.split(COMMA);
-        this.supportContextStrategyChecks = new HashSet<>(Arrays.asList(checksArray));
-        this.supportContextStrategyChecks.addAll(SUPPORT_CONTEXT_STRATEGY_CHECKS);
+        LOG.warning("Deprecated property 'supportContextStrategyChecks'. "
+                + "Use contextStrategy with :SELF scope instead. "
+                + "Example: <property name=\"contextStrategy\" value=\"CheckName:SELF\"/>");
+        final String[] checksArray = supportContextStrategyChecksValue.split(COMMA);
+        for (String check : checksArray) {
+            contextStrategyMap.put(check.trim(), ContextScope.SELF);
+        }
+        contextStrategyMap.putAll(
+                buildSelfMapFromList(SUPPORT_CONTEXT_STRATEGY_CHECKS));
     }
 
     /**
@@ -258,9 +356,8 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
                 final JavaPatchFilterElement element =
                         new JavaPatchFilterElement(fileName, lineRangeList,
                                 strategy,
-                                checkNamesForContextStrategyByTokenOrParentSet,
-                                checkNamesForContextStrategyByTokenOrAncestorSet,
-                                supportContextStrategyChecks,
+                                Collections.unmodifiableMap(contextStrategyMap),
+                                Collections.unmodifiableMap(userDefinedAncestorTokensMap),
                                 neverSuppressedChecks);
                 filters.add(element);
             }
@@ -277,5 +374,20 @@ public final class SuppressionJavaPatchFilter extends AutomaticBean implements
     @Override
     public Set<String> getExternalResourceLocations() {
         return Collections.singleton(file);
+    }
+
+    /**
+     * Builds a SELF-scope entry map from a list of check names.
+     * Used internally to convert the default {@link #SUPPORT_CONTEXT_STRATEGY_CHECKS} list.
+     *
+     * @param checks list of check names
+     * @return map of check name to {@link ContextScope#SELF}
+     */
+    private static Map<String, ContextScope> buildSelfMapFromList(List<String> checks) {
+        final Map<String, ContextScope> map = new HashMap<>();
+        for (String check : checks) {
+            map.put(check.trim(), ContextScope.SELF);
+        }
+        return map;
     }
 }
